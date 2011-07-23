@@ -61,6 +61,7 @@
 		<p>
 			<?=__RATING?>: <?=$rating?>&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/plus-8.png" /> <img src="images/minus-8.png" />
 		</p>
+		<p>&nbsp;</p>
 		<p><? echo(__COMMENTS.' ('.mysql_num_rows($comments).')'); ?></p>
 		<?php
 			while ($row=mysql_fetch_array($comments))
