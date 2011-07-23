@@ -12,6 +12,9 @@ define('__POPULAR', 'Δημοφιλείς Καταχωρήσεις');
 define('__NEWESTTAB', 'Πρόσφατοι');
 define('__POPULARTAB', 'Δημοφιλείς');
 define('__RATEDTAB', 'Καλύτερα');
-define('__VISITEDTAB', 'Επισκεψιμότητα')
+define('__VISITEDTAB', 'Επισκεψιμότητα');
+
+// add.php
+define('__ADDBOOKMARK', 'Προσθήκη Σελιδοδείκτη')
 
 ?>
