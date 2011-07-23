@@ -63,116 +63,71 @@
 		<li><a href="#tabmostvisited"><?php echo (__VISITEDTAB); ?></a></li>
 	</ul>
 	
+	<!-- Tab functions -->
+	<?php
+		function prettyprintbookmarks($result)
+		{
+			echo ("<ul>");
+			while ($row = mysql_fetch_array($result))
+			{
+				echo ("<li class=\"bookmark\"><a href=\"viewbookmark.php?bid=".$row[3]."\">".$row[1]."</a> <br /> <span class=\"bookurl\">".$row[0]."</span><br /><span class=\"bookdesc\">" . $row[2]."</span>");
+			}
+			echo ("</ul>");
+		}
+		
+		/** sorttype: datecreated, popularity, rating, visits */
+		function get10of($sorttype)
+		{
+			$result = mysql_query('
+			SELECT bookmarks.url, comments.title, comments.comment, bookmarks.bid
+			FROM bookmarks
+			INNER JOIN booksncomms ON bookmarks.bid = booksncomms.bid
+			INNER JOIN comments ON comments.cid = booksncomms.cid
+			JOIN (SELECT bookmarks.bid
+				  FROM bookmarks
+				  ORDER BY bookmarks.'.$sorttype.' DESC LIMIT 10)
+			AS a ON a.bid = bookmarks.bid
+			JOIN (SELECT comments.cid, MAX(comments.rating) AS maxrating
+			     FROM comments
+			     inner JOIN booksncomms ON comments.cid = booksncomms.cid
+			     GROUP BY booksncomms.bid)
+			AS b ON b.cid = comments.cid
+			WHERE comments.title IS NOT NULL
+			ORDER BY bookmarks.'.$sorttype.' DESC;');
+			return $result;
+		}
+	?>
+	
 	<div class="tab_container">
 		<div id="tabnew" class="tab_content">
 			<p>
 				<?php
-				$result = mysql_query('
-					SELECT bookmarks.url, comments.title, comments.comment
-					FROM bookmarks
-					INNER JOIN booksncomms ON bookmarks.bid = booksncomms.bid
-					INNER JOIN comments ON comments.cid = booksncomms.cid
-					JOIN (SELECT bookmarks.bid
-						  FROM bookmarks
-						  ORDER BY bookmarks.datecreated DESC LIMIT 10)
-					AS a ON a.bid = bookmarks.bid
-					JOIN (SELECT comments.cid, MAX(comments.rating) AS maxrating
-					     FROM comments
-					     inner JOIN booksncomms ON comments.cid = booksncomms.cid
-					     GROUP BY booksncomms.bid)
-					AS b ON b.cid = comments.cid
-					WHERE comments.title IS NOT NULL
-					ORDER BY bookmarks.url;');
-				echo ("<ul>");
-				while ($row = mysql_fetch_array($result))
-				{
-					echo ("<li><a href=\"http://".$row[0]."\">".$row[1]." (".$row[0].")</a> -|- " . $row[2]);
-				}
-				echo ("</ul>");
+				$result = get10of('datecreated');
+				prettyprintbookmarks($result);
 				?>
 			</p>
 		</div>
 		<div id="tabpopular" class="tab_content">
 			<p>
 				<?php
-				$result = mysql_query('
-					SELECT bookmarks.url, comments.title, comments.comment
-					FROM bookmarks
-					INNER JOIN booksncomms ON bookmarks.bid = booksncomms.bid
-					INNER JOIN comments ON comments.cid = booksncomms.cid
-					JOIN (SELECT bookmarks.bid
-						  FROM bookmarks
-						  ORDER BY bookmarks.popularity DESC LIMIT 10)
-					AS a ON a.bid = bookmarks.bid
-					JOIN (SELECT comments.cid, MAX(comments.rating) AS maxrating
-					     FROM comments
-					     inner JOIN booksncomms ON comments.cid = booksncomms.cid
-					     GROUP BY booksncomms.bid)
-					AS b ON b.cid = comments.cid
-					WHERE comments.title IS NOT NULL
-					ORDER BY bookmarks.url;');
-				echo ("<ul>");
-				while ($row = mysql_fetch_array($result))
-				{
-					echo ("<li><a href=\"http://".$row[0]."\">".$row[1]." (".$row[0].")</a> -|- " . $row[2]);
-				}
-				echo ("</ul>");
+				$result = get10of('popularity');
+				prettyprintbookmarks($result);
 				?>
 			</p>
 		</div>
 		<div id="tabtoprated" class="tab_content">
 			<p>
 				<?php
-				$result = mysql_query('
-					SELECT bookmarks.url, comments.title, comments.comment
-					FROM bookmarks
-					INNER JOIN booksncomms ON bookmarks.bid = booksncomms.bid
-					INNER JOIN comments ON comments.cid = booksncomms.cid
-					JOIN (SELECT bookmarks.bid
-						  FROM bookmarks
-						  ORDER BY bookmarks.rating DESC LIMIT 10)
-					AS a ON a.bid = bookmarks.bid
-					JOIN (SELECT comments.cid, MAX(comments.rating) AS maxrating
-					     FROM comments
-					     inner JOIN booksncomms ON comments.cid = booksncomms.cid
-					     GROUP BY booksncomms.bid)
-					AS b ON b.cid = comments.cid
-					WHERE comments.title IS NOT NULL
-					ORDER BY bookmarks.url;');
-				echo ("<ul>");
-				while ($row = mysql_fetch_array($result))
-				{
-					echo ("<li><a href=\"http://".$row[0]."\">".$row[1]." (".$row[0].")</a> -|- " . $row[2]);
-				}
-				echo ("</ul>");
+				$result = get10of('rating');
+				prettyprintbookmarks($result);
 				?>
 			</p>
 		</div>
 		<div id="tabmostvisited" class="tab_content">
 			<p>
 				<?php
-				$result = mysql_query('
-					SELECT bookmarks.url, comments.title, comments.comment
-					FROM bookmarks
-					INNER JOIN booksncomms ON bookmarks.bid = booksncomms.bid
-					INNER JOIN comments ON comments.cid = booksncomms.cid
-					JOIN (SELECT bookmarks.bid
-						  FROM bookmarks
-						  ORDER BY bookmarks.visits DESC LIMIT 10)
-					AS a ON a.bid = bookmarks.bid
-					JOIN (SELECT comments.cid, MAX(comments.rating) AS maxrating
-					     FROM comments
-					     inner JOIN booksncomms ON comments.cid = booksncomms.cid
-					     GROUP BY booksncomms.bid)
-					AS b ON b.cid = comments.cid
-					WHERE comments.title IS NOT NULL
-					ORDER BY bookmarks.url;');
-				echo ("<ul>");
-				while ($row = mysql_fetch_array($result))
-				{
-					echo ("<li><a href=\"http://".$row[0]."\">".$row[1]." (".$row[0].")</a> -|- " . $row[2]);
-				}
-				echo ("</ul>");
+				$result = get10of('visits');
+				prettyprintbookmarks($result);
 				?>
 			</p>
 		</div>
