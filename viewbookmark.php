@@ -32,15 +32,52 @@
 	
 	<div id="content">
 		<?php
-			$result = mysql_query('
-						select comments.title, comments.comment, users.username
+			// Queries
+			$comments = mysql_query('
+						select comments.title, comments.comment, users.username, comments.dateposted
 						from comments
 						inner join booksncomms on comments.cid=booksncomms.cid
 						inner join users on comments.user=users.uid
 						where booksncomms.bid='.strval($_GET['bid']).'
-						order by users.username;
+						order by comments.dateposted;
 			');
+			$bookmark = mysql_query('select url, rating from bookmarks where bid='.strval($_GET['bid']).';');
+			$titles = mysql_query('select comments.title, comments.comment
+									from comments
+									inner join booksncomms on comments.cid=booksncomms.cid
+									where booksncomms.bid='.strval($_GET['bid']).' and comments.title is not null
+									order by comments.rating desc;');
 			
+			// Get useful fields from queries
+			$best_title_comment = mysql_fetch_array($titles);
+			$best_title = $best_title_comment[0];
+			$best_desc = $best_title_comment[1];
+			$myurl = mysql_fetch_array($bookmark);
+			$rating = $myurl[1];
+		?>
+		<h2><?php echo($best_title); ?></h2>
+		<p><a href="http://<?php echo($myurl[0]); ?>"><?php echo($myurl[0]); ?></a></p>
+		<p><?=__DESCRIPTION?>: <br /><?=$best_desc?></p>
+		<p>
+			<?=__RATING?>: <?=$rating?>&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/plus-8.png" /> <img src="images/minus-8.png" />
+		</p>
+		<p><? echo(__COMMENTS.' ('.mysql_num_rows($comments).')'); ?></p>
+		<?php
+			while ($row=mysql_fetch_array($comments))
+			{
+				$commentdate = $row[3];
+				$commenttitle = $row[0];
+				$commentdesc = $row[1];
+				$commentuser = $row[2];
+				if ($commenttitle=='')
+				{
+					echo('<p>'.__ONDATE.' '.$commentdate.' '.__COMMUSER.' '.$commentuser.' '.__COMMPOSTED.':<br /><em>'.$commentdesc.'</em></p>'); 
+				} 
+				else
+				{
+					echo('<p>'.__ONDATE.' '.$commentdate.' '.__COMMUSER.' '.$commentuser.' '.__COMMADDED.':<br /><em>'.$commenttitle.'</em><br />'.__COMMDESC.'<br /><em>'.$commentdesc.'</em></p>');
+				}
+			}
 		?>
 	</div>
 	
