@@ -19,5 +19,13 @@ define('__ADDBOOKMARK', 'Προσθήκη Σελιδοδείκτη');
 
 // viewbookmark.php
 define('__VIEWBOOKMARK', 'Προβολή Σελιδοδείκτη');
+define('__DESCRIPTION', 'Περιγραφή');
+define('__RATING', 'Βαθμολογία');
+define('__COMMENTS', 'Σχόλια');
+define('__ONDATE', 'Στις');
+define('__COMMUSER', 'ο/η χρήστης');
+define('__COMMPOSTED', 'δημοσίευσε');
+define('__COMMADDED', 'πρόσθεσε αυτή τη σελίδα στους σελιδοδείκτες του με τίτλο');
+define('__COMMDESC', 'και την περιγραφή');
 
 ?>
