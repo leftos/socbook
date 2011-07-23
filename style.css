@@ -1,0 +1,148 @@
+body
+{
+	font-family: Calibri, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background: #FCECEC;
+	color: #342D00;
+}
+
+h1, h2, h3
+{
+	color: #342D00;	
+}
+
+a
+{
+	text-decoration: none;
+	color: #9F0000;
+}
+
+a:hover
+{
+	text-decoration:underline;
+}
+
+a:visited 
+{
+	color: blue;
+}
+
+#title
+{
+	margin: 10px 10px;
+}
+
+#language
+{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	text-align: right;
+}
+
+#navigation
+{
+	position: fixed;
+	top: 5em;
+	right: 1em;
+	width: 10em;
+	text-align: right;
+	border-left: 10px groove #806e00;
+	/* background: #FCECEC url("images/verticalrule.gif") repeat-y left;*/
+}
+
+#navigation ul
+{
+	list-style: none;
+}
+
+#navigation li
+{
+	line-height: 1.8em;
+}
+
+#content
+{
+	margin: 0 12em 0 25px;
+}
+
+#content h2
+{
+	padding: 5px 0 0 0;
+}
+
+#content p
+{
+	padding: 0px 0 0 8px;
+}
+
+#footer
+{
+	clear: both;
+	border-top: 1px solid grey;
+	margin: 0 30em 0 0.5em; 
+	font-family: Cambria, "Times New Roman", Times, serif;
+	font-size: 0.7em;
+}
+
+#footer p
+{
+	padding: 10px 30px 20px 20px;
+}
+
+/* */
+/* Below are the CSS properties for the index.php tabs */
+
+ul.tabs {
+	margin: 0 12em 0 0;
+	padding: 0;
+	float: left;
+	list-style: none;
+	height: 32px; /*--Set height of tabs--*/
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #999;
+	/*width: 70%;*/
+}
+ul.tabs li {
+	float: left;
+	margin: 0;
+	padding: 0;
+	height: 31px; /*--Subtract 1px from the height of the unordered list--*/
+	line-height: 31px; /*--Vertically aligns the text within the tab--*/
+	border: 1px solid #999;
+	border-left: none;
+	margin-bottom: -1px; /*--Pull the list item down 1px--*/
+	overflow: hidden;
+	position: relative;
+	background: #e0e0e0;
+}
+ul.tabs li a {
+	text-decoration: none;
+	color: #000;
+	display: block;
+	font-size: 1.2em;
+	padding: 0 20px;
+	border: 1px solid #fff; /*--Gives the bevel look with a 1px white border inside the list item--*/
+	outline: none;
+}
+ul.tabs li a:hover {
+	background: #ccc;
+}
+html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that the active tab does not listen to the hover properties--*/
+	/* background: #fff; */
+	border-bottom: 1px solid #fff; /*--Makes the active tab look like it's connected with its content--*/
+}
+
+.tab_container {
+	border: 1px solid #999;
+	border-top: 1px solid #999;
+	overflow: hidden;
+	clear: both;
+	margin: 0 13em 0 0;
+	float: left width: 90%;
+	/* background: #fff; */
+}
+.tab_content {
+	padding: 20px;
+	font-size: 1.2em;
+}
+
