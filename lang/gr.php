@@ -15,6 +15,9 @@ define('__RATEDTAB', 'Καλύτερα');
 define('__VISITEDTAB', 'Επισκεψιμότητα');
 
 // add.php
-define('__ADDBOOKMARK', 'Προσθήκη Σελιδοδείκτη')
+define('__ADDBOOKMARK', 'Προσθήκη Σελιδοδείκτη');
+
+// viewbookmark.php
+define('__VIEWBOOKMARK', 'Προβολή Σελιδοδείκτη');
 
 ?>
