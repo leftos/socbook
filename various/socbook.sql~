@@ -19,8 +19,8 @@
 -- Table structure for table `bookmarks`
 --
 
-DROP database `socbook`;
-CREATE database `socbook` DEFAULT charset = `utf8`;
+DROP DATABASE IF EXISTS `socbook`;
+CREATE database `socbook` DEFAULT charset = `utf-8`;
 
 USE socbook;
 
