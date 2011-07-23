@@ -1,8 +1,8 @@
 <?php
 
 $_db["host"] = "localhost";
-$_db["username"] = "root";
-$_db["password"] = "";
+$_db["username"] = "socbook";
+$_db["password"] = "socbook";
 $_db["database"] = "socbook";
 
 session_start();
