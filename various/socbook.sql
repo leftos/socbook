@@ -23,7 +23,7 @@ CREATE USER socbook IDENTIFIED BY socbook;
 DROP database `socbook`;
 CREATE database `socbook` DEFAULT charset = `utf8`;
 
-GRANT ALL ON socbook TO socbook;
+GRANT ALL ON socbook.* TO socbook;
 
 USE socbook;
 
