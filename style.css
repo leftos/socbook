@@ -70,9 +70,14 @@ a:visited
 	padding: 5px 0 0 0;
 }
 
+#content
+{
+	padding: 1em 0;
+}
+
 #content p
 {
-	padding: 0px 0 0 8px;
+	padding: 0px 0 0em 8px;
 }
 
 #footer
