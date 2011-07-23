@@ -31,6 +31,17 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
+		<?php
+			$result = mysql_query('
+						select comments.title, comments.comment, users.username
+						from comments
+						inner join booksncomms on comments.cid=booksncomms.cid
+						inner join users on comments.user=users.uid
+						where booksncomms.bid='.strval($_GET['bid']).'
+						order by users.username;
+			');
+			
+		?>
 	</div>
 	
 	<!-- Below should remain as is on every page -->
