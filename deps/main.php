@@ -12,25 +12,6 @@ if (!isset($session["uid"])) {
 	$session["admin"] = 0;
 }
 
-$lang = $session["lang"];
-include("lang/".$lang.".php");
-
-class _header 
-{
-	public $title = __TITLE;
-	public $js = "";
-	
-	public function settitle($string) {
-		$this->title .= " - ".$string;
-	}
-	
-	public function addjs($string) {
-		$this->js .= "<script type = \"text/javascript\" src=\"".$string."\"></script>\n";
-	}
-}
-
-$header = new _header();
-
 if (!($db = mysql_connect($_db["host"], $_db["username"], $_db["password"])))
 {
 	echo "Unable to connect to database.\n";

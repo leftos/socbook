@@ -5,13 +5,14 @@
 <!-- Page dependent settings such as settitle -->
 <?php 
 	include("deps/main.php");
-	$myheader = new _header;
-	$myheader->settitle(__HOMEPAGE);
+	include("deps/presentation.inc");
+	include("deps/database.inc");
+	$title = settitle(__HOMEPAGE);
 	$thisPage = __HOMEPAGE;
 ?>
 
 <head>
-	<title><?php echo($myheader->title); ?></title>
+	<title><?php echo($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	
 	<!-- JQuery code for tabs -->
@@ -65,69 +66,39 @@
 	
 	<!-- Tab functions -->
 	<?php
-		function prettyprintbookmarks($result)
-		{
-			echo ("<ul>");
-			while ($row = mysql_fetch_array($result))
-			{
-				echo ("<li class=\"bookmark\"><a href=\"viewbookmark.php?bid=".$row[3]."\">".$row[1]."</a> <br /> <span class=\"bookurl\">".$row[0]."</span><br /><span class=\"bookdesc\">" . $row[2]."</span>");
-			}
-			echo ("</ul>");
-		}
 		
-		/** sorttype: datecreated, popularity, rating, visits */
-		function get10of($sorttype)
-		{
-			$result = mysql_query('
-			SELECT bookmarks.url, comments.title, comments.comment, bookmarks.bid
-			FROM bookmarks
-			INNER JOIN booksncomms ON bookmarks.bid = booksncomms.bid
-			INNER JOIN comments ON comments.cid = booksncomms.cid
-			JOIN (SELECT bookmarks.bid
-				  FROM bookmarks
-				  ORDER BY bookmarks.'.$sorttype.' DESC LIMIT 10)
-			AS a ON a.bid = bookmarks.bid
-			JOIN (SELECT comments.cid, MAX(comments.rating) AS maxrating
-			     FROM comments
-			     inner JOIN booksncomms ON comments.cid = booksncomms.cid
-			     GROUP BY booksncomms.bid)
-			AS b ON b.cid = comments.cid
-			WHERE comments.title IS NOT NULL
-			ORDER BY bookmarks.'.$sorttype.' DESC;');
-			return $result;
-		}
 	?>
 	
 	<div class="tab_container">
 		<div id="tabnew" class="tab_content">
 			<p>
 				<?php
-				$result = get10of('datecreated');
-				prettyprintbookmarks($result);
+				$result = populateIndex('datecreated');
+				prettyPrintBookmarks($result);
 				?>
 			</p>
 		</div>
 		<div id="tabpopular" class="tab_content">
 			<p>
 				<?php
-				$result = get10of('popularity');
-				prettyprintbookmarks($result);
+				$result = populateIndex('popularity');
+				prettyPrintBookmarks($result);
 				?>
 			</p>
 		</div>
 		<div id="tabtoprated" class="tab_content">
 			<p>
 				<?php
-				$result = get10of('rating');
-				prettyprintbookmarks($result);
+				$result = populateIndex('rating');
+				prettyPrintBookmarks($result);
 				?>
 			</p>
 		</div>
 		<div id="tabmostvisited" class="tab_content">
 			<p>
 				<?php
-				$result = get10of('visits');
-				prettyprintbookmarks($result);
+				$result = populateIndex('visits');
+				prettyPrintBookmarks($result);
 				?>
 			</p>
 		</div>

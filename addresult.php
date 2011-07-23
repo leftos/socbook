@@ -8,7 +8,7 @@
 	include("deps/presentation.inc");
 	include("deps/database.inc");
 	$title = settitle(__ADDBOOKMARK);
-	$thisPage = __ADDBOOKMARK;
+	$thisPage = '__ADDRESULT';
 ?>
 
 <head>
@@ -32,34 +32,20 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<form action="addresult.php" method="post">
-			<table border="0">
-				<tr>
-					<td>URL</td>
-					<td>
-					<input type="text" name="url" maxlength="40" size="40">
-					</td>
-				</tr>
-				<tr>
-					<td>Title</td>
-					<td>
-					<input type="text" name="title" maxlength="30" size="30">
-					</td>
-				</tr>
-				<tr>
-					<td>Description</td>
-					<td><textarea name="desc" rows="5" cols="30"></textarea></td>
-				</tr>
-				<tr>
-					<td>Tags</td>
-					<td> <input type="text" name="tags" maxlength="30" size="30"
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" value="Add"></td>
-				</tr>
-			</table>
-		</form>
+		<?php
+			$url=$_POST['url'];
+			$title=$_POST['title'];
+			$desc=$_POST['desc'];
+			$tags=$_POST['tags'];
+			
+			if( !$url || !$title || !$desc || !$tags )
+			{
+			echo 'You have not entered all the required details.<br />';
+			exit;
+			}
+			
+			insertBookmark($url, $title, $desc, $tags, 1);
+		?>
 	</div>
 	
 	<!-- Below should remain as is on every page -->

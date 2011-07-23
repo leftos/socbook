@@ -28,4 +28,8 @@ define('__COMMPOSTED', 'δημοσίευσε');
 define('__COMMADDED', 'πρόσθεσε αυτή τη σελίδα στους σελιδοδείκτες του με τίτλο');
 define('__COMMDESC', 'και την περιγραφή');
 
+// database.inc
+/// insertBookmark()
+define('__BOOKMARKEXISTS', 'Έχετε ήδη καταχωρήσει σελιδοδείκτη για αυτή τη σελίδα.')
+
 ?>

@@ -5,13 +5,14 @@
 <!-- Page dependent settings such as settitle -->
 <?php 
 	include("deps/main.php");
-	$myheader = new _header;
-	$myheader->settitle(__ADDBOOKMARK);
-	$thisPage = __ADDBOOKMARK;
+	include("deps/presentation.inc");
+	include("deps/database.inc");
+	$title = settitle(__HOMEPAGE);
+	$thisPage = __HOMEPAGE;
 ?>
 
 <head>
-	<title><?php echo($myheader->title); ?></title>
+	<title><?php echo($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 

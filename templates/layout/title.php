@@ -1,1 +1,1 @@
-<h1><?php echo($myheader->title); ?></h1>
+<h1><?php global $title; echo($title); ?></h1>
