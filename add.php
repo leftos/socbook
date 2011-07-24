@@ -37,7 +37,7 @@
 			<table border="0">
 				<tr>
 					<td>URL</td>
-					<td><input type="text" name="url" maxlength="40" size="40"></td>
+					<td><input type="text" name="url" maxlength="2000" size="40"></td>
 				</tr>
 				<tr>
 					<td>Title</td>
