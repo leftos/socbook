@@ -37,23 +37,13 @@
 			<table border="0">
 				<tr>
 					<td>URL</td>
-<<<<<<< HEAD
 					<td><input type="text" name="url" maxlength="40" size="40"></td>
-				</tr>
-				<tr>
-					<td>Title</td>
-					<td><input type="text" name="title" maxlength="30" size="30"></td>
-=======
-					<td>
-					<input type="text" name="url" maxlength="2000" size="60" />
-					</td>
 				</tr>
 				<tr>
 					<td>Title</td>
 					<td>
 					<input type="text" name="title" maxlength="140" size="60" />
 					</td>
->>>>>>> ddfa53f47e5465cb368ee4ce548fd3dc4380c38b
 				</tr>
 				<tr>
 					<td>Description</td>
@@ -61,18 +51,11 @@
 				</tr>
 				<tr>
 					<td>Tags</td>
-<<<<<<< HEAD
-					<td><input type="text" name="tags" maxlength="30" size="30"</td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" value="Add Bookmark"></td>
-=======
 					<td> <input type="text" name="tags" maxlength="200" size="60" />
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="submit" value=<?=__ADD?>></td>
->>>>>>> ddfa53f47e5465cb368ee4ce548fd3dc4380c38b
 				</tr>
 			</table>
 		</form>
