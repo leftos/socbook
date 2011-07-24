@@ -19,14 +19,6 @@
 -- Table structure for table `bookmarks`
 --
 
-DROP database `socbook`;
-CREATE database `socbook` DEFAULT charset = `utf8`;
-
-grant all on socbook.* to socbook identified by 'socbook';
-
-USE socbook;
-
-
 DROP TABLE IF EXISTS `bookmarks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -36,10 +28,10 @@ CREATE TABLE `bookmarks` (
   `popularity` int(11) NOT NULL DEFAULT '1',
   `rating` int(11) DEFAULT NULL,
   `visits` int(11) DEFAULT '0',
-  `datecreated` date DEFAULT NULL,
+  `datecreated` datetime NOT NULL,
   `reported` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`bid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,7 +40,7 @@ CREATE TABLE `bookmarks` (
 
 LOCK TABLES `bookmarks` WRITE;
 /*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES (1,'www.google.com',1,NULL,0,'2011-07-20',0),(2,'www.facebook.com',1,NULL,0,'2011-07-20',0);
+INSERT INTO `bookmarks` VALUES (1,'www.di.fm',1,0,0,'2011-07-24 16:24:04',0),(2,'www.radioparea.gr',1,0,0,'2011-07-24 16:24:55',0),(3,'www.github.com',1,0,1,'2011-07-24 16:25:21',0);
 /*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -75,7 +67,7 @@ CREATE TABLE `booksncomms` (
 
 LOCK TABLES `booksncomms` WRITE;
 /*!40000 ALTER TABLE `booksncomms` DISABLE KEYS */;
-INSERT INTO `booksncomms` VALUES (1,1),(2,2),(1,3);
+INSERT INTO `booksncomms` VALUES (1,1),(2,2),(3,3);
 /*!40000 ALTER TABLE `booksncomms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +94,7 @@ CREATE TABLE `booksntags` (
 
 LOCK TABLES `booksntags` WRITE;
 /*!40000 ALTER TABLE `booksntags` DISABLE KEYS */;
-INSERT INTO `booksntags` VALUES (1,1),(2,2);
+INSERT INTO `booksntags` VALUES (1,1),(2,1),(1,2),(2,2),(1,3),(1,4),(1,5),(1,6),(1,7),(2,8),(2,9),(3,10),(3,11),(3,12);
 /*!40000 ALTER TABLE `booksntags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +110,7 @@ CREATE TABLE `comments` (
   `title` varchar(140) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comment` text COLLATE utf8_unicode_ci,
   `user` int(11) NOT NULL,
-  `dateposted` date NOT NULL,
+  `dateposted` datetime NOT NULL,
   `rating` int(11) DEFAULT NULL,
   PRIMARY KEY (`cid`),
   KEY `user` (`user`),
@@ -132,7 +124,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,'My Favorite Search Engine','Google, what else is there to say?',1,'2011-07-20',6),(2,'Facebook','Just another social network.',2,'2011-07-20',7),(3,'Google rocks!','',2,'2011-07-21',NULL);
+INSERT INTO `comments` VALUES (1,'Digitally Imported (di.fm)','Web radio Î¼Îµ Î·Î»ÎµÎºÏ„ÏÎ¿Î½Î¹ÎºÎ® Î¼Î¿Ï…ÏƒÎ¹ÎºÎ®.',1,'2011-07-24 16:24:04',0),(2,'Radioparea.gr Web Radio','Î†Î»Î»Î¿ Î­Î½Î± web radio.',1,'2011-07-24 16:24:55',0),(3,'GitHub, source control','Î Î»Î±Ï„Ï†ÏŒÏÎ¼Î± ÎµÎ»Î­Î³Ï‡Î¿Ï… Ï€Î·Î³Î±Î¯Î¿Ï… ÎºÏŽÎ´Î¹ÎºÎ± ÎºÎ±Î¹ ÏƒÏ…Î½ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚',1,'2011-07-24 16:25:21',0);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +140,7 @@ CREATE TABLE `tagcloud` (
   `tag` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `popularity` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +149,7 @@ CREATE TABLE `tagcloud` (
 
 LOCK TABLES `tagcloud` WRITE;
 /*!40000 ALTER TABLE `tagcloud` DISABLE KEYS */;
-INSERT INTO `tagcloud` VALUES (1,'search engine',1),(2,'social network',1);
+INSERT INTO `tagcloud` VALUES (1,'radio',2),(2,'music',2),(3,'streaming',1),(4,'electronic',1),(5,'trance',1),(6,'techno',1),(7,'house',1),(8,'mainsteam',1),(9,'web',1),(10,'source',1),(11,'control',1),(12,'github',1);
 /*!40000 ALTER TABLE `tagcloud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,4 +189,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-22 23:04:35
+-- Dump completed on 2011-07-24 19:25:55

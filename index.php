@@ -54,8 +54,10 @@
 	
 	<div id="navigation">
 		<?php include('templates/layout/navigation.php'); ?>
+		<?php include('templates/tagcloud.php'); ?>
 	</div>
 	<!-- Above should remain as is on every page -->
+	
 	
 	<ul class="tabs">
 		<li><a href="#tabnew"><?php echo (__NEWESTTAB); ?></a></li>

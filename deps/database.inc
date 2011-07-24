@@ -225,7 +225,7 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	$result = $db->query("select bid from bookmarks where url='".$url."'");
 	if ($result->num_rows == 0)
 	{
-		$result = $db->query("insert into bookmarks values (NULL, '".$url."', 1, 0, 0, '".date('Y-m-d')."', 0)");
+		$result = $db->query("insert into bookmarks values (NULL, '".$url."', 1, 0, 0, '".date('Y-m-d H:i:s')."', 0)");
 		//echo ("insert into bookmarks values (NULL, '".$url."', 1, 0, 0, '".date('Y-m-d')."', 0)\n");
 		//echo ($db->error);
 		$bid = $db->insert_id;
@@ -252,7 +252,7 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	}
 	
 	// Add comment and update booksncomms
-	$result = $db->query("insert into comments values (NULL, '".$title."', '".$desc."', ".$uid.", '".date('Y-m-d')."', 0)");
+	$result = $db->query("insert into comments values (NULL, '".$title."', '".$desc."', ".$uid.", '".date('Y-m-d H:i:s')."', 0)");
 	$cid = $db->insert_id;
 	$result = $db->query("insert into booksncomms values (".$bid.",".$cid.")");
 		
