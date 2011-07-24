@@ -290,7 +290,7 @@ function populateIndex($sorttype)
 	}
 	
 	$result = $db->query('
-	SELECT bookmarks.url, comments.title, comments.comment, bookmarks.bid
+	SELECT bookmarks.url, comments.title, comments.comment, bookmarks.bid, bookmarks.'.$sorttype.'
 	FROM bookmarks
 	INNER JOIN booksncomms ON bookmarks.bid = booksncomms.bid
 	INNER JOIN comments ON comments.cid = booksncomms.cid
