@@ -85,9 +85,9 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		
+		<? // http://<?php echo($bk->getUrl()); ?>
 		<h2><?php echo($bk->getTitle()); ?></h2>
-		<p><a href="http://<?php echo($bk->getUrl()); ?>"><?php echo($bk->getUrl()); ?></a></p>
+		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=$bk->getUrl()?></a></p>
 		<p><?=__DESCRIPTION?>: <br /><?=$bk->getDesc() ?></p>
 		<p>
 			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" id="plusOneLink"><img src="images/plus-8.png" /></a>&nbsp;<a href="#" id="minusOneLink"><img src="images/minus-8.png" /></a>
