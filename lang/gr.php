@@ -32,6 +32,9 @@ define('__TAGS', 'Ετικέτες');
 
 // database.inc
 /// insertBookmark()
-define('__BOOKMARKEXISTS', 'Έχετε ήδη καταχωρήσει σελιδοδείκτη για αυτή τη σελίδα.')
+define('__BOOKMARKEXISTS', 'Έχετε ήδη καταχωρήσει σελιδοδείκτη για αυτή τη σελίδα.');
+
+// registration.php
+define('__REGISTRATION', 'Εγγραφή');
 
 ?>
