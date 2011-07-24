@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<!-- Page dependent settings such as settitle -->
+<?php 
+	include("deps/main.php");
+	include("deps/presentation.inc");
+	include("deps/database.inc");
+	$title = settitle(__REGISTRATION);
+	$thisPage = __REGISTRATION;
+?>
+<head>
+	<title><?php echo($title); ?></title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script  type="text/javascript">
+	function validateForm()
+	{
+		var username=document.forms["register"]["username"].value
+		if (username==null || username=="")
+  		{
+  			alert("Username must be filled out");
+  			return false;
+  		}
+		var email=document.forms["register"]["email"].value
+		var atpos=email.indexOf("@");
+		var dotpos=email.lastIndexOf(".");
+		if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+  		{
+  			alert("Enter a valid e-mail address");
+  			return false;
+  		}
+  		var password=document.forms["register"]["password"].value
+  		if (password==null || password=="")
+  		{
+  			alert("Password must be filled out");
+  			return false;
+  		}
+	}
+	</script>
+</head>
+
+<body>
+	<!-- Below should remain as is on every page -->
+	<div id="title">
+		<?php include('templates/layout/title.php'); ?>
+	</div>
+	
+	<div id="language">
+		<?php include('templates/layout/language.php'); ?>
+	</div>
+	
+	<div id="navigation">
+		<?php include('templates/layout/navigation.php'); ?>
+	</div>
+	<!-- Above should remain as is on every page -->
+	
+	<div id="content">
+		<form id='register' action='register.php' onsubmit="return validateForm()" method='post' accept-charset='UTF-8'>
+			<table border="0">
+				<tr>
+					<td>Username</td>
+					<td>
+						<input type="text" name="username" id="username" maxlength="50" size="30">
+					</td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td>
+						<input type="text" name="email" id="email" maxlength="50" size="30">
+					</td>
+				</tr>
+				<tr>
+					<td>Password</td>
+					<td>
+						<input type="password" name="password" id="password" maxlength="50" size="30">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" name="Register" value="Register"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<!-- Below should remain as is on every page -->
+	<div id="footer">
+		<?php include('templates/layout/footer.php'); ?>
+	</div>
+	<!-- Above should remain as is on every page -->
+</body>
+
+</html>
