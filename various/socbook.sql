@@ -31,7 +31,7 @@ CREATE TABLE `bookmarks` (
   `datecreated` datetime NOT NULL,
   `reported` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`bid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `bookmarks` (
 
 LOCK TABLES `bookmarks` WRITE;
 /*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES (1,'www.di.fm',1,0,0,'2011-07-24 16:24:04',0),(2,'www.radioparea.gr',1,0,0,'2011-07-24 16:24:55',0),(3,'www.github.com',1,0,1,'2011-07-24 16:25:21',0);
+INSERT INTO `bookmarks` VALUES (1,'www.di.fm',1,0,0,'2011-07-24 16:24:04',0),(2,'www.radioparea.gr',1,0,0,'2011-07-24 16:24:55',0),(3,'www.github.com',1,0,1,'2011-07-24 16:25:21',0),(4,'www.twitter.com',1,0,0,'2011-07-24 16:29:47',0),(5,'www.facebook.com',1,0,0,'2011-07-24 16:34:14',0);
 /*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +67,7 @@ CREATE TABLE `booksncomms` (
 
 LOCK TABLES `booksncomms` WRITE;
 /*!40000 ALTER TABLE `booksncomms` DISABLE KEYS */;
-INSERT INTO `booksncomms` VALUES (1,1),(2,2),(3,3);
+INSERT INTO `booksncomms` VALUES (1,1),(2,2),(3,3),(4,4),(5,5);
 /*!40000 ALTER TABLE `booksncomms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +94,7 @@ CREATE TABLE `booksntags` (
 
 LOCK TABLES `booksntags` WRITE;
 /*!40000 ALTER TABLE `booksntags` DISABLE KEYS */;
-INSERT INTO `booksntags` VALUES (1,1),(2,1),(1,2),(2,2),(1,3),(1,4),(1,5),(1,6),(1,7),(2,8),(2,9),(3,10),(3,11),(3,12);
+INSERT INTO `booksntags` VALUES (1,1),(2,1),(1,2),(2,2),(5,2),(1,3),(1,4),(1,5),(1,6),(1,7),(2,8),(2,9),(3,10),(3,11),(3,12),(4,13),(5,13),(4,14),(5,14),(4,15),(4,16),(5,17),(5,18),(5,19),(5,20),(5,21);
 /*!40000 ALTER TABLE `booksntags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +115,7 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`cid`),
   KEY `user` (`user`),
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,'Digitally Imported (di.fm)','Web radio Î¼Îµ Î·Î»ÎµÎºÏ„ÏÎ¿Î½Î¹ÎºÎ® Î¼Î¿Ï…ÏƒÎ¹ÎºÎ®.',1,'2011-07-24 16:24:04',0),(2,'Radioparea.gr Web Radio','Î†Î»Î»Î¿ Î­Î½Î± web radio.',1,'2011-07-24 16:24:55',0),(3,'GitHub, source control','Î Î»Î±Ï„Ï†ÏŒÏÎ¼Î± ÎµÎ»Î­Î³Ï‡Î¿Ï… Ï€Î·Î³Î±Î¯Î¿Ï… ÎºÏŽÎ´Î¹ÎºÎ± ÎºÎ±Î¹ ÏƒÏ…Î½ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚',1,'2011-07-24 16:25:21',0);
+INSERT INTO `comments` VALUES (1,'Digitally Imported (di.fm)','Web radio Î¼Îµ Î·Î»ÎµÎºÏ„ÏÎ¿Î½Î¹ÎºÎ® Î¼Î¿Ï…ÏƒÎ¹ÎºÎ®.',1,'2011-07-24 16:24:04',0),(2,'Radioparea.gr Web Radio','Î†Î»Î»Î¿ Î­Î½Î± web radio.',1,'2011-07-24 16:24:55',0),(3,'GitHub, source control','Î Î»Î±Ï„Ï†ÏŒÏÎ¼Î± ÎµÎ»Î­Î³Ï‡Î¿Ï… Ï€Î·Î³Î±Î¯Î¿Ï… ÎºÏŽÎ´Î¹ÎºÎ± ÎºÎ±Î¹ ÏƒÏ…Î½ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚',1,'2011-07-24 16:25:21',0),(4,'Twitter','Î¥Ï€Î·ÏÎµÏƒÎ¯Î± ÎºÎ¿Î¹Î½Ï‰Î½Î¹ÎºÎ®Ï‚ Î´Î¹ÎºÏ„ÏÏ‰ÏƒÎ·Ï‚ Î¼Îµ ÏƒÏÎ½Ï„Î¿Î¼Î± Î¼Î·Î½ÏÎ¼Î±Ï„Î±, Î­Ï‰Ï‚ 140 Ï‡Î±ÏÎ±ÎºÏ„Î®ÏÎµÏ‚.',1,'2011-07-24 16:29:47',0),(5,'Facebook','Î¤Î¿ social network Ï€Î¿Ï… Î­ÎºÎ±Î½Îµ Î¸ÏÎ±ÏÏƒÎ· ÎºÎ±Î¹ Ï€Î»Î­Î¿Î½ Ï‡ÏÎ·ÏƒÎ¹Î¼Î¿Ï€Î¿Î¹ÎµÎ¯Ï„Î±Î¹ Î±Ï€ÏŒ ÎµÎºÎ±Ï„Î¿Î¼Î¼ÏÏÎ¹Î± Ï‡ÏÎ®ÏƒÏ„ÎµÏ‚ Î±Î½Î¬ Ï„Î¿Î½ ÎºÏŒÏƒÎ¼Î¿, Î³Î¹Î± Î½Î± Î¼Î¿Î¹ÏÎ±ÏƒÏ„Î¿ÏÎ½ Ï†Ï‰Ï„Î¿Î³ÏÎ±Ï†Î¯ÎµÏ‚, Î¼Î¿Ï…ÏƒÎ¹ÎºÎ® ÎºÎ±Î¹ Î½Î­Î±.',1,'2011-07-24 16:34:14',0);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +140,7 @@ CREATE TABLE `tagcloud` (
   `tag` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `popularity` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +149,7 @@ CREATE TABLE `tagcloud` (
 
 LOCK TABLES `tagcloud` WRITE;
 /*!40000 ALTER TABLE `tagcloud` DISABLE KEYS */;
-INSERT INTO `tagcloud` VALUES (1,'radio',2),(2,'music',2),(3,'streaming',1),(4,'electronic',1),(5,'trance',1),(6,'techno',1),(7,'house',1),(8,'mainsteam',1),(9,'web',1),(10,'source',1),(11,'control',1),(12,'github',1);
+INSERT INTO `tagcloud` VALUES (1,'radio',2),(2,'music',3),(3,'streaming',1),(4,'electronic',1),(5,'trance',1),(6,'techno',1),(7,'house',1),(8,'mainsteam',1),(9,'web',1),(10,'source',1),(11,'control',1),(12,'github',1),(13,'social',2),(14,'network',2),(15,'twitter',1),(16,'tweet',1),(17,'facebook',1),(18,'poke',1),(19,'video',1),(20,'share',1),(21,'photos',1);
 /*!40000 ALTER TABLE `tagcloud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,4 +189,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-24 19:25:55
+-- Dump completed on 2011-07-24 19:53:54
