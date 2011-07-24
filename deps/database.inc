@@ -226,8 +226,8 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	if ($result->num_rows == 0)
 	{
 		$result = $db->query("insert into bookmarks values (NULL, '".$url."', 1, 0, 0, '".date('Y-m-d')."', 0)");
-		echo ("insert into bookmarks values (NULL, '".$url."', 1, 0, 0, '".date('Y-m-d')."', 0)\n");
-		echo ($db->error);
+		//echo ("insert into bookmarks values (NULL, '".$url."', 1, 0, 0, '".date('Y-m-d')."', 0)\n");
+		//echo ($db->error);
 		$bid = $db->insert_id;
 	}
 	else
@@ -277,6 +277,8 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	}
 	
 	$db->close();
+	
+	return $bid;
 }
 
 /** sorttype: datecreated, popularity, rating, visits */
@@ -431,6 +433,25 @@ function minusone($bid)
 	$result = $db->query('update bookmarks set rating=rating-1 where bid='.$bid) or die($db->error);
 							
 	$db->close();
+}
+
+function visit($bid)
+{
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+	
+	$result = $db->query('update bookmarks set visits=visits+1 where bid='.$bid) or die ($db->error);
+
+	$result = $db->query('select url from bookmarks where bid='.$bid) or die($db->error);
+	$url = $result->fetch_field();
+							
+	$db->close();
+	header("Location: ".$url);
+	exit;
 }
 
 ?>

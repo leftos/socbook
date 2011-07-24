@@ -37,26 +37,26 @@
 				<tr>
 					<td>URL</td>
 					<td>
-					<input type="text" name="url" maxlength="40" size="40">
+					<input type="text" name="url" maxlength="2000" size="60" />
 					</td>
 				</tr>
 				<tr>
 					<td>Title</td>
 					<td>
-					<input type="text" name="title" maxlength="30" size="30">
+					<input type="text" name="title" maxlength="140" size="60" />
 					</td>
 				</tr>
 				<tr>
 					<td>Description</td>
-					<td><textarea name="desc" rows="5" cols="30"></textarea></td>
+					<td><textarea name="desc" rows="8" cols="40" /></textarea></td>
 				</tr>
 				<tr>
 					<td>Tags</td>
-					<td> <input type="text" name="tags" maxlength="30" size="30"
+					<td> <input type="text" name="tags" maxlength="200" size="60" />
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" value="Add"></td>
+					<td colspan="2"><input type="submit" value=<?=__ADD?>></td>
 				</tr>
 			</table>
 		</form>
