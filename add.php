@@ -14,6 +14,7 @@
 <head>
 	<title><?php echo($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script type="text/javascript" src="deps/validations.js"></script>
 </head>
 
 <body>
@@ -32,19 +33,15 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<form action="addresult.php" method="post">
+		<form id='addbookmark' action='addresult.php' onsubmit="return validateAddBookmarkForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
 				<tr>
 					<td>URL</td>
-					<td>
-					<input type="text" name="url" maxlength="40" size="40">
-					</td>
+					<td><input type="text" name="url" maxlength="40" size="40"></td>
 				</tr>
 				<tr>
 					<td>Title</td>
-					<td>
-					<input type="text" name="title" maxlength="30" size="30">
-					</td>
+					<td><input type="text" name="title" maxlength="30" size="30"></td>
 				</tr>
 				<tr>
 					<td>Description</td>
@@ -52,11 +49,10 @@
 				</tr>
 				<tr>
 					<td>Tags</td>
-					<td> <input type="text" name="tags" maxlength="30" size="30"
-					</td>
+					<td><input type="text" name="tags" maxlength="30" size="30"</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" value="Add"></td>
+					<td colspan="2"><input type="submit" value="Add Bookmark"></td>
 				</tr>
 			</table>
 		</form>
