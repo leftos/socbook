@@ -42,6 +42,7 @@
 	<title><?php echo($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	
+	<!-- Ajax code to increase/decrease rating and refresh -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript">
       jQuery(document).ready(function() {
@@ -85,8 +86,16 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<? // http://<?php echo($bk->getUrl()); ?>
-		<h2><?php echo($bk->getTitle()); ?></h2>
+		<table>
+			<tr>
+				<td width=80%>
+					<h2><?php echo($bk->getTitle()); ?></h2>
+				</td>
+				<td class="report" width=20%>
+					<form action="report.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="submit" align="right" value="<?=__REPORT?>" /></form>
+				</td>
+			</tr>
+		</table>
 		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=$bk->getUrl()?></a></p>
 		<p><?=__DESCRIPTION?>: <br /><?=$bk->getDesc() ?></p>
 		<p>

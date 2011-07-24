@@ -26,6 +26,11 @@ a:visited
 	color: blue;
 }
 
+.report
+{
+	text-align: right;
+}
+
 .bookurl
 {
 	font-style: italic;
