@@ -28,6 +28,7 @@ define('__COMMPOSTED', 'δημοσίευσε');
 define('__COMMADDED', 'πρόσθεσε αυτή τη σελίδα στους σελιδοδείκτες του με τίτλο');
 define('__COMMDESC', 'και την περιγραφή');
 define('__DATECREATED', 'Ημερομηνία δημιουργίας');
+define('__TAGS', 'Ετικέτες');
 
 // database.inc
 /// insertBookmark()

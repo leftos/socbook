@@ -5,16 +5,43 @@ class bookmark
 	private $url = null;
 	private $title = null;
 	private $desc = null;
-	private $tags = null;
+	private $tags = array();
 	private $dateCreated = null;
 	private $rating = null;
-	var $comments = array();
+	private $comments = array();
+	private $popularity = null;
+	private $visits = null;
+	private $reported = null;
 	
 	function __construct($bid)
 	{
 		$this->bid = $bid;
 	}
 	
+	public function getPopularity(){
+		return $this->popularity;
+	}
+
+	public function setPopularity($popularity){
+		$this->popularity = $popularity;
+	}
+
+	public function getVisits(){
+		return $this->visits;
+	}
+
+	public function setVisits($visits){
+		$this->visits = $visits;
+	}
+
+	public function getReported(){
+		return $this->reported;
+	}
+
+	public function setReported($reported){
+		$this->reported = $reported;
+	}
+
 	public function getBid(){
 		return $this->bid;
 	}
@@ -43,12 +70,12 @@ class bookmark
 		$this->desc = $desc;
 	}
 
-	public function getTags(){
-		return $this->tags;
+	public function getTag($id){
+		return $this->tags[$id];
 	}
 
-	public function setTags($tags){
-		$this->tags = $tags;
+	public function setTag($id, $tag){
+		$this->tags[$id] = $tag;
 	}
 
 	public function getUid(){
@@ -73,6 +100,22 @@ class bookmark
 
 	public function setRating($rating){
 		$this->rating = $rating;
+	}
+	
+	public function getComment($id){
+		return $this->comments[$id];
+	}
+	
+	public function setComment($id, $comment){
+		$this->comments[$id] = $comment;
+	}
+	
+	public function getCommentCount(){
+		return count($this->comments);
+	}
+	
+	public function getTagCount(){
+		return count($this->tags);
 	}
 }
 
@@ -122,6 +165,38 @@ class comment
 
 	public function setDatePosted($datePosted){
 		$this->datePosted = $datePosted;
+	}
+
+}
+
+class tag
+{
+	private $tid = null;
+	private $tagw = null;
+	private $popularity = null;
+
+	public function getTid(){
+		return $this->tid;
+	}
+
+	public function setTid($tid){
+		$this->tid = $tid;
+	}
+
+	public function getTagW(){
+		return $this->tagw;
+	}
+
+	public function setTagW($tag){
+		$this->tagw = $tag;
+	}
+
+	public function getPopularity(){
+		return $this->popularity;
+	}
+
+	public function setPopularity($popularity){
+		$this->popularity = $popularity;
 	}
 
 }
@@ -262,6 +337,9 @@ function fetchBookmark($bk)
 	$bk->setDateCreated($mybk->datecreated);
 	$bk->setRating($mybk->rating);
 	
+	fetchComments($bk);
+	fetchTags($bk);
+	
 	return $bk;
 	
 	$db->close();
@@ -296,8 +374,62 @@ function fetchComments($bk)
 		$curc->setDesc($cur->comment);
 		$curc->setUsername($cur->username);
 		$curc->setDatePosted($cur->dateposted);
-		$bk->comments[$i++] = $curc;
+		$bk->setComment($i++, $curc);
 	}
+	$db->close();
+}
+
+function fetchTags($bk)
+{
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+
+	$result = $db->query('select tagcloud.tid, tag, popularity
+							from tagcloud
+							inner join booksntags on tagcloud.tid=booksntags.tid
+							where booksntags.bid='.$bk->getBid()) or die($db->error);
+	
+	$i = 0;
+	
+	while ($cur = $result->fetch_object())
+	{
+		$curt = new tag();
+		$curt->setTid($cur->tid);
+		$curt->setTagW($cur->tag);
+		$curt->setPopularity($cur->popularity);
+		$bk->setTag($i++, $curt);
+	}
+}
+
+function plusone($bid)
+{
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+
+	$result = $db->query('update bookmarks set rating=rating+1 where bid='.$bid) or die($db->error);
+							
+	$db->close();
+}
+
+function minusone($bid)
+{
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+
+	$result = $db->query('update bookmarks set rating=rating-1 where bid='.$bid) or die($db->error);
+							
 	$db->close();
 }
 
