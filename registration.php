@@ -12,31 +12,7 @@
 <head>
 	<title><?php echo($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
-	<script  type="text/javascript">
-	function validateForm()
-	{
-		var username=document.forms["register"]["username"].value
-		if (username==null || username=="")
-  		{
-  			alert("Username must be filled out");
-  			return false;
-  		}
-		var email=document.forms["register"]["email"].value
-		var atpos=email.indexOf("@");
-		var dotpos=email.lastIndexOf(".");
-		if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
-  		{
-  			alert("Enter a valid e-mail address");
-  			return false;
-  		}
-  		var password=document.forms["register"]["password"].value
-  		if (password==null || password=="")
-  		{
-  			alert("Password must be filled out");
-  			return false;
-  		}
-	}
-	</script>
+	<script type="text/javascript" src="deps/validations.js"></script>
 </head>
 
 <body>
@@ -55,7 +31,7 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<form id='register' action='register.php' onsubmit="return validateForm()" method='post' accept-charset='UTF-8'>
+		<form id='register' action='register.php' onsubmit="return validateRegisterForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
 				<tr>
 					<td>Username</td>
