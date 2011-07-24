@@ -9,7 +9,7 @@ function tag_info()
 		exit;
 	}
 	
-	$result = $db->query('SELECT * FROM tagcloud ORDER BY popularity DESC');
+	$result = $db->query('SELECT * FROM tagcloud ORDER BY popularity DESC LIMIT 20');
 	$arr = array();
 	while ($row = $result->fetch_object())
 	{
