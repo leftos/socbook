@@ -64,7 +64,7 @@ function checkIfOtherTitles($bid)
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='.$bid.'
-							and comments.title is not null') or die($db->error);
+							and comments.title!=\'\'') or die($db->error);
 	
 	if ($result->num_rows > 1)
 	{
@@ -87,10 +87,33 @@ function showSuggestedTitles($bid, $uid)
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='.$bid.'
-							and comments.title is not null
+							and comments.title!=\'\'
 							order by comments.rating desc') or die($db->error);
 	
-	$row = $result->fetch_object();
+	addPlusMinus($bid, $db, $result, $uid);
+	$db->close();
+}
+
+function addPlusMinusTitle($bid, $cid, $uid)
+{
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+	// echo $bid.' '.$cid.' '.$uid;
+	$result = $db->query('select comments.title, comments.cid, comments.rating
+							from comments
+							where cid='.$cid) or die($db->error);
+	
+	addPlusMinus($bid, $db, $result, $uid, false);
+	$db->close();
+}
+
+function addPlusMinus($bid, $db, $result, $uid, $skipfirst=true)
+{
+	if ($skipfirst==true) {$row = $result->fetch_object();}
 	while ($row = $result->fetch_object())
 	{
 		echo $row->title.'&nbsp;&nbsp;&nbsp;&nbsp;('.$row->rating.')&nbsp;&nbsp;';
@@ -117,7 +140,6 @@ function showSuggestedTitles($bid, $uid)
 			}
 		}
 	}
-	$db->close();
 }
 
 // Original PHP code by Chirp Internet: www.chirp.com.au 
