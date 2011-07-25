@@ -4,6 +4,7 @@ class bookmark
 	private $bid = null;
 	private $url = null;
 	private $title = null;
+	private $titleCID = null;
 	private $desc = null;
 	private $tags = array();
 	private $dateCreated = null;
@@ -16,6 +17,14 @@ class bookmark
 	function __construct($bid)
 	{
 		$this->bid = $bid;
+	}
+	
+	public function getTitleCID(){
+		return $this->titleCID;
+	}
+
+	public function setTitleCID($titleCID){
+		$this->titleCID = $titleCID;
 	}
 	
 	public function getPopularity(){
@@ -322,15 +331,15 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 		{
 			$result = $db->query("insert into tagcloud values (NULL, '".$tag."', 1)");
 			$tid = $db->insert_id;
+			$result = $db->query("insert into booksntags values (".$bid.",".$tid.",0)");
 		}
 		else
 		{
 			$row = $result->fetch_object();
 			$tid = $row->tid;
-			$result = $db->query("update tagcloud set popularity=popularity+1 where tid=".$tid);
+			$result = $db->query("update tagcloud set popularity=popularity+1 where tid=".$tid) or die($db->error);
+			$result = $db->query("update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid) or die ($db->error);
 		}
-		
-		$result = $db->query("insert into booksntags values (".$bid.",".$tid.")");
 	}
 	
 	$db->close();
@@ -417,7 +426,7 @@ function populateIndex($sorttype)
 	     inner JOIN booksncomms ON comments.cid = booksncomms.cid
 	     GROUP BY booksncomms.bid)
 	AS b ON b.cid = comments.cid
-	WHERE comments.title IS NOT NULL
+	WHERE comments.title!=\'\'
 	ORDER BY bookmarks.'.$sorttype.' DESC;');
 	
 	$db->close();
@@ -425,7 +434,7 @@ function populateIndex($sorttype)
 }
 
 /** Returns a new bookmark() object */
-function fetchBookmark($bk)
+function fetchBookmark($bid)
 {
 	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
 	if( mysqli_connect_errno() )
@@ -433,18 +442,19 @@ function fetchBookmark($bk)
 		echo 'Error: Could not connect to database';
 		exit;
 	}
-	
-	$bid = $bk->getBid();
+
+	$bk = new bookmark($bid);
 	
 	$bookmark = $db->query('select url, rating, datecreated from bookmarks where bid='.$bid.';');
-	$titles = $db->query('select comments.title, comments.comment
+	$titles = $db->query('select comments.title, comments.comment, comments.cid
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
-							where booksncomms.bid='.$bid.' and comments.title is not null
+							where booksncomms.bid='.$bid.' and comments.title!=\'\'
 							order by comments.rating desc limit 1;');
 	
 	$best_title_comment = $titles->fetch_object();
 	$bk->setTitle($best_title_comment->title);
+	$bk->setTitleCID($best_title_comment->cid);
 	$bk->setDesc($best_title_comment->comment);
 	$mybk = $bookmark->fetch_object();
 	$bk->setUrl($mybk->url);
@@ -502,10 +512,11 @@ function fetchTags($bk)
 		exit;
 	}
 
-	$result = $db->query('select tagcloud.tid, tag, popularity
+	$result = $db->query('select tagcloud.tid, tagcloud.tag, booksntags.popularity
 							from tagcloud
 							inner join booksntags on tagcloud.tid=booksntags.tid
-							where booksntags.bid='.$bk->getBid()) or die($db->error);
+							where booksntags.bid='.$bk->getBid().'
+							order by booksntags.popularity desc') or die($db->error);
 	
 	$i = 0;
 	
@@ -612,6 +623,58 @@ function visit($bid)
 	$db->close();
 	header("Location: ".$url);
 	exit;
+}
+
+function userOwnsBookmark($bid, $uid)
+{
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+	
+	$titles = $db->query('select comments.title, comments.comment, comments.cid
+							from comments
+							inner join booksncomms on comments.cid=booksncomms.cid
+							where booksncomms.bid='.$bid.' 
+							and comments.user='.$uid.'
+							and comments.title!=\'\'');
+							
+	$db->close();
+	
+	if ($titles->num_rows !=0)
+	{
+		$row = $titles->fetch_object();
+		return $row->cid;
+	}
+	return 0;
+}
+
+function getComment($cid)
+{
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+	
+	$titles = $db->query('select title, comment, dateposted, rating, username
+							from comments
+							inner join users on users.uid=comments.user
+							where comments.cid='.$cid) or die($db->error);
+							
+	$db->close();
+	
+	$row = $titles->fetch_object();
+	$comm = new comment();
+	$comm->setCid($cid);
+	$comm->setDatePosted($row->dateposted);
+	$comm->setUsername($row->username);
+	$comm->setTitle($row->title);
+	$comm->setDesc($row->comment);
+	return $comm;
 }
 
 ?>

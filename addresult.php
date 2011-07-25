@@ -45,7 +45,7 @@
 				exit;
 			}
 			
-			$bid = insertBookmark($url, $title, $desc, $tags, 1);
+			$bid = insertBookmark($url, $title, $desc, $tags, $session['uid']);
 			
 			echo ('<p>'.__BOOKMARKADDED.'</p>');
 			echo ('<p><a href="viewbookmark.php?bid='.$bid.'">'.__VISITBOOKMARK.'</a></p>');

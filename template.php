@@ -4,9 +4,9 @@
 
 <!-- Page dependent settings such as settitle -->
 <?php 
-	include("deps/main.php");
-	include("deps/presentation.inc");
-	include("deps/database.inc");
+	include_once("deps/main.php");
+	include_once("deps/presentation.inc");
+	include_once("deps/database.inc");
 	$title = settitle(__HOMEPAGE);
 	$thisPage = __HOMEPAGE;
 ?>

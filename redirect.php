@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['action']))
 {
-	if ($_GET['action'] == 'leave')
+	if (($_GET['action'] == 'leave') || ($_GET['action'] == 'leavehttps'))
 	{
 		@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
 		if( mysqli_connect_errno() )
@@ -18,7 +18,13 @@ if (isset($_GET['action']))
 		$murl = $result->fetch_object();
 								
 		$db->close();
-		header("Location: http://".$murl->url);
+		
+		if ($_GET['action'] == 'leave')
+		{
+			header("Location: http://".$murl->url);
+		} else {
+			header("Location: https://".$murl->url);
+		}
 		exit;
 	}
 }

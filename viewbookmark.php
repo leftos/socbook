@@ -4,9 +4,9 @@
 
 <!-- Page dependent settings such as settitle -->
 <?php 
-	include("deps/main.php");
-	include("deps/presentation.inc");
-	include("deps/database.inc");
+	include_once("deps/main.php");
+	include_once("deps/presentation.inc");
+	include_once("deps/database.inc");
 	$title = settitle(__VIEWBOOKMARK);
 	$thisPage = __VIEWBOOKMARK;
 ?>
@@ -25,8 +25,7 @@
 	{
 		$bid = $_GET['bid'];
 	}			
-	$bk = new bookmark($bid);
-	fetchBookmark($bk);
+	$bk = fetchBookmark($bid);
 	
 	if (isset($_POST['action']))
 	{
@@ -100,9 +99,13 @@
 		<table>
 			<tr>
 				<td width=80%>
-					<h2><?php echo($bk->getTitle()); ?></h2>
+					<h2><?php addPlusMinusTitle($bid, $bk->getTitleCID(), $session['uid']); ?></h2>
 				</td>
 				<td class="report" width=20%>
+					<?php
+					if ($cid = userOwnsBookmark($bid, $session['uid'])) { ?>
+					<form action="edit.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/edit.png" /></form>
+					<? } ?>
 					<form action="report.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="submit" align="right" value="<?=__REPORT?>" /></form>
 				</td>
 			</tr>
@@ -116,7 +119,8 @@
 				</td>
 			</tr>
 		</table>
-		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=$bk->getUrl()?></a></p>
+		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=myTruncate($bk->getUrl(), 150, "/") ?></a>&nbsp;
+			<a href="redirect.php?action=leavehttps&bid=<?=$bk->getBid()?>"><img src="images/lock_small.png" alt="<?=__VISITHTTPS?>" title="<?=__VISITHTTPS?>" /></a></p>
 		<p><?=__DESCRIPTION?>: <br /><?=$bk->getDesc() ?></p>
 		<p>
 			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<? showValidRatingButtons($bid, $session['uid']); ?>
@@ -127,7 +131,7 @@
 			{
 				if ($i > 0) echo (', ');
 				$tag = $bk->getTag($i);
-				echo "<a href=\"search.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a>";
+				echo "<a href=\"search.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
 			}
 			?> 
 		</p>
