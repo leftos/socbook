@@ -59,11 +59,13 @@ td
 
 #hiddenDivQ a
 {
+	margin: 0 10em 0 8px;
 	font-size: 0.9em;
 }
 
 .hiddenDivA
 {
+	margin: 0 10em 0 8px;
 	padding: 5px;
 	font-size: 0.9em;
 	background:#CFE3FF;

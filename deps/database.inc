@@ -126,6 +126,52 @@ class bookmark
 	public function getTagCount(){
 		return count($this->tags);
 	}
+	
+	/** mode: 'ids', 'names', 'pretty' */
+	public function getOwnersList($mode='pretty')
+	{
+		@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+		if( mysqli_connect_errno() )
+		{
+			echo 'Error: Could not connect to database';
+			exit;
+		}
+		
+		$result = $db->query("select username, uid
+								from users
+								inner join comments on comments.user=users.uid
+								inner join booksncomms on booksncomms.cid=comments.cid
+								where booksncomms.bid=".$this->bid."
+								and comments.title!=''
+								order by users.username");
+		
+		$owners = array();
+		$ownersid = array();
+		$i = 0;
+		while ($row = $result->fetch_object())
+		{
+			$owners[$i++] = $row->username;
+			$ownersid[$i++] = $row->uid;
+		}
+		
+		if ($mode == 'ids') return $ownersid;
+		else if ($mode == 'names') return $owners;
+		
+		$owners = array_reverse($owners, true);
+		$ownersid = array_reverse($ownersid, true);
+		$ownersStr = '';
+		$i = 0;
+		while($item = array_pop($owners))
+		{
+			if ($i > 0) {$ownersStr .= ", ";}
+			$itemid = array_pop($ownersid);
+			$ownersStr .= "<a href=\"/profile.php?uid=".$itemid."\">".$item."</a>";
+			$i++;
+		}
+		
+		$db->close();
+		return $ownersStr;
+	}
 }
 
 class comment

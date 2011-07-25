@@ -51,6 +51,7 @@ define('__MINUSONEONTITLE', "-1 σε αυτόν τον τίτλο");
 define('__PLUSONE', '+1 σε αυτό το σελιδοδείκτη');
 define('__MINUSONE', '-1 σε αυτό το σελιδοδείκτη');
 define('__OWN', 'Έχετε καταχωρήσει αυτό το σελιδοδείκτη');
+define('__OWNERS', 'Χρήστες');
 
 // database.inc
 /// insertBookmark()

@@ -17,13 +17,15 @@ function prettyPrintBookmarks($result)
 	echo ("<ul>");
 	while ($row = $result->fetch_object())
 	{
+		$image = "";
 		if ($own=userOwnsBookmark($row->bid, $session['uid']))
 		{
 			$comm = getComment($own);
 			$row->title = $comm->getTitle();
 			$row->desc = $comm->getDesc();
+			$image = "<img src=\"/images/star_16.png\" title=\"".__OWN."\" />";
 		}
-		echo ("<li class=\"bookmark\"><a href=\"viewbookmark.php?bid=".$row->bid."\">".$row->title."</a> <br /> <span class=\"bookurl\">".$row->url."</span><br /><span class=\"bookdesc\">(".$row->info.") " . $row->comment."</span>");
+		echo ("<li class=\"bookmark\"><a href=\"viewbookmark.php?bid=".$row->bid."\">".$row->title."</a>&nbsp;&nbsp;&nbsp;".$image." <br /> <span class=\"bookurl\">".$row->url."</span><br /><span class=\"bookdesc\">(".$row->info.") " . $row->comment."</span>");
 	}
 	echo ("</ul>");
 }

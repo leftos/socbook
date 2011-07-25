@@ -125,16 +125,15 @@
 					<form action="report.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="image" src="images/speaker_16.png" title="<?=__REPORT?>" /></form>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="3">
-					<div id="hiddenDivQ">
-						<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
-						<a onclick="javascript:ShowHide('HiddenDiv_1')" href="javascript:;"><? checkIfOtherTitles($bid)?></a>
-					</div>
-					<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? $own=userOwnsBookmark($bid, $session['uid']); showSuggestedTitles($bid, $session['uid'], $own); ?></div>					
-				</td>
-			</tr>
 		</table>
+			
+		<div id="hiddenDivQ">
+			<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
+			<a onclick="javascript:ShowHide('HiddenDiv_1')" href="javascript:;"><? checkIfOtherTitles($bid)?></a>
+		</div>
+		<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? $own=userOwnsBookmark($bid, $session['uid']); showSuggestedTitles($bid, $session['uid'], $own); ?></div>					
+	
+
 		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=myTruncate($bk->getUrl(), 150, "/") ?></a>&nbsp;
 			<a href="redirect.php?action=leavehttps&bid=<?=$bk->getBid()?>"><img src="images/lock_small.png" alt="<?=__VISITHTTPS?>" title="<?=__VISITHTTPS?>" /></a></p>
 		<p><?=__DESCRIPTION?>: <br /><? if ($cid==0) {echo $bk->getDesc();} else {$comm=getComment($cid); echo $comm->getDesc();} ?></p>
@@ -169,7 +168,13 @@
 			<? } ?>
 		</p>
 		<p><?=__DATECREATED?>: <?=$bk->getDateCreated() ?></p>
-		<p>&nbsp;</p>
+		<div id="hiddenDivQ">
+			<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
+			<a onclick="javascript:ShowHide('HiddenDiv_5')" href="javascript:;"><?=__OWNERS?> (<?=count($bk->getOwnersList('ids'))?>)</a>
+		</div>
+		<div class="hiddenDivA" id="HiddenDiv_5" style="DISPLAY: none" >
+			<?=$bk->getOwnersList(); ?>
+		</div>
 		<p></p>
 		<div id="hiddenDivQ">
 			<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
