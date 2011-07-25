@@ -208,7 +208,47 @@ class user
 	private $password=null;
 	private $email=null;
 	private $class=null;
-	/* placeholder for now */
+	
+	public function getUid(){
+		return $this->uid;
+	}
+	
+	public function setUid($uid){
+		$this->uid = $uid;
+	}
+	
+	public function getUsername(){
+		return $this->username;
+	}
+	
+	public function setUsername($username){
+		$this->username = $username;
+	}
+	
+	public function getPassword(){
+		return $this->password;
+	}
+	
+	public function setPassword($password){
+		$hashed_password = hash('sha256',$password);
+		$this->password = $hashed_password;
+	}
+	
+	public function getEmail(){
+		return $this->email;
+	}
+	
+	public function setEmail($email){
+		$this->email = $email;
+	}
+	
+	public function getClass(){
+		return $this->class;
+	}
+	/** this needs checking for sessioning */
+	public function setClass($class='guest'){
+		$this->class = $class;
+	}
 }
 
 
@@ -290,6 +330,61 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	$db->close();
 	
 	return $bid;
+}
+
+function insertUser( $username, $email, $password )
+{
+	if( !get_magic_quotes_gpc() )
+	{
+		$username = addslashes($username);
+		$email = addslashes($email);
+		$password = addslashes($password);
+	}
+	
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+	
+	$check_db_email = $db->query("select uid from users where users.email='".$email."'");
+	if ($check_db_email->num_rows == 0)
+	{
+		$check_db_username = $db->query("select uid from users where users.username='".$username."'");
+		if ($check_db_username->num_rows == 0)
+		{
+			$new_user = new user;
+			$new_user->setUsername($username);
+			$new_user->setEmail($email);
+			$new_user->setPassword($password);
+			$new_user->setClass('user');
+			
+			$insert_db_user = $db->query("insert into users values (NULL, '".$new_user->getUsername()."', '".$new_user->getPassword()."', '".$new_user->getEmail()."', '".$new_user->getClass()."')");
+			$uid = $db->insert_id;
+		}
+		else 
+		{
+			$check_db_username->free();
+			$check_db_email->free();
+			$db->close();
+			echo (__USEREXISTS);
+			exit;
+		} 
+	}
+	else
+	{
+		$check_db_email->free();
+		$db->close();
+		echo (__EMAILEXISTS);
+		exit;
+	}
+	
+	$check_db_email->free();
+	$check_db_username->free();
+	$db->close();
+	
+	return $uid;
 }
 
 /** sorttype: datecreated, popularity, rating, visits */

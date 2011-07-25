@@ -7,8 +7,8 @@
 	include("deps/main.php");
 	include("deps/presentation.inc");
 	include("deps/database.inc");
-	$title = settitle(__ADDBOOKMARK);
-	$thisPage = '__ADDRESULT';
+	$title = settitle(__REGISTRATION);
+	$thisPage = '__REGISTER';
 ?>
 
 <head>
@@ -33,23 +33,17 @@
 	
 	<div id="content">
 		<?php
-			$url=$_POST['url'];
-			$title=$_POST['title'];
-			$desc=$_POST['desc'];
-			$tags=$_POST['tags'];
+			$username=$_POST['username'];
+			$email=$_POST['email'];
+			$password=$_POST['password'];
 			
-			if( !$url || !$title || !$desc || !$tags )
+			if( !$username || !$email || !$password )
 			{
 				echo 'You have not entered all the required details.<br />';
 				exit;
 			}
 			
-			$bid = insertBookmark($url, $title, $desc, $tags, 1);
-			
-			echo ('<p>'.__BOOKMARKADDED.'</p>');
-			echo ('<p><a href="viewbookmark.php?bid='.$bid.'">'.__VISITBOOKMARK.'</a></p>');
-			echo ('<p><a href="add.php">'.__ADDANOTHER.'</a></p>');
-			echo ('<p><a href="index.php">'.__RETURNTOMAIN.'</a></p>');
+			$uid = insertUser( $username, $email, $password);
 		?>
 	</div>
 	

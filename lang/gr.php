@@ -40,6 +40,8 @@ define('__TAGS', 'Ετικέτες');
 // database.inc
 /// insertBookmark()
 define('__BOOKMARKEXISTS', 'Έχετε ήδη καταχωρήσει σελιδοδείκτη για αυτή τη σελίδα.');
+define('__USEREXISTS', 'Ο χρήστης υπάρχει ήδη στο σύστημα');
+define('__EMAILEXISTS', 'Το email αυτό χρησιμοποιείται από άλλο λογαριασμό');
 
 // registration.php
 define('__REGISTRATION', 'Εγγραφή Νέου Χρήστη');
