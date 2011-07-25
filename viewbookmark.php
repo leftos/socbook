@@ -32,8 +32,7 @@
 	{
 		if ($_POST['action'] == 'rating')
 		{
-			if ($_POST['dod'] == 'plusone') { plusone($bid); }
-			else minusone($bid);
+			changeRating($bid, $session['uid'], $_POST['dod']);
 		}
 	}
 ?>
@@ -99,7 +98,7 @@
 		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=$bk->getUrl()?></a></p>
 		<p><?=__DESCRIPTION?>: <br /><?=$bk->getDesc() ?></p>
 		<p>
-			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" id="plusOneLink"><img src="images/plus-8.png" /></a>&nbsp;<a href="#" id="minusOneLink"><img src="images/minus-8.png" /></a>
+			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<? showValidRatingButtons($bid, $session['uid']); ?>
 		</p>
 		<p>
 			<?=__TAGS?>: <?php 

@@ -40,7 +40,7 @@ CREATE TABLE `bookmarks` (
 
 LOCK TABLES `bookmarks` WRITE;
 /*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES (1,'www.di.fm',1,0,0,'2011-07-24 16:24:04',0),(2,'www.radioparea.gr',1,0,0,'2011-07-24 16:24:55',0),(3,'www.github.com',1,0,1,'2011-07-24 16:25:21',0),(4,'www.twitter.com',1,0,0,'2011-07-24 16:29:47',0),(5,'www.facebook.com',1,0,0,'2011-07-24 16:34:14',0);
+INSERT INTO `bookmarks` VALUES (1,'www.di.fm',1,1,0,'2011-07-24 16:24:04',0),(2,'www.radioparea.gr',1,0,0,'2011-07-24 16:24:55',0),(3,'www.github.com',1,0,1,'2011-07-24 16:25:21',0),(4,'www.twitter.com',1,0,0,'2011-07-24 16:29:47',0),(5,'www.facebook.com',1,0,0,'2011-07-24 16:34:14',0);
 /*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,6 +154,34 @@ INSERT INTO `tagcloud` VALUES (1,'radio',2),(2,'music',3),(3,'streaming',1),(4,'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `userrated`
+--
+
+DROP TABLE IF EXISTS `userrated`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userrated` (
+  `bid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `rating` enum('-1','1') COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`bid`,`uid`),
+  KEY `uid` (`uid`),
+  CONSTRAINT `userrated_ibfk_1` FOREIGN KEY (`bid`) REFERENCES `bookmarks` (`bid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `userrated_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userrated`
+--
+
+LOCK TABLES `userrated` WRITE;
+/*!40000 ALTER TABLE `userrated` DISABLE KEYS */;
+INSERT INTO `userrated` VALUES (1,1,'1');
+/*!40000 ALTER TABLE `userrated` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -189,4 +217,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-24 19:53:54
+-- Dump completed on 2011-07-25 12:22:34
