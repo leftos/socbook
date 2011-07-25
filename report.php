@@ -14,6 +14,7 @@
 <head>
 	<title><?php echo($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
+	<head profile="http://www.w3.org/2005/10/profile"><link rel="icon" type="image/png" href="/favicon.png" />
 </head>
 
 <body>
@@ -53,7 +54,10 @@
 		<p><?=__SUREREPORT?></p>
 		<p><em><?=$bk->getTitle()?> (<?=$bk->getUrl()?>)</em></p>
 		<p><?=__SUREREPORT2?></p>
-		<form action="doreport.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="submit" value="<?=__CONFIRM?>" /></form>
+		<form action="doreport.php" method="post">
+			<input type="hidden" name="bid" value="<?=$bid?>" />
+			<input type="submit" value="<?=__CONFIRM?>" />
+		</form>
 	</div>
 	
 	<!-- Below should remain as is on every page -->

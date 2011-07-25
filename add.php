@@ -14,6 +14,7 @@
 <head>
 	<title><?php echo($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
+	<head profile="http://www.w3.org/2005/10/profile"><link rel="icon" type="image/png" href="/favicon.png" />
 	<script type="text/javascript" src="deps/validations.js"></script>
 </head>
 
@@ -36,21 +37,21 @@
 		<form id='addbookmark' action='addresult.php' onsubmit="return validateAddBookmarkForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
 				<tr>
-					<td>URL</td>
+					<td><?=__URL?></td>
 					<td><input type="text" name="url" maxlength="2000" size="40"></td>
 				</tr>
 				<tr>
-					<td>Title</td>
+					<td><?=__TITLE?></td>
 					<td>
 					<input type="text" name="title" maxlength="140" size="60" />
 					</td>
 				</tr>
 				<tr>
-					<td>Description</td>
+					<td><?=__DESCRIPTION?></td>
 					<td><textarea name="desc" rows="8" cols="40" /></textarea></td>
 				</tr>
 				<tr>
-					<td>Tags</td>
+					<td><?=__TAGS?></td>
 					<td> <input type="text" name="tags" maxlength="200" size="60" />
 					</td>
 				</tr>

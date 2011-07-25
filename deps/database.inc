@@ -435,7 +435,7 @@ function fetchBookmark($bk)
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='.$bid.' and comments.title is not null
-							order by comments.rating desc;');
+							order by comments.rating desc limit 1;');
 	
 	$best_title_comment = $titles->fetch_object();
 	$bk->setTitle($best_title_comment->title);
@@ -547,6 +547,44 @@ function changeRating($bid, $uid, $do)
 			$result = $db->query('update bookmarks set rating=rating-1 where bid='.$bid) or die($db->error);
 		}
 		$result = $db->query('delete from userrated where bid='.$bid.' and uid='.$uid) or die($db->error);
+	}
+	$db->close();
+}
+
+function changeTitleRating($cid, $uid, $do)
+{
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+	
+	$result = $db->query('select * from userratedtitles where cid='.$cid.' and uid='.$uid) or die($db->error);
+	if ($result->num_rows == 0)
+	{	
+		if ($do == 'plusone')
+		{
+			$result = $db->query('update comments set rating=rating+1 where cid='.$cid) or die($db->error);
+			$result = $db->query('insert into userratedtitles values ('.$cid.','.$uid.', \'1\')') or die($db->error);
+		}
+		else
+		{
+			$result = $db->query('update comments set rating=rating-1 where cid='.$cid) or die($db->error);
+			$result = $db->query('insert into userratedtitles values ('.$cid.','.$uid.', \'-1\')') or die($db->error);
+		}
+	}
+	else
+	{
+		if ($do == 'plusone')
+		{
+			$result = $db->query('update comments set rating=rating+1 where cid='.$cid) or die($db->error);
+		}
+		else
+		{
+			$result = $db->query('update comments set rating=rating-1 where cid='.$cid) or die($db->error);
+		}
+		$result = $db->query('delete from userratedtitles where cid='.$cid.' and uid='.$uid) or die($db->error);
 	}
 	$db->close();
 }

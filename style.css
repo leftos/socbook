@@ -26,6 +26,11 @@ a:visited
 	color: blue;
 }
 
+form
+{
+	display: inline;
+}
+
 .report
 {
 	text-align: right;
@@ -45,6 +50,23 @@ a:visited
 #title
 {
 	margin: 10px 10px;
+}
+
+#hiddenDivQ a
+{
+	font-size: 0.9em;
+}
+
+.hiddenDivA
+{
+	padding: 5px;
+	font-size: 0.9em;
+	background:#CFE3FF;
+    border: 1px solid #559DFF;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    /* width: 5em; */
 }
 
 #language

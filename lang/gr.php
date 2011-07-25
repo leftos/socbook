@@ -17,12 +17,14 @@ define('__VISITEDTAB', 'Επισκεψιμότητα');
 // add.php
 define('__ADDBOOKMARK', 'Προσθήκη Σελιδοδείκτη');
 define('__ADD', 'Προσθήκη');
+define('__URL', 'URL');
 
 // addresult.php
 define('__BOOKMARKADDED', 'Ο σελιδοδείκτης καταχωρήθηκε!');
 define('__VISITBOOKMARK', 'Δείτε την καταχώρησή σας');
 define('__ADDANOTHER', 'Προσθέστε άλλο σελιδοδείκτη');
 define('__RETURNTOMAIN', 'Επιστρέψτε στην κεντρική σελίδα');
+define('__NOTALLDETAILS', 'Δεν έχετε καταχωρήσει όλα τα απαιτούμενα στοιχεία.');
 
 // viewbookmark.php
 define('__VIEWBOOKMARK', 'Προβολή Σελιδοδείκτη');
@@ -36,6 +38,9 @@ define('__COMMADDED', 'πρόσθεσε αυτή τη σελίδα στους σ
 define('__COMMDESC', 'και την περιγραφή');
 define('__DATECREATED', 'Ημερομηνία δημιουργίας');
 define('__TAGS', 'Ετικέτες');
+define('__SHOWSUGGESTED', 'Εμφάνιση άλλων προτεινόμενων τίτλων');
+define('__ADDCOMMENT', 'Προσθήκη Σχόλιου');
+define('__BENICE', 'Θυμηθείτε να είστε πάντα ευγενικοί στα σχόλιά σας. Προσβλητικά σχόλια θα διαγράφονται.');
 
 // database.inc
 /// insertBookmark()

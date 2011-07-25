@@ -34,22 +34,29 @@
 		{
 			changeRating($bid, $session['uid'], $_POST['dod']);
 		}
+		else if ($_POST['action'] == 'ratingT')
+		{
+			changeTitleRating($_POST['cid'], $session['uid'], $_POST['dod']);
+		}
 	}
 ?>
 
 <head>
 	<title><?php echo($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
+	<head profile="http://www.w3.org/2005/10/profile"><link rel="icon" type="image/png" href="/favicon.png" />
 	
 	<!-- Ajax code to increase/decrease rating and refresh -->
+	<link type="text/css" href="deps/jquery-ui-1.8.14.custom.css" rel="Stylesheet" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript" src="deps/jquery-ui-1.8.14.custom.min.js"></script>
 	<script type="text/javascript">
       jQuery(document).ready(function() {
         $("#plusOneLink").click(function() {
         	$.post("viewbookmark.php",
 			  { action: "rating", dod: "plusone", bid: "<?=$bid?>" },
 			  function(data){
-			    location.reload();
+			    window.location = window.location.href;
 			    //alert("Data Loaded: " + data);
 			  }
 			);
@@ -59,7 +66,7 @@
         	$.post("viewbookmark.php",
 			  { action: "rating", dod: "minusone", bid: "<?=$bid?>" },
 			  function(data){
-			    location.reload();
+			    window.location = window.location.href;
 			    //alert("Data Loaded: " + data);
 			  }
 			);
@@ -67,6 +74,11 @@
         });
       });
     </script>
+    <script>
+	$(function() {
+		$( "#resizable" ).resizable();
+	});
+	</script>
 </head>
 
 <body>
@@ -94,6 +106,15 @@
 					<form action="report.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="submit" align="right" value="<?=__REPORT?>" /></form>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<div id="hiddenDivQ">
+						<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
+						<a onclick="javascript:ShowHide('HiddenDiv_1')" href="javascript:;"><? checkIfOtherTitles($bid)?></a>
+					</div>
+					<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? showSuggestedTitles($bid, $session['uid']) ?></div>					
+				</td>
+			</tr>
 		</table>
 		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=$bk->getUrl()?></a></p>
 		<p><?=__DESCRIPTION?>: <br /><?=$bk->getDesc() ?></p>
@@ -106,13 +127,27 @@
 			{
 				if ($i > 0) echo (', ');
 				$tag = $bk->getTag($i);
-				echo ($tag->getTagW());
+				echo "<a href=\"search.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a>";
 			}
 			?> 
 		</p>
 		<p><?=__DATECREATED?>: <?=$bk->getDateCreated() ?></p>
 		<p>&nbsp;</p>
 		<p><? echo(__COMMENTS.' ('.$bk->getCommentCount().')'); ?></p>
+		<?php if ($session['uid']!=0) { ?>
+			<div id="hiddenDivQ">
+				<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
+				<a onclick="javascript:ShowHide('HiddenDiv_2')" href="javascript:;"><?=__ADDCOMMENT?></a>
+			</div>
+			<div class="hiddenDivA" id="HiddenDiv_2" style="DISPLAY: none" >
+				<form action="addcomment.php" method="post">
+					<textarea name="comm" placeholder="<?=__BENICE?>" rows="8" cols="50"></textarea><br />
+					<input type="hidden" name="bid" value="<?=$bid?>" />
+					<input type="hidden" name="uid" value="<?=$session['uid']?>" />
+					<input type="submit" value="<?=__ADDCOMMENT?>" />
+				</form>
+			</div>
+		<? } ?>
 		<?php
 			for ($i=0; $i< $bk->getCommentCount(); $i++)
 			{
