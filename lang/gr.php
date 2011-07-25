@@ -36,6 +36,7 @@ define('__COMMADDED', 'πρόσθεσε αυτή τη σελίδα στους σ
 define('__COMMDESC', 'και την περιγραφή');
 define('__DATECREATED', 'Ημερομηνία δημιουργίας');
 define('__TAGS', 'Ετικέτες');
+define('__SHOWSUGGESTED', 'Εμφάνιση άλλων προτεινόμενων τίτλων');
 
 // database.inc
 /// insertBookmark()

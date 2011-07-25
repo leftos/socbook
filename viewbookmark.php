@@ -32,8 +32,11 @@
 	{
 		if ($_POST['action'] == 'rating')
 		{
-			if ($_POST['dod'] == 'plusone') { plusone($bid); }
-			else minusone($bid);
+			changeRating($bid, $session['uid'], $_POST['dod']);
+		}
+		else if ($_POST['action'] == 'ratingT')
+		{
+			changeTitleRating($_POST['cid'], $session['uid'], $_POST['dod']);
 		}
 	}
 ?>
@@ -50,7 +53,7 @@
         	$.post("viewbookmark.php",
 			  { action: "rating", dod: "plusone", bid: "<?=$bid?>" },
 			  function(data){
-			    location.reload();
+			    window.location = window.location.href;
 			    //alert("Data Loaded: " + data);
 			  }
 			);
@@ -60,7 +63,7 @@
         	$.post("viewbookmark.php",
 			  { action: "rating", dod: "minusone", bid: "<?=$bid?>" },
 			  function(data){
-			    location.reload();
+			    window.location = window.location.href;
 			    //alert("Data Loaded: " + data);
 			  }
 			);
@@ -95,11 +98,20 @@
 					<form action="report.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="submit" align="right" value="<?=__REPORT?>" /></form>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<div id="hiddenDivQ">
+						<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
+						<a onclick="javascript:ShowHide('HiddenDiv_1')" href="javascript:;"><? checkIfOtherTitles($bid)?></a>
+					</div>
+					<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? showSuggestedTitles($bid, $session['uid']) ?></div>					
+				</td>
+			</tr>
 		</table>
 		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=$bk->getUrl()?></a></p>
 		<p><?=__DESCRIPTION?>: <br /><?=$bk->getDesc() ?></p>
 		<p>
-			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" id="plusOneLink"><img src="images/plus-8.png" /></a>&nbsp;<a href="#" id="minusOneLink"><img src="images/minus-8.png" /></a>
+			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<? showValidRatingButtons($bid, $session['uid']); ?>
 		</p>
 		<p>
 			<?=__TAGS?>: <?php 
