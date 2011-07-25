@@ -119,4 +119,5 @@ function showSuggestedTitles($bid, $uid)
 	}
 	$db->close();
 }
+
 ?>
