@@ -17,12 +17,15 @@ define('__VISITEDTAB', 'Επισκεψιμότητα');
 // add.php
 define('__ADDBOOKMARK', 'Προσθήκη Σελιδοδείκτη');
 define('__ADD', 'Προσθήκη');
+define('__URL', 'URL');
+define('__TITLE', 'Τίτλος');
 
 // addresult.php
 define('__BOOKMARKADDED', 'Ο σελιδοδείκτης καταχωρήθηκε!');
 define('__VISITBOOKMARK', 'Δείτε την καταχώρησή σας');
 define('__ADDANOTHER', 'Προσθέστε άλλο σελιδοδείκτη');
 define('__RETURNTOMAIN', 'Επιστρέψτε στην κεντρική σελίδα');
+define('__NOTALLDETAILS', 'Δεν έχετε καταχωρήσει όλα τα απαιτούμενα στοιχεία.');
 
 // viewbookmark.php
 define('__VIEWBOOKMARK', 'Προβολή Σελιδοδείκτη');
