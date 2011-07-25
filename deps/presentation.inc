@@ -20,4 +20,35 @@ function prettyPrintBookmarks($result)
 	echo ("</ul>");
 }
 
+function showValidRatingButtons($bid, $uid)
+{
+	// <a href="#" id="plusOneLink"><img src="images/plus-8.png" /></a>&nbsp;<a href="#" id="minusOneLink"><img src="images/minus-8.png" /></a>
+	if ($uid == 0) return;
+	
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+	
+	$result = $db->query('select * from userrated where bid='.$bid.' and uid='.$uid) or die($db->error);
+	if ($result->num_rows == 0)
+	{
+		echo "<a href=\"#\" id=\"plusOneLink\"><img src=\"images/plus-8.png\" /></a> <a href=\"#\" id=\"minusOneLink\"><img src=\"images/minus-8.png\" /></a>";
+	}
+	else
+	{
+		$row = $result->fetch_object();
+		if ($row->rating=='-1')
+		{
+			echo "<a href=\"#\" id=\"plusOneLink\"><img src=\"images/plus-8.png\" /></a>";
+		}
+		else
+		{
+			echo "<a href=\"#\" id=\"minusOneLink\"><img src=\"images/minus-8.png\" /></a>";
+		}
+	}
+}
+
 ?>

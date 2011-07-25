@@ -407,7 +407,7 @@ function fetchTags($bk)
 	}
 }
 
-function plusone($bid)
+function changeRating($bid, $uid, $do)
 {
 	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
 	if( mysqli_connect_errno() )
@@ -415,23 +415,33 @@ function plusone($bid)
 		echo 'Error: Could not connect to database';
 		exit;
 	}
-
-	$result = $db->query('update bookmarks set rating=rating+1 where bid='.$bid) or die($db->error);
-							
-	$db->close();
-}
-
-function minusone($bid)
-{
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
+	
+	$result = $db->query('select * from userrated where bid='.$bid.' and uid='.$uid) or die($db->error);
+	if ($result->num_rows == 0)
+	{	
+		if ($do == 'plusone')
+		{
+			$result = $db->query('update bookmarks set rating=rating+1 where bid='.$bid) or die($db->error);
+			$result = $db->query('insert into userrated values ('.$bid.','.$uid.', \'1\')') or die($db->error);
+		}
+		else
+		{
+			$result = $db->query('update bookmarks set rating=rating-1 where bid='.$bid) or die($db->error);
+			$result = $db->query('insert into userrated values ('.$bid.','.$uid.', \'-1\')') or die($db->error);
+		}
 	}
-
-	$result = $db->query('update bookmarks set rating=rating-1 where bid='.$bid) or die($db->error);
-							
+	else
+	{
+		if ($do == 'plusone')
+		{
+			$result = $db->query('update bookmarks set rating=rating+1 where bid='.$bid) or die($db->error);
+		}
+		else
+		{
+			$result = $db->query('update bookmarks set rating=rating-1 where bid='.$bid) or die($db->error);
+		}
+		$result = $db->query('delete from userrated where bid='.$bid.' and uid='.$uid) or die($db->error);
+	}
 	$db->close();
 }
 
