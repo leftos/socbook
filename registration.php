@@ -34,25 +34,25 @@
 		<form id='register' action='register.php' onsubmit="return validateRegisterForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
 				<tr>
-					<td>Username</td>
+					<td><?=__USERNAME?></td>
 					<td>
 						<input type="text" name="username" id="username" maxlength="50" size="30">
 					</td>
 				</tr>
 				<tr>
-					<td>Email</td>
+					<td><?=__EMAIL?></td>
 					<td>
 						<input type="text" name="email" id="email" maxlength="50" size="30">
 					</td>
 				</tr>
 				<tr>
-					<td>Password</td>
+					<td><?=__PASSWORD?></td>
 					<td>
 						<input type="password" name="password" id="password" maxlength="50" size="30">
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" name="Register" value="Register"></td>
+					<td colspan="2"><input type="submit" name="Register" value="<?=__REGISTERBUTTON?>"></td>
 				</tr>
 			</table>
 		</form>

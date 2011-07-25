@@ -201,6 +201,17 @@ class tag
 
 }
 
+class user
+{
+	private $uid=null;
+	private $username=null;
+	private $password=null;
+	private $email=null;
+	private $class=null;
+	/* placeholder for now */
+}
+
+
 function insertBookmark( $url, $title, $desc, $tags, $uid )
 {
 	if( !get_magic_quotes_gpc() )

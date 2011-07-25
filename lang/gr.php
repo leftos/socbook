@@ -42,12 +42,16 @@ define('__TAGS', 'Ετικέτες');
 define('__BOOKMARKEXISTS', 'Έχετε ήδη καταχωρήσει σελιδοδείκτη για αυτή τη σελίδα.');
 
 // registration.php
-define('__REGISTRATION', 'Εγγραφή');
+define('__REGISTRATION', 'Εγγραφή Νέου Χρήστη');
+define('__REGISTERBUTTON','Εγγραφή');
+define('__USERNAME','Όνομα Χρήστη');
+define('__EMAIL','Διεύθυνση Ηλ. Ταχυδρομίου');
+define('__PASSWORD','Κωδικός Πρόσβασης');
 
 // report.php
 define('__REPORT', 'Αναφορά σελιδοδείκτη');
 define('__SUREREPORT', 'Είστε σίγουροι ότι θέλετε να αναφέρετε αυτό το σελιδοδείκτη;');
 define('__SUREREPORT2', 'Πραγματοποιήστε την αναφορά μόνο αν θεωρείτε το περιεχόμενο προσβλητικό ή παράνομο.');
-define('__CONFIRM', 'Επιβεβαίωση')
+define('__CONFIRM', 'Επιβεβαίωση');
 
 ?>
