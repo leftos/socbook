@@ -40,7 +40,7 @@ CREATE TABLE `bookmarks` (
 
 LOCK TABLES `bookmarks` WRITE;
 /*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES (1,'www.di.fm',1,1,0,'2011-07-24 16:24:04',0),(2,'www.radioparea.gr',1,0,0,'2011-07-24 16:24:55',0),(3,'www.github.com',1,0,1,'2011-07-24 16:25:21',0),(4,'www.twitter.com',1,0,0,'2011-07-24 16:29:47',0),(5,'www.facebook.com',1,0,0,'2011-07-24 16:34:14',0);
+INSERT INTO `bookmarks` VALUES (1,'www.di.fm',1,1,0,'2011-07-24 16:24:04',0),(2,'www.radioparea.gr',1,0,0,'2011-07-24 16:24:55',0),(3,'www.github.com',1,-1,1,'2011-07-24 16:25:21',0),(4,'www.twitter.com',1,0,0,'2011-07-24 16:29:47',0),(5,'www.facebook.com',1,0,1,'2011-07-24 16:34:14',0);
 /*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +67,7 @@ CREATE TABLE `booksncomms` (
 
 LOCK TABLES `booksncomms` WRITE;
 /*!40000 ALTER TABLE `booksncomms` DISABLE KEYS */;
-INSERT INTO `booksncomms` VALUES (1,1),(2,2),(3,3),(4,4),(5,5);
+INSERT INTO `booksncomms` VALUES (1,1),(2,2),(3,3),(4,4),(5,5),(3,6);
 /*!40000 ALTER TABLE `booksncomms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +115,7 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`cid`),
   KEY `user` (`user`),
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +124,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,'Digitally Imported (di.fm)','Web radio Î¼Îµ Î·Î»ÎµÎºÏ„ÏÎ¿Î½Î¹ÎºÎ® Î¼Î¿Ï…ÏƒÎ¹ÎºÎ®.',1,'2011-07-24 16:24:04',0),(2,'Radioparea.gr Web Radio','Î†Î»Î»Î¿ Î­Î½Î± web radio.',1,'2011-07-24 16:24:55',0),(3,'GitHub, source control','Î Î»Î±Ï„Ï†ÏŒÏÎ¼Î± ÎµÎ»Î­Î³Ï‡Î¿Ï… Ï€Î·Î³Î±Î¯Î¿Ï… ÎºÏŽÎ´Î¹ÎºÎ± ÎºÎ±Î¹ ÏƒÏ…Î½ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚',1,'2011-07-24 16:25:21',0),(4,'Twitter','Î¥Ï€Î·ÏÎµÏƒÎ¯Î± ÎºÎ¿Î¹Î½Ï‰Î½Î¹ÎºÎ®Ï‚ Î´Î¹ÎºÏ„ÏÏ‰ÏƒÎ·Ï‚ Î¼Îµ ÏƒÏÎ½Ï„Î¿Î¼Î± Î¼Î·Î½ÏÎ¼Î±Ï„Î±, Î­Ï‰Ï‚ 140 Ï‡Î±ÏÎ±ÎºÏ„Î®ÏÎµÏ‚.',1,'2011-07-24 16:29:47',0),(5,'Facebook','Î¤Î¿ social network Ï€Î¿Ï… Î­ÎºÎ±Î½Îµ Î¸ÏÎ±ÏÏƒÎ· ÎºÎ±Î¹ Ï€Î»Î­Î¿Î½ Ï‡ÏÎ·ÏƒÎ¹Î¼Î¿Ï€Î¿Î¹ÎµÎ¯Ï„Î±Î¹ Î±Ï€ÏŒ ÎµÎºÎ±Ï„Î¿Î¼Î¼ÏÏÎ¹Î± Ï‡ÏÎ®ÏƒÏ„ÎµÏ‚ Î±Î½Î¬ Ï„Î¿Î½ ÎºÏŒÏƒÎ¼Î¿, Î³Î¹Î± Î½Î± Î¼Î¿Î¹ÏÎ±ÏƒÏ„Î¿ÏÎ½ Ï†Ï‰Ï„Î¿Î³ÏÎ±Ï†Î¯ÎµÏ‚, Î¼Î¿Ï…ÏƒÎ¹ÎºÎ® ÎºÎ±Î¹ Î½Î­Î±.',1,'2011-07-24 16:34:14',0);
+INSERT INTO `comments` VALUES (1,'Digitally Imported (di.fm)','Web radio Î¼Îµ Î·Î»ÎµÎºÏ„ÏÎ¿Î½Î¹ÎºÎ® Î¼Î¿Ï…ÏƒÎ¹ÎºÎ®.',1,'2011-07-24 16:24:04',0),(2,'Radioparea.gr Web Radio','Î†Î»Î»Î¿ Î­Î½Î± web radio.',1,'2011-07-24 16:24:55',0),(3,'GitHub, source control','Î Î»Î±Ï„Ï†ÏŒÏÎ¼Î± ÎµÎ»Î­Î³Ï‡Î¿Ï… Ï€Î·Î³Î±Î¯Î¿Ï… ÎºÏŽÎ´Î¹ÎºÎ± ÎºÎ±Î¹ ÏƒÏ…Î½ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚',1,'2011-07-24 16:25:21',1),(4,'Twitter','Î¥Ï€Î·ÏÎµÏƒÎ¯Î± ÎºÎ¿Î¹Î½Ï‰Î½Î¹ÎºÎ®Ï‚ Î´Î¹ÎºÏ„ÏÏ‰ÏƒÎ·Ï‚ Î¼Îµ ÏƒÏÎ½Ï„Î¿Î¼Î± Î¼Î·Î½ÏÎ¼Î±Ï„Î±, Î­Ï‰Ï‚ 140 Ï‡Î±ÏÎ±ÎºÏ„Î®ÏÎµÏ‚.',1,'2011-07-24 16:29:47',0),(5,'Facebook','Î¤Î¿ social network Ï€Î¿Ï… Î­ÎºÎ±Î½Îµ Î¸ÏÎ±ÏÏƒÎ· ÎºÎ±Î¹ Ï€Î»Î­Î¿Î½ Ï‡ÏÎ·ÏƒÎ¹Î¼Î¿Ï€Î¿Î¹ÎµÎ¯Ï„Î±Î¹ Î±Ï€ÏŒ ÎµÎºÎ±Ï„Î¿Î¼Î¼ÏÏÎ¹Î± Ï‡ÏÎ®ÏƒÏ„ÎµÏ‚ Î±Î½Î¬ Ï„Î¿Î½ ÎºÏŒÏƒÎ¼Î¿, Î³Î¹Î± Î½Î± Î¼Î¿Î¹ÏÎ±ÏƒÏ„Î¿ÏÎ½ Ï†Ï‰Ï„Î¿Î³ÏÎ±Ï†Î¯ÎµÏ‚, Î¼Î¿Ï…ÏƒÎ¹ÎºÎ® ÎºÎ±Î¹ Î½Î­Î±.',1,'2011-07-24 16:34:14',0),(6,'GitHub, source control for the masses!','This is the one we used for this project.',2,'2011-07-25 13:08:47',3);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,8 +177,36 @@ CREATE TABLE `userrated` (
 
 LOCK TABLES `userrated` WRITE;
 /*!40000 ALTER TABLE `userrated` DISABLE KEYS */;
-INSERT INTO `userrated` VALUES (1,1,'1');
+INSERT INTO `userrated` VALUES (1,1,'1'),(3,1,'-1');
 /*!40000 ALTER TABLE `userrated` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userratedtitles`
+--
+
+DROP TABLE IF EXISTS `userratedtitles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userratedtitles` (
+  `cid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `rating` enum('-1','1') COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`cid`,`uid`),
+  KEY `uid` (`uid`),
+  CONSTRAINT `userratedtitles_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `comments` (`cid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `userratedtitles_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userratedtitles`
+--
+
+LOCK TABLES `userratedtitles` WRITE;
+/*!40000 ALTER TABLE `userratedtitles` DISABLE KEYS */;
+INSERT INTO `userratedtitles` VALUES (3,1,'1'),(6,1,'1');
+/*!40000 ALTER TABLE `userratedtitles` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -217,4 +245,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-25 12:22:34
+-- Dump completed on 2011-07-25 13:52:47
