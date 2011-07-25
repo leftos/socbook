@@ -37,26 +37,26 @@
 		<form id='addbookmark' action='addresult.php' onsubmit="return validateAddBookmarkForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
 				<tr>
-					<td><?=__URL?></td>
+					<td><?=__BOOKMARKURL?></td>
 					<td><input type="text" name="url" maxlength="2000" size="40"></td>
 				</tr>
 				<tr>
-					<td><?=__TITLE?></td>
+					<td><?=__BOOKMARKTITLE?></td>
 					<td>
 					<input type="text" name="title" maxlength="140" size="60" />
 					</td>
 				</tr>
 				<tr>
-					<td><?=__DESCRIPTION?></td>
+					<td><?=__BOOKMARKDESCRIPTION?></td>
 					<td><textarea name="desc" rows="8" cols="40" /></textarea></td>
 				</tr>
 				<tr>
-					<td><?=__TAGS?></td>
+					<td><?=__BOOKMARKTAGS?></td>
 					<td> <input type="text" name="tags" maxlength="200" size="60" />
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" value=<?=__ADD?>></td>
+					<td colspan="2"><input type="submit" value=<?=__BOOKMARKADD?>></td>
 				</tr>
 			</table>
 		</form>

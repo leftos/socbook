@@ -39,7 +39,7 @@
 			
 			if( !$username || !$email || !$password )
 			{
-				echo 'You have not entered all the required details.<br />';
+				echo __NOTALLDETAILS.'<br />';
 				exit;
 			}
 			

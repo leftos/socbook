@@ -16,8 +16,11 @@ define('__VISITEDTAB', 'Επισκεψιμότητα');
 
 // add.php
 define('__ADDBOOKMARK', 'Προσθήκη Σελιδοδείκτη');
-define('__ADD', 'Προσθήκη');
-define('__URL', 'URL');
+define('__BOOKMARKADD', 'Προσθήκη');
+define('__BOOKMARKURL', 'URL');
+define('__BOOKMARKTITLE','Τίτλος');
+define('__BOOKMARKDESCRIPTION','Περιγραφή');
+define('__BOOKMARKTAGS','Ετικέτες');
 
 // addresult.php
 define('__BOOKMARKADDED', 'Ο σελιδοδείκτης καταχωρήθηκε!');

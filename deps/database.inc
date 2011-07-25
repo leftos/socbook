@@ -270,7 +270,13 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 		exit;
 	}
 	
-	// TODO: validate(), formatting()
+	// TODO: validate()
+	// formating
+	foreach (array('http://','https://') as $strip)
+	{
+		$url = str_replace($strip, '', $url);
+	}
+	$url = rtrim($url, '/');
 	
 	// See if bookmark exists and update, or else add it
 	$result = $db->query("select bid from bookmarks where url='".$url."'");
