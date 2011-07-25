@@ -116,7 +116,8 @@
 				</td>
 			</tr>
 		</table>
-		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=$bk->getUrl()?></a></p>
+		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=myTruncate($bk->getUrl(), 150, "/") ?></a>&nbsp;
+			<a href="redirect.php?action=leavehttps&bid=<?=$bk->getBid()?>"><img src="images/lock_small.png" alt="<?=__VISITHTTPS?>" title="<?=__VISITHTTPS?>" /></a></p>
 		<p><?=__DESCRIPTION?>: <br /><?=$bk->getDesc() ?></p>
 		<p>
 			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<? showValidRatingButtons($bid, $session['uid']); ?>
