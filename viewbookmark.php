@@ -131,7 +131,7 @@
 			{
 				if ($i > 0) echo (', ');
 				$tag = $bk->getTag($i);
-				echo "<a href=\"search.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a>";
+				echo "<a href=\"search.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
 			}
 			?> 
 		</p>

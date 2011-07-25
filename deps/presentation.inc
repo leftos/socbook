@@ -124,7 +124,7 @@ function addPlusMinus($bid, $db, $result, $uid, $skipfirst=true)
 		
 		if ($temp->num_rows == 0)
 		{
-			echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"plusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/plus-8.png\" /></form>";
+			echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"plusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/plus-8.png\" /></form>&nbsp;";
 			echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"minusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/minus-8.png\" /></form>";
 		}
 		else

@@ -325,19 +325,15 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 		{
 			$result = $db->query("insert into tagcloud values (NULL, '".$tag."', 1)");
 			$tid = $db->insert_id;
+			$result = $db->query("insert into booksntags values (".$bid.",".$tid.",0)");
 		}
 		else
 		{
 			$row = $result->fetch_object();
 			$tid = $row->tid;
-			$result = $db->query('select * from booksntags where bid='.$bid.' and tid='.$tid) or die($db->error);
-			if ($result->num_rows == 0)
-			{
-				$result = $db->query("update tagcloud set popularity=popularity+1 where tid=".$tid);				
-			}
+			$result = $db->query("update tagcloud set popularity=popularity+1 where tid=".$tid) or die($db->error);
+			$result = $db->query("update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid) or die ($db->error);
 		}
-		
-		$result = $db->query("insert into booksntags values (".$bid.",".$tid.")");
 	}
 	
 	$db->close();
@@ -510,10 +506,11 @@ function fetchTags($bk)
 		exit;
 	}
 
-	$result = $db->query('select tagcloud.tid, tag, popularity
+	$result = $db->query('select tagcloud.tid, tagcloud.tag, booksntags.popularity
 							from tagcloud
 							inner join booksntags on tagcloud.tid=booksntags.tid
-							where booksntags.bid='.$bk->getBid()) or die($db->error);
+							where booksntags.bid='.$bk->getBid().'
+							order by booksntags.popularity desc') or die($db->error);
 	
 	$i = 0;
 	
