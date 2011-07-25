@@ -117,7 +117,7 @@
 					<img src="images/star_16.png" title="<?=__OWN?>" />&nbsp;&nbsp;&nbsp;&nbsp;
 					<form action="edit.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/edit.png" title="<?=__EDIT?>" /></form>
 					<form action="delete.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" /></form>
-					<? } else { ?>					
+					<? } else if ($session['uid']!=0) { ?>					
 					<form action="add.php" method="post"><input type="hidden" name="url" value="<?=$bk->getUrl()?>" /><input type="image" src="images/add_16.png" title="<?=__ADDTOMINE?>" /></form>
 					<? } ?>
 				</td>
