@@ -47,7 +47,7 @@
 			<input type="hidden" name="bid" value="<?=$bid?>" />
 			<table>
 				<tr>
-					<td><?=__TITLELABEL?></td>
+					<td><?=__BOOKMARKTITLE?></td>
 					<td>
 					<input type="text" name="title" maxlength="140" size="60" value="<?=$title?>" />
 					</td>

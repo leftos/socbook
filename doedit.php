@@ -32,7 +32,7 @@ if ((isset($_POST['cid'])) && (isset($_POST['bid'])))
 			{
 				$result = $db->query("insert into tagcloud values (NULL, '".$tag."', 1)");
 				$tid = $db->insert_id;
-				$result = $db->query("insert into booksntags values (".$bid.",".$tid.",0)");
+				$result = $db->query("insert into booksntags values (".$bid.",".$tid.",1)");
 			}
 			else
 			{

@@ -115,7 +115,7 @@
 						<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
 						<a onclick="javascript:ShowHide('HiddenDiv_1')" href="javascript:;"><? checkIfOtherTitles($bid)?></a>
 					</div>
-					<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? showSuggestedTitles($bid, $session['uid']) ?></div>					
+					<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? showSuggestedTitles($bid, $session['uid']); ?></div>					
 				</td>
 			</tr>
 		</table>
@@ -127,49 +127,72 @@
 		</p>
 		<p>
 			<?=__TAGS?>: <?php 
-			for ($i=0; $i<$bk->getTagCount(); $i++)
+			if ($bk->getTagCount() > 10) {$max=10;} else {$max=$bk->getTagCount();}
+			for ($i=0; $i<$max; $i++)
 			{
 				if ($i > 0) echo (', ');
 				$tag = $bk->getTag($i);
 				echo "<a href=\"search.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
 			}
-			?> 
+			?><br />
+			<? if ($max==10) { ?>
+				<div id="hiddenDivQ">
+					<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
+					<a onclick="javascript:ShowHide('HiddenDiv_3')" href="javascript:;"><?=__SHOWOTHERTAGS ?></a>
+				</div>
+				<div class="hiddenDivA" id="HiddenDiv_3" style="DISPLAY: none" >
+					<? 
+						for ($i=10; $i<$bk->getTagCount(); $i++)
+						{
+							if ($i > 10) echo (', ');
+							$tag = $bk->getTag($i);
+							echo "<a href=\"search.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
+						}
+					?>
+					</div> 
+			<? } ?>
 		</p>
 		<p><?=__DATECREATED?>: <?=$bk->getDateCreated() ?></p>
 		<p>&nbsp;</p>
-		<p><? echo(__COMMENTS.' ('.$bk->getCommentCount().')'); ?></p>
-		<?php if ($session['uid']!=0) { ?>
-			<div id="hiddenDivQ">
-				<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
-				<a onclick="javascript:ShowHide('HiddenDiv_2')" href="javascript:;"><?=__ADDCOMMENT?></a>
-			</div>
-			<div class="hiddenDivA" id="HiddenDiv_2" style="DISPLAY: none" >
-				<form action="addcomment.php" method="post">
-					<textarea name="comm" placeholder="<?=__BENICE?>" rows="8" cols="50"></textarea><br />
-					<input type="hidden" name="bid" value="<?=$bid?>" />
-					<input type="hidden" name="uid" value="<?=$session['uid']?>" />
-					<input type="submit" value="<?=__ADDCOMMENT?>" />
-				</form>
-			</div>
-		<? } ?>
-		<?php
-			for ($i=0; $i< $bk->getCommentCount(); $i++)
-			{
-				$comment = $bk->getComment($i);
-				$commentdate = $comment->getDatePosted();
-				$commenttitle = $comment->getTitle();
-				$commentdesc = $comment->getDesc();
-				$commentuser = $comment->getUsername();
-				if ($commenttitle=='')
+		<p></p>
+		<div id="hiddenDivQ">
+			<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
+			<a onclick="javascript:ShowHide('HiddenDiv_4')" href="javascript:;"><? echo(__COMMENTS.' ('.$bk->getCommentCount().')'); ?></a>
+		</div>
+		<div class="hiddenDivA" id="HiddenDiv_4" style="DISPLAY: none" >
+			<?php if ($session['uid']!=0) { ?>
+				<div id="hiddenDivQ">
+					<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
+					<a onclick="javascript:ShowHide('HiddenDiv_2')" href="javascript:;"><?=__ADDCOMMENT?></a>
+				</div>
+				<div class="hiddenDivA" id="HiddenDiv_2" style="DISPLAY: none" >
+					<form action="addcomment.php" method="post">
+						<textarea name="comm" placeholder="<?=__BENICE?>" rows="8" cols="50"></textarea><br />
+						<input type="hidden" name="bid" value="<?=$bid?>" />
+						<input type="hidden" name="uid" value="<?=$session['uid']?>" />
+						<input type="submit" value="<?=__ADDCOMMENT?>" />
+					</form>
+				</div>
+			<? } ?>
+			<?php
+				for ($i=0; $i< $bk->getCommentCount(); $i++)
 				{
-					echo('<p>'.__ONDATE.' '.$commentdate.' '.__COMMUSER.' '.$commentuser.' '.__COMMPOSTED.':<br /><em>'.$commentdesc.'</em></p>'); 
-				} 
-				else
-				{
-					echo('<p>'.__ONDATE.' '.$commentdate.' '.__COMMUSER.' '.$commentuser.' '.__COMMADDED.':<br /><em>'.$commenttitle.'</em><br />'.__COMMDESC.'<br /><em>'.$commentdesc.'</em></p>');
+					$comment = $bk->getComment($i);
+					$commentdate = $comment->getDatePosted();
+					$commenttitle = $comment->getTitle();
+					$commentdesc = $comment->getDesc();
+					$commentuser = $comment->getUsername();
+					if ($commenttitle=='')
+					{
+						echo('<p>'.__ONDATE.' '.$commentdate.' '.__COMMUSER.' '.$commentuser.' '.__COMMPOSTED.':<br /><em style="padding:0 10px">'.$commentdesc.'</em></p>'); 
+					} 
+					else
+					{
+						echo('<p>'.__ONDATE.' '.$commentdate.' '.__COMMUSER.' '.$commentuser.' '.__COMMADDED.':<br /><strong style="padding:0 10px">'.$commenttitle.'</strong><br />'.__COMMDESC.'<br /><em style="padding:0 10px">'.$commentdesc.'</em></p>');
+					}
 				}
-			}
-		?>
+			?>
+		</div>
 	</div>
 	
 	<!-- Below should remain as is on every page -->
