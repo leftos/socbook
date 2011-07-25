@@ -331,14 +331,22 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 		{
 			$result = $db->query("insert into tagcloud values (NULL, '".$tag."', 1)");
 			$tid = $db->insert_id;
-			$result = $db->query("insert into booksntags values (".$bid.",".$tid.",0)");
+			$result = $db->query("insert into booksntags values (".$bid.",".$tid.",1)");
 		}
 		else
 		{
 			$row = $result->fetch_object();
 			$tid = $row->tid;
 			$result = $db->query("update tagcloud set popularity=popularity+1 where tid=".$tid) or die($db->error);
-			$result = $db->query("update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid) or die ($db->error);
+			$result = $db->query("select * from booksntags where tid=".$tid.' and bid='.$bid) or die($db->error);
+			if ($result->num_rows == 0)
+			{
+				$result = $db->query("insert into booksntags values (".$bid.",".$tid.", 1)") or die($db->error);
+			}
+			else
+			{
+				$result = $db->query("update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid) or die ($db->error);
+			}			
 		}
 	}
 	
@@ -412,22 +420,45 @@ function populateIndex($sorttype)
 		exit;
 	}
 	
-	$result = $db->query('
-	SELECT bookmarks.url, comments.title, comments.comment, bookmarks.bid, bookmarks.'.$sorttype.'
-	FROM bookmarks
-	INNER JOIN booksncomms ON bookmarks.bid = booksncomms.bid
-	INNER JOIN comments ON comments.cid = booksncomms.cid
-	JOIN (SELECT bookmarks.bid
-		  FROM bookmarks
-		  ORDER BY bookmarks.'.$sorttype.' DESC LIMIT 10)
-	AS a ON a.bid = bookmarks.bid
-	JOIN (SELECT comments.cid, MAX(comments.rating) AS maxrating
-	     FROM comments
-	     inner JOIN booksncomms ON comments.cid = booksncomms.cid
-	     GROUP BY booksncomms.bid)
-	AS b ON b.cid = comments.cid
-	WHERE comments.title!=\'\'
-	ORDER BY bookmarks.'.$sorttype.' DESC;');
+	$result = $db->query("
+	SELECT tablea.bid,
+		   tablea.url,
+	       tablea.cid,
+	       tablea.title,
+	       tablea.comment,
+	       tablea.".$sorttype." as info,
+	       tablea.cratinga,
+	       tableb.cratingb
+	FROM   (SELECT bookmarks.".$sorttype.",
+				   bookmarks.url,
+	               booksncomms.bid,
+	               comments.cid,
+	               comments.title,
+	               comments.comment,
+	               comments.rating as cratinga
+	        FROM   booksncomms
+	               INNER JOIN comments
+	                 ON booksncomms.cid = comments.cid
+	               INNER JOIN bookmarks
+	                 ON booksncomms.bid = bookmarks.bid) AS tablea
+	       LEFT OUTER JOIN (SELECT bookmarks.".$sorttype.",
+				   				   bookmarks.url,
+	                               booksncomms.bid,
+	                               comments.cid,
+	                               comments.title,
+	               				   comments.comment,
+	                               comments.rating as cratingb
+	                        FROM   booksncomms
+	                               INNER JOIN comments
+	                                 ON booksncomms.cid = comments.cid
+	                               INNER JOIN bookmarks
+	                                 ON booksncomms.bid = bookmarks.bid) AS tableb
+	         ON tablea.bid = tableb.bid
+	            AND tablea.cratinga < tableb.cratingb
+	WHERE  tableb.cratingb IS NULL
+	       AND tablea.title != ''
+	GROUP  BY tablea.bid
+	ORDER  BY tablea.".$sorttype." DESC") or die($db->error);
 	
 	$db->close();
 	return $result;
@@ -450,7 +481,7 @@ function fetchBookmark($bid)
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='.$bid.' and comments.title!=\'\'
-							order by comments.rating desc limit 1;');
+							order by comments.rating desc limit 1');
 	
 	$best_title_comment = $titles->fetch_object();
 	$bk->setTitle($best_title_comment->title);

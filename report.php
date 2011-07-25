@@ -45,9 +45,8 @@
 		else
 		{
 			$bid = $_GET['bid'];
-		}			
-		$bk = new bookmark($bid);
-		fetchBookmark($bk);
+		}
+		$bk = fetchBookmark($bid);
 		?>
 		
 		<h2><?=__REPORT?></h2>
@@ -56,7 +55,8 @@
 		<p><?=__SUREREPORT2?></p>
 		<form action="doreport.php" method="post">
 			<input type="hidden" name="bid" value="<?=$bid?>" />
-			<input type="submit" value="<?=__CONFIRM?>" />
+			<input type="submit" value="<?=__CONFIRM?>" />&nbsp;
+			<input type="button" value="<?=__GOBACK?>" onclick="parent.location = 'viewbookmark.php?bid=<?=$bid?>'" />
 		</form>
 	</div>
 	

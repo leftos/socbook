@@ -7,15 +7,14 @@
 	include_once("deps/main.php");
 	include_once("deps/presentation.inc");
 	include_once("deps/database.inc");
-	$title = settitle(__ADDBOOKMARK);
-	$thisPage = __ADDBOOKMARK;
+	$title = settitle(__DELETE);
+	$thisPage = __DELETE;
 ?>
 
 <head>
 	<title><?php echo($title); ?></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<head profile="http://www.w3.org/2005/10/profile"><link rel="icon" type="image/png" href="/favicon.png" />
-	<script type="text/javascript" src="deps/validations.js"></script>
 </head>
 
 <body>
@@ -34,29 +33,28 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<form id='addbookmark' action='addresult.php' onsubmit="return validateAddBookmarkForm()" method='post' accept-charset='UTF-8'>
-			<table border="0">
-				<tr>
-					<td><?=__BOOKMARKURL?></td>
-					<td><input type="text" name="url" maxlength="2000" size="60" <? if (isset($_POST['url'])) {?>value="<?=$_POST['url']?>" <?}?>/></td>
-				</tr>
-				<tr>
-					<td><?=__BOOKMARKTITLE?></td>
-					<td><input type="text" name="title" maxlength="140" size="60" /></td>
-				</tr>
-				<tr>
-					<td><?=__BOOKMARKDESCRIPTION?></td>
-					<td><textarea name="desc" rows="8" cols="40" /></textarea></td>
-				</tr>
-				<tr>
-					<td><?=__BOOKMARKTAGS?></td>
-					<td> <input type="text" name="tags" maxlength="200" size="60" /></td>
-				</tr>
-				<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
-				<tr>
-					<td colspan="2"><input type="submit" value=<?=__BOOKMARKADD?>></td>
-				</tr>
-			</table>
+		<?php
+		if (!(isset($_POST['bid'])))
+		{
+			die("You didn't use a valid BID.");
+		}
+		$bid = $_POST['bid'];
+		
+		$bk = fetchBookmark($bid);
+		$cid = $_POST['cid'];
+		?>
+		
+		<h2><?=__DELETE?></h2>
+		<p><?=__SUREDELETE?></p>
+		<p><em><?=$bk->getTitle()?> (<?=$bk->getUrl()?>)</em></p>
+		<p><?=__SUREDELETE2?></p>
+		<p><?=__SUREDELETE3?></p>
+		<form action="dodelete.php" method="post">
+			<input type="hidden" name="bid" value="<?=$bid?>" />
+			<input type="hidden" name="cid" value="<?=$cid?>" />
+			<input type="checkbox" name="deletecomments" value="true" />&nbsp;<?=__DELETECOMMENTS?><br /><br />
+			<input type="submit" value="<?=__CONFIRM?>" />
+			<input type="button" value="<?=__GOBACK?>" onclick="parent.location = 'viewbookmark.php?bid=<?=$bid?>'" />
 		</form>
 	</div>
 	

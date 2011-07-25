@@ -24,8 +24,7 @@
 	else
 	{
 		$bid = $_GET['bid'];
-	}			
-	$bk = fetchBookmark($bid);
+	}
 	
 	if (isset($_POST['action']))
 	{
@@ -38,6 +37,7 @@
 			changeTitleRating($_POST['cid'], $session['uid'], $_POST['dod']);
 		}
 	}
+	$bk = fetchBookmark($bid);
 ?>
 
 <head>
@@ -99,29 +99,45 @@
 		<table>
 			<tr>
 				<td width=80%>
-					<h2><?php addPlusMinusTitle($bid, $bk->getTitleCID(), $session['uid']); ?></h2>
+					<h2>
+						<?php 
+							if ($temp = userOwnsBookmark($bid, $session['uid']))
+							{
+								$cid = $temp;
+							} else {
+								$cid = $bk->getTitleCID();
+							}
+							addPlusMinusTitle($bid, $cid, $session['uid'], 'true'); 
+						?>
+					</h2>
 				</td>
 				<td class="report" width=20%>
 					<?php
 					if ($cid = userOwnsBookmark($bid, $session['uid'])) { ?>
-					<form action="edit.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/edit.png" /></form>
+					<img src="images/star_16.png" title="<?=__OWN?>" />&nbsp;&nbsp;&nbsp;&nbsp;
+					<form action="edit.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/edit.png" title="<?=__EDIT?>" /></form>
+					<form action="delete.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" /></form>
+					<? } else { ?>					
+					<form action="add.php" method="post"><input type="hidden" name="url" value="<?=$bk->getUrl()?>" /><input type="image" src="images/add_16.png" title="<?=__ADDTOMINE?>" /></form>
 					<? } ?>
-					<form action="report.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="submit" align="right" value="<?=__REPORT?>" /></form>
+				</td>
+				<td>
+					<form action="report.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="image" src="images/speaker_16.png" title="<?=__REPORT?>" /></form>
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td colspan="3">
 					<div id="hiddenDivQ">
 						<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
 						<a onclick="javascript:ShowHide('HiddenDiv_1')" href="javascript:;"><? checkIfOtherTitles($bid)?></a>
 					</div>
-					<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? showSuggestedTitles($bid, $session['uid']); ?></div>					
+					<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? $own=userOwnsBookmark($bid, $session['uid']); showSuggestedTitles($bid, $session['uid'], $own); ?></div>					
 				</td>
 			</tr>
 		</table>
 		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=myTruncate($bk->getUrl(), 150, "/") ?></a>&nbsp;
 			<a href="redirect.php?action=leavehttps&bid=<?=$bk->getBid()?>"><img src="images/lock_small.png" alt="<?=__VISITHTTPS?>" title="<?=__VISITHTTPS?>" /></a></p>
-		<p><?=__DESCRIPTION?>: <br /><?=$bk->getDesc() ?></p>
+		<p><?=__DESCRIPTION?>: <br /><? if ($cid==0) {echo $bk->getDesc();} else {$comm=getComment($cid); echo $comm->getDesc();} ?></p>
 		<p>
 			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<? showValidRatingButtons($bid, $session['uid']); ?>
 		</p>
