@@ -541,9 +541,9 @@ function fetchBookmark($bid)
 	fetchComments($bk);
 	fetchTags($bk);
 	
-	return $bk;
-	
 	$db->close();
+	
+	return $bk;
 }
 
 /** $bk as bookmark() object, adds comments to it */

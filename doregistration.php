@@ -8,7 +8,7 @@
 	include("deps/presentation.inc");
 	include("deps/database.inc");
 	$title = settitle(__REGISTRATION);
-	$thisPage = '__REGISTER';
+	$thisPage = __REGISTRATION;
 ?>
 
 <head>
@@ -33,17 +33,36 @@
 	
 	<div id="content">
 		<?php
+		
+			$form_secret = $_POST['form_secret'];
 			$username=$_POST['username'];
 			$email=$_POST['email'];
 			$password=$_POST['password'];
 			
-			if( !$username || !$email || !$password )
+			if(isset($_SESSION['FORM_SECRET']))
 			{
-				echo __NOTALLDETAILS.'<br />';
-				exit;
+				if(strcasecmp($form_secret, $_SESSION['FORM_SECRET'])===0)
+				{
+					if( !$username || !$email || !$password )
+					{
+						echo __NOTALLDETAILS.'<br />';
+						exit;
+					}
+					
+					$uid = insertUser( $username, $email, $password);
+					unset($_SESSION['FORM_SECRET']);
+				}
+				else
+				{
+					//Invalid secret key
+					echo "something you did is wrong, you are not supposed to even print this";
+				}
 			}
-			
-			$uid = insertUser( $username, $email, $password);
+			else
+			{
+				//Secret key missing
+				echo "form data has been processed";
+			}
 		?>
 	</div>
 	

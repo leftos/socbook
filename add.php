@@ -9,6 +9,9 @@
 	include_once("deps/database.inc");
 	$title = settitle(__ADDBOOKMARK);
 	$thisPage = __ADDBOOKMARK;
+	
+	$form_secret = md5(uniqid(rand(), true));
+	$_SESSION['FORM_SECRET'] = $form_secret;
 ?>
 
 <head>
@@ -36,6 +39,9 @@
 	<div id="content">
 		<form id='addbookmark' action='addresult.php' onsubmit="return validateAddBookmarkForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
+				<tr>
+					<td><input type='hidden' name='form_secret' id='form_secret' value="<?php echo $_SESSION['FORM_SECRET'];?>"></td>
+				</tr>
 				<tr>
 					<td><?=__BOOKMARKURL?></td>
 					<td><input type="text" name="url" maxlength="2000" size="60" <? if (isset($_POST['url'])) {?>value="<?=$_POST['url']?>" <?}?>/></td>

@@ -8,6 +8,10 @@
 	include("deps/database.inc");
 	$title = settitle(__REGISTRATION);
 	$thisPage = __REGISTRATION;
+	
+	//Prevent duplicate form submission
+	$form_secret = md5(uniqid(rand(), true));
+	$_SESSION['FORM_SECRET'] = $form_secret;
 ?>
 <head>
 	<title><?php echo($title); ?></title>
@@ -32,8 +36,11 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<form id='register' action='register.php' onsubmit="return validateRegisterForm()" method='post' accept-charset='UTF-8'>
+		<form id='register' action='doregistration.php' onsubmit="return validateRegisterForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
+				<tr>
+					<td><input type='hidden' name='form_secret' id='form_secret' value="<?php echo $_SESSION['FORM_SECRET'];?>"></td>
+				</tr>
 				<tr>
 					<td><?=__USERNAME?></td>
 					<td>

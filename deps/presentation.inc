@@ -1,7 +1,7 @@
 <?php
-global $session;
+global $_SESSION;
 
-$lang = $session["lang"];
+$lang = $_SESSION["lang"];
 include("lang/".$lang.".php");
 
 function settitle($string) {

@@ -6,10 +6,11 @@ $_db["password"] = "socbook";
 $_db["database"] = "socbook";
 */
 session_start();
-if (!isset($session["uid"])) {
-	$session["uid"] = 0; // Set to 1 to test rating changes properly on viewbookmark.php, should be reset to 0
-	$session["lang"] = 'gr';
-	$session["admin"] = 0;
+
+if (!isset($_SESSION["uid"])) {
+	$_SESSION["uid"] = 0; // Set to 1 to test rating changes properly on viewbookmark.php, should be reset to 0
+	$_SESSION["lang"] = 'gr';
+	$_SESSION["admin"] = 0;
 }
 /*
 if (!($db = mysql_connect($_db["host"], $_db["username"], $_db["password"])))
