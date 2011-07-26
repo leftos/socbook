@@ -10,9 +10,10 @@
 	$thisPage = __REGISTRATION;
 ?>
 <head>
-	<title><?php echo($title); ?></title>
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<head profile="http://www.w3.org/2005/10/profile"><link rel="icon" type="image/png" href="/favicon.png" />
+	<!-- Global head attributes and scripts (JQuery, etc.) -->	
+	<?php include('templates/head.inc') ?>
+	
+	<!-- Page-specific head attributes -->
 	<script type="text/javascript" src="deps/validations.js"></script>
 </head>
 

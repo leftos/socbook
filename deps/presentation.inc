@@ -76,12 +76,9 @@ function checkIfOtherTitles($bid)
 							where booksncomms.bid='.$bid.'
 							and comments.title!=\'\'') or die($db->error);
 	
-	if ($result->num_rows > 1)
-	{
-		echo(__SHOWSUGGESTED);
-	}
-	
 	$db->close();
+	
+	return ($result->num_rows - 1);
 }
 
 function showSuggestedTitles($bid, $uid, $own)

@@ -12,12 +12,9 @@
 ?>
 
 <head>
-	<title><?php echo($title); ?></title>
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<head profile="http://www.w3.org/2005/10/profile"><link rel="icon" type="image/png" href="/favicon.png" />
+	<?php include('templates/head.inc') ?>
 	
 	<!-- JQuery code for tabs -->
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 	<script type="text/javascript">
 	
 	$(document).ready(function() {
@@ -54,6 +51,7 @@
 	
 	<div id="navigation">
 		<?php include('templates/layout/navigation.php'); ?>
+		<p><img src="/images/horizontalrule.png" style="width: 9em; height:1em" /></p>
 		<?php include('templates/tagcloud.php'); ?>
 	</div>
 	<!-- Above should remain as is on every page -->

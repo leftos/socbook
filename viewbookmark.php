@@ -41,14 +41,12 @@
 ?>
 
 <head>
-	<title><?php echo($title); ?></title>
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<head profile="http://www.w3.org/2005/10/profile"><link rel="icon" type="image/png" href="/favicon.png" />
+	<!-- Global head attributes and scripts (JQuery, etc.) -->	
+	<?php include('templates/head.inc') ?>
+	
+	<!-- Page-specific head attributes -->
 	
 	<!-- Ajax code to increase/decrease rating and refresh -->
-	<link type="text/css" href="deps/jquery-ui-1.8.14.custom.css" rel="Stylesheet" />
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-	<script type="text/javascript" src="deps/jquery-ui-1.8.14.custom.min.js"></script>
 	<script type="text/javascript">
       jQuery(document).ready(function() {
         $("#plusOneLink").click(function() {
@@ -127,12 +125,13 @@
 			</tr>
 		</table>
 			
+		<?php if(checkIfOtherTitles($bid)) { ?>
 		<div id="hiddenDivQ">
 			<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
-			<a onclick="javascript:ShowHide('HiddenDiv_1')" href="javascript:;"><? checkIfOtherTitles($bid)?></a>
+			<a onclick="javascript:ShowHide('HiddenDiv_1')" href="javascript:;"><?=__SHOWSUGGESTED?></a>
 		</div>
 		<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? $own=userOwnsBookmark($bid, $session['uid']); showSuggestedTitles($bid, $session['uid'], $own); ?></div>					
-	
+		<? } ?>
 
 		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=myTruncate($bk->getUrl(), 150, "/") ?></a>&nbsp;
 			<a href="redirect.php?action=leavehttps&bid=<?=$bk->getBid()?>"><img src="images/lock_small.png" alt="<?=__VISITHTTPS?>" title="<?=__VISITHTTPS?>" /></a></p>

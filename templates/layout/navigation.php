@@ -5,3 +5,9 @@
 	<li>&nbsp;</li>
 	<li><?php if ($thisPage==__REGISTRATION) {echo(__REGISTRATION);} else {echo ("<a href=\"registration.php\">".__REGISTRATION."</a>");} ?></li>
 </ul>
+<p><img src="/images/horizontalrule.png" width="9em" /></p>
+<form action="search.php" method="get">
+	<label style="font-size: 0.9em"><?=__SEARCH?> </label><br />
+	<input class="tags" type="text" name="s" size="20" />
+</form>
+

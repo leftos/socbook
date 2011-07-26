@@ -12,8 +12,10 @@
 ?>
 
 <head>
-	<title><?php echo($title); ?></title>
-	<link rel="stylesheet" type="text/css" href="style.css" />
+	<!-- Global head attributes and scripts (JQuery, etc.) -->	
+	<?php include('templates/head.inc') ?>
+	
+	<!-- Page-specific head attributes -->
 </head>
 
 <body>

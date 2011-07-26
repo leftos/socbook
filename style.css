@@ -105,6 +105,12 @@ td
 	/* line-height: 1.8em; */
 }
 
+#navigation p img
+{
+	width: 9em;
+	height: 1em;
+}
+
 #content
 {
 	margin: 0 12em 0 25px;
@@ -142,6 +148,11 @@ td
 #footer p
 {
 	padding: 10px 30px 20px 20px;
+}
+
+#tags
+{
+	/* font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; */
 }
 
 /* */
