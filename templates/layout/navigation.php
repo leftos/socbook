@@ -1,7 +1,15 @@
 <ul>
  	<li><?php if ($thisPage==__HOMEPAGE) {echo(__HOMEPAGE);} else {echo ("<a href=\"index.php\">".__HOMEPAGE."</a>");} ?></li>
  	<li>&nbsp;</li>
+ 	<? if ($session['uid'] != 0) { ?>
 	<li><?php if ($thisPage==__ADDBOOKMARK) {echo(__ADDBOOKMARK);} else {echo ("<a href=\"add.php\">".__ADDBOOKMARK."</a>");} ?></li>
 	<li>&nbsp;</li>
+	<? } ?>
 	<li><?php if ($thisPage==__REGISTRATION) {echo(__REGISTRATION);} else {echo ("<a href=\"registration.php\">".__REGISTRATION."</a>");} ?></li>
 </ul>
+<p><img src="/images/horizontalrule.png" width="9em" /></p>
+<form action="search.php" method="get">
+	<label style="font-size: 0.9em"><?=__SEARCH?> </label><br />
+	<input class="tags" type="text" name="s" size="20" /><br />&nbsp;
+</form>
+
