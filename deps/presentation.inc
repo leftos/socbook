@@ -25,9 +25,48 @@ function prettyPrintBookmarks($result)
 			$row->desc = $comm->getDesc();
 			$image = "<img src=\"/images/star_16.png\" title=\"".__OWN."\" />";
 		}
-		echo ("<li class=\"bookmark\"><a href=\"viewbookmark.php?bid=".$row->bid."\">".$row->title."</a>&nbsp;&nbsp;&nbsp;".$image." <br /> <span class=\"bookurl\">".$row->url."</span><br /><span class=\"bookdesc\">(".$row->info.") " . $row->comment."</span>");
+		echo ("<li><a href=\"viewbookmark.php?bid=".$row->bid."\">".$row->title."</a>&nbsp;&nbsp;&nbsp;".$image." <br /> <span class=\"bookurl\">".$row->url."</span><br /><span class=\"bookdesc\">(".$row->info.") " . $row->comment."</span>");
 	}
 	echo ("</ul>");
+}
+
+function prettyPrintBookmark($bk, $_info='date')
+{
+	global $session;
+	
+	$image = "";
+	if ($own=userOwnsBookmark($bk->getBid(), $session['uid']))
+	{
+		$comm = getComment($own);
+		$title = $comm->getTitle();
+		$comment = $comm->getDesc();
+		$image = "<img src=\"/images/star_16.png\" title=\"".__OWN."\" />";
+	}
+	else
+	{
+		$title = $bk->getTitle();
+		$comment = $bk->getDesc();
+	}
+	$bid = $bk->getBid();
+	$url = $bk->getUrl();
+	switch ($_info)
+	{
+		case 'date':
+			$info = $bk->getDateCreated();
+			break;
+		case 'rating':
+			$info = $bk->getRating();
+			break;
+		case 'visits':
+			$info = $bk->getVisits();
+			break;
+		case 'popularity':
+			$info = $bk->getPopularity();
+			break;
+	}
+	
+	echo ("<li><a href=\"viewbookmark.php?bid=".$bid."\">".$title."</a>&nbsp;&nbsp;&nbsp;".$image." <br /> <span class=\"bookurl\">".$url."</span><br /><span class=\"bookdesc\">(".$info.") " . $comment."</span>");
+
 }
 
 function showValidRatingButtons($bid, $uid)

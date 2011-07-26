@@ -208,8 +208,18 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 	/* background: #fff; */
 }
 .tab_content {
-	padding: 20px;
+	padding: 15px;
 	font-size: 1.2em;
+}
+
+.tab_content li {
+	list-style-type: none;
+}
+
+.search li {
+	list-style-type: none;
+	padding: 0.5em 0;
+	font-size: 1.1em;
 }
 
 .tag_cloud p{

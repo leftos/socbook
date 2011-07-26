@@ -789,4 +789,41 @@ function getComment($cid)
 	return $comm;
 }
 
+function search($s, $in='default', $combine='or', $exact='no')
+{
+	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+	$arr = explode(' ', $s);
+	$bkarr = array();
+	switch($in)
+	{
+		case "default":
+			foreach ($arr as $w)
+			{
+				$result = $db->query("select booksncomms.bid
+								from comments
+								join booksncomms on booksncomms.cid=comments.cid
+								join booksntags on booksncomms.bid=booksntags.bid
+								join tagcloud on booksntags.tid=tagcloud.tid
+								where title like '%".$w."%' or comment like '%".$w."%' or tag like '%".$w."%'
+								group by booksncomms.bid;") or die ($db->error);
+								
+				while ($row = $result->fetch_object())
+				{
+					$bkarr[strval($row->bid)] = $row->bid;
+				}
+			}
+			break;		
+	}
+	foreach ($bkarr as $b)
+	{
+		$bk = fetchBookmark($b);
+		prettyPrintBookmark($bk);
+	}
+}
+
 ?>
