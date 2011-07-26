@@ -12,13 +12,13 @@ function settitle($string) {
 
 function prettyPrintBookmarks($result)
 {
-	global $session;
+	global $_SESSION;
 	
 	echo ("<ul>");
 	while ($row = $result->fetch_object())
 	{
 		$image = "";
-		if ($own=userOwnsBookmark($row->bid, $session['uid']))
+		if ($own=userOwnsBookmark($row->bid, $_SESSION['uid']))
 		{
 			$comm = getComment($own);
 			$row->title = $comm->getTitle();
@@ -32,10 +32,10 @@ function prettyPrintBookmarks($result)
 
 function prettyPrintBookmark($bk, $_info='date')
 {
-	global $session;
+	global $_SESSION;
 	
 	$image = "";
-	if ($own=userOwnsBookmark($bk->getBid(), $session['uid']))
+	if ($own=userOwnsBookmark($bk->getBid(), $_SESSION['uid']))
 	{
 		$comm = getComment($own);
 		$title = $comm->getTitle();

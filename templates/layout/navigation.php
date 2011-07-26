@@ -1,7 +1,7 @@
 <ul>
  	<li><?php if ($thisPage==__HOMEPAGE) {echo(__HOMEPAGE);} else {echo ("<a href=\"index.php\">".__HOMEPAGE."</a>");} ?></li>
  	<li>&nbsp;</li>
- 	<? if ($session['uid'] != 0) { ?>
+ 	<? if ($_SESSION['uid'] != 0) { ?>
 	<li><?php if ($thisPage==__ADDBOOKMARK) {echo(__ADDBOOKMARK);} else {echo ("<a href=\"add.php\">".__ADDBOOKMARK."</a>");} ?></li>
 	<li>&nbsp;</li>
 	<? } ?>
