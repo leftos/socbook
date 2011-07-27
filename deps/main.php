@@ -7,11 +7,16 @@ $_db["database"] = "socbook";
 */
 session_start();
 
+// if guest
 if (!isset($_SESSION["uid"])) {
-	$_SESSION["uid"] = 0; // Set to 1 to test rating changes properly on viewbookmark.php, should be reset to 0
+	$_SESSION["uid"] = 0;
 	$_SESSION["lang"] = 'gr';
 	$_SESSION["admin"] = 0;
 }
+
+// manual override of session uid FOR TESTING ONLY
+$_SESSION["uid"] = 1;
+
 /*
 if (!($db = mysql_connect($_db["host"], $_db["username"], $_db["password"])))
 {

@@ -2,14 +2,9 @@
 
 function tag_info()
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$result = $db->query('SELECT * FROM tagcloud ORDER BY popularity DESC LIMIT 20');
+	$result = dbquery($db, 'SELECT * FROM tagcloud ORDER BY popularity DESC LIMIT 20');
 	$arr = array();
 	while ($row = $result->fetch_object())
 	{
@@ -28,7 +23,7 @@ function tag_cloud()
 	$max_size = 30;
 	
 	$tags = tag_info();
-	if (count($tags)==0) exit;
+	if (count($tags)==0) return '';
 	
 	$minimum_count = min(array_values($tags));
 	$maximum_count = max(array_values($tags));
@@ -44,10 +39,9 @@ function tag_cloud()
 		$size = $min_size + ($count - $minimum_count)
 				* ($max_size - $min_size) / $spread;
 		$cloud_tags[] = '<a style="font-size: '. floor($size) . 'px'
-		. '" class="tag_cloud" href="search.php?s=' . $tag
-		. '" title="\'' . $tag . '\' returned a count of ' . $count . '">'
-		. htmlspecialchars(stripslashes($tag)) . '</a>';
-		
+		. '" class="tag_cloud" href="search.php?s=' . $tag . '&exact=true'
+		. '" title="' . $tag . ' (' . $count . ')">'
+		. htmlspecialchars(stripslashes($tag)) . '</a>';		
 	}
 	
 	$cloud_html = join(" ", $cloud_tags) . "<br />";
@@ -56,4 +50,7 @@ function tag_cloud()
 }
 ?>
 
-<div class="tag_cloud"><p><?php print tag_cloud(); ?></p></div>
+<? $html = tag_cloud(); if ($html!='') { ?> 
+	<p><img src="/images/horizontalrule.png" style="width: 9em; height:1em" /></p>
+	<div class="tag_cloud"><p><?=$html?></p></div>
+<? } ?>

@@ -1,8 +1,10 @@
 <?php
-global $_SESSION;
+while(!file_exists(getcwd()."/.htroot")){chdir('..');}
 
+require_once('deps/main.php');
 $lang = $_SESSION["lang"];
-include("lang/".$lang.".php");
+require_once("lang/".$lang.".php");
+require_once('deps/database.inc');
 
 function settitle($string) {
 	$title = __TITLE;
@@ -13,6 +15,19 @@ function settitle($string) {
 function prettyPrintBookmarks($result)
 {
 	global $_SESSION;
+	
+	if ($result->num_rows == 0)
+	{
+		echo "<p>".__NOBOOKMARKS."</p>";
+		if ($_SESSION['uid'] == 0) 
+		{
+			echo "<p><a href=\"/registration.php\">".__LOGINTOADD1."</a> ";
+			echo __LOGINTOADD2." ";
+			echo "<a href=\"/login.php\">".__LOGINTOADD3."</a> ";
+			echo __LOGINTOADD4."</p>";
+		}
+		else echo "<p><a href=\"/add.php\">".__PLEASEADD."</a></p>";
+	}
 	
 	echo ("<ul>");
 	while ($row = $result->fetch_object())
@@ -30,7 +45,7 @@ function prettyPrintBookmarks($result)
 	echo ("</ul>");
 }
 
-function prettyPrintBookmark($bk, $_info='date')
+function prettyPrintBookmark($bk, $_info='date', $_extra=null)
 {
 	global $_SESSION;
 	
@@ -63,6 +78,9 @@ function prettyPrintBookmark($bk, $_info='date')
 		case 'popularity':
 			$info = $bk->getPopularity();
 			break;
+		case 'extra':
+			$info = $_extra;
+			break;
 	}
 	
 	echo ("<li><a href=\"viewbookmark.php?bid=".$bid."\">".$title."</a>&nbsp;&nbsp;&nbsp;".$image." <br /> <span class=\"bookurl\">".$url."</span><br /><span class=\"bookdesc\">(".$info.") " . $comment."</span>");
@@ -74,14 +92,9 @@ function showValidRatingButtons($bid, $uid)
 	// <a href="#" id="plusOneLink"><img src="images/plus-8.png" /></a>&nbsp;<a href="#" id="minusOneLink"><img src="images/minus-8.png" /></a>
 	if ($uid == 0) return;
 	
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$result = $db->query('select * from userrated where bid='.$bid.' and uid='.$uid) or die($db->error);
+	$result = dbquery($db, 'select * from userrated where bid='.$bid.' and uid='.$uid);
 	if ($result->num_rows == 0)
 	{
 		echo "<a href=\"#\" id=\"plusOneLink\"><img src=\"images/plus-8.png\" title=\"".__PLUSONE."\" /></a> <a href=\"#\" id=\"minusOneLink\"><img src=\"images/minus-8.png\" title=\"".__MINUSONE."\" /></a>";
@@ -102,18 +115,13 @@ function showValidRatingButtons($bid, $uid)
 
 function checkIfOtherTitles($bid)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$result = $db->query('select comments.title
+	$result = dbquery($db, 'select comments.title
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='.$bid.'
-							and comments.title!=\'\'') or die($db->error);
+							and comments.title!=\'\'');
 	
 	$db->close();
 	
@@ -122,12 +130,7 @@ function checkIfOtherTitles($bid)
 
 function showSuggestedTitles($bid, $uid, $own)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
 	if ($own != 0)
 	{
@@ -140,12 +143,12 @@ function showSuggestedTitles($bid, $uid, $own)
 		$skip = 'true';
 	}
 	
-	$result = $db->query('select comments.title, comments.comment, comments.cid, comments.rating
+	$result = dbquery($db, 'select comments.title, comments.comment, comments.cid, comments.rating
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='.$bid.' and comments.title!=\'\'
 							'.$check.'
-							order by comments.rating desc') or die($db->error);
+							order by comments.rating desc');
 	
 	addPlusMinus($bid, $db, $result, $uid, $skip);
 	$db->close();
@@ -153,16 +156,12 @@ function showSuggestedTitles($bid, $uid, $own)
 
 function addPlusMinusTitle($bid, $cid, $uid)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
+	
 	// echo $bid.' '.$cid.' '.$uid;
-	$result = $db->query('select comments.title, comments.cid, comments.rating, comments.user
+	$result = dbquery($db, 'select comments.title, comments.cid, comments.rating, comments.user
 							from comments
-							where cid='.$cid) or die($db->error);
+							where cid='.$cid);
 	
 	addPlusMinus($bid, $db, $result, $uid, 'false');
 	$db->close();
@@ -175,25 +174,25 @@ function addPlusMinus($bid, $db, $result, $uid, $skipfirst)
 	{
 		echo $row->title.'&nbsp;&nbsp;&nbsp;&nbsp;('.$row->rating.')&nbsp;&nbsp;';
 		
-		$temp = $db->query('select cid, uid, rating from userratedtitles where cid='.$row->cid.' and uid='.$uid);
+		$temp = dbquery($db, 'select cid, uid, rating from userratedtitles where cid='.$row->cid.' and uid='.$uid);
 		
 		if ($uid==0) continue;
 		
 		if ($temp->num_rows == 0)
 		{
-			echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"plusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/plus-8.png\" title=\"".__PLUSONEONTITLE."\" /></form>&nbsp;";
-			echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"minusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/minus-8.png\" title=\"".__MINUSONEONTITLE."\" /></form>";
+			echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\" accept-charset=\"utf-8\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"plusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/plus-8.png\" title=\"".__PLUSONEONTITLE."\" /></form>&nbsp;";
+			echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\" accept-charset=\"utf-8\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"minusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/minus-8.png\" title=\"".__MINUSONEONTITLE."\" /></form>";
 		}
 		else
 		{
 			$cur = $temp->fetch_object();
 			if ($cur->rating == '-1')
 			{
-				echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"plusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/plus-8.png\" title=\"".__PLUSONEONTITLE."\" /></form>";
+				echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\" accept-charset=\"utf-8\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"plusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/plus-8.png\" title=\"".__PLUSONEONTITLE."\" /></form>";
 			}
 			else
 			{
-				echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"minusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/minus-8.png\" title=\"".__MINUSONEONTITLE."\" /></form>";
+				echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\" accept-charset=\"utf-8\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"minusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/minus-8.png\" title=\"".__MINUSONEONTITLE."\" /></form>";
 			}
 		}
 	}
@@ -212,6 +211,13 @@ function myTruncate($string, $limit, $break=".", $pad="...") {
 		} 
 	} 
 	return $string; 
+}
+
+function clearExtraSpaces($s)
+{
+	$s = trim($s);
+	$s = str_replace("  ", " ", $s);
+	return $s;
 }
 
 ?>

@@ -15,7 +15,7 @@
 				$item = split(',', $item);
 				$myarr[$i++] = $item[0];
 			} */
-			echo join("\", \"", fetchAllTags()); 
+			echo join("\", \"", fetchAllTags(false, 15)); 
 		?> "];
 		function split( val ) {
 			return val.split( / \s*/ );

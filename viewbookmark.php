@@ -4,9 +4,9 @@
 
 <!-- Page dependent settings such as settitle -->
 <?php 
-	include_once("deps/main.php");
-	include_once("deps/presentation.inc");
-	include_once("deps/database.inc");
+	require_once("deps/main.php");
+	require_once("deps/presentation.inc");
+	require_once("deps/database.inc");
 	$title = settitle(__VIEWBOOKMARK);
 	$thisPage = __VIEWBOOKMARK;
 ?>
@@ -42,7 +42,7 @@
 
 <head>
 	<!-- Global head attributes and scripts (JQuery, etc.) -->	
-	<?php include('templates/head.inc') ?>
+	<?php require_once('templates/head.inc') ?>
 	
 	<!-- Page-specific head attributes -->
 	
@@ -81,15 +81,15 @@
 <body>
 	<!-- Below should remain as is on every page -->
 	<div id="title">
-		<?php include('templates/layout/title.php'); ?>
+		<?php require_once('templates/layout/title.php'); ?>
 	</div>
 	
 	<div id="language">
-		<?php include('templates/layout/language.php'); ?>
+		<?php require_once('templates/layout/language.php'); ?>
 	</div>
 	
 	<div id="navigation">
-		<?php include('templates/layout/navigation.php'); ?>
+		<?php require_once('templates/layout/navigation.php'); ?>
 	</div>
 	<!-- Above should remain as is on every page -->
 	
@@ -217,7 +217,7 @@
 	
 	<!-- Below should remain as is on every page -->
 	<div id="footer">
-		<?php include('templates/layout/footer.php'); ?>
+		<?php require_once('templates/layout/footer.php'); ?>
 	</div>
 	<!-- Above should remain as is on every page -->
 </body>

@@ -216,6 +216,14 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 	list-style-type: none;
 }
 
+.tab_page {
+	font-size: 1.2em;
+}
+
+.tab_page li {
+	list-style-type: none;
+}
+
 .search li {
 	list-style-type: none;
 	padding: 0.5em 0;

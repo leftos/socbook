@@ -1,4 +1,9 @@
 <?php
+header("Content-type: text/html; charset=utf-8");
+
+// Global require to allows us to skip optional parameters in functions
+require_once('par.class.php');
+
 class bookmark
 {
 	private $bid = null;
@@ -130,14 +135,9 @@ class bookmark
 	/** mode: 'ids', 'names', 'pretty' */
 	public function getOwnersList($mode='pretty')
 	{
-		@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-		if( mysqli_connect_errno() )
-		{
-			echo 'Error: Could not connect to database';
-			exit;
-		}
+		$db = connectToDB();
 		
-		$result = $db->query("select username, uid
+		$result = dbquery($db, "select username, uid
 								from users
 								inner join comments on comments.user=users.uid
 								inner join booksncomms on booksncomms.cid=comments.cid
@@ -306,6 +306,19 @@ class user
 	}
 }
 
+function connectToDB($host='localhost', $username='socbook', $password='socbook', $database='socbook')
+{
+	@ $_db = new mysqli($host, $username, $password, $database);
+	$_db->set_charset('utf8');
+	if( mysqli_connect_errno() )
+	{
+		echo 'Error: Could not connect to database';
+		exit;
+	}
+	
+	return $_db;
+}
+
 
 function insertBookmark( $url, $title, $desc, $tags, $uid )
 {
@@ -334,10 +347,10 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	$url = rtrim($url, '/');
 	
 	// See if bookmark exists and update, or else add it
-	$result = $db->query("select bid from bookmarks where url='".$url."'");
+	$result = dbquery($db, "select bid from bookmarks where url='".$url."'");
 	if ($result->num_rows == 0)
 	{
-		$result = $db->query("insert into bookmarks values (NULL, '".$url."', 1, 0, 0, '".date('Y-m-d H:i:s')."', 0)");
+		$result = dbquery($db, "insert into bookmarks values (NULL, '".$url."', 1, 0, 0, '".date('Y-m-d H:i:s')."', 0)");
 		//echo ("insert into bookmarks values (NULL, '".$url."', 1, 0, 0, '".date('Y-m-d')."', 0)\n");
 		//echo ($db->error);
 		$bid = $db->insert_id;
@@ -346,14 +359,14 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	{
 		$row = $result->fetch_object();
 		$bid = $row->bid;
-		$result = $db->query("select comments.cid
+		$result = dbquery($db, "select comments.cid
 								from bookmarks
 								inner join booksncomms on bookmarks.bid=booksncomms.bid
 								inner join comments on booksncomms.cid=comments.cid
 								where bookmarks.bid=".$bid." and comments.user=".$uid);
 		if ($result->num_rows == 0)
 		{
-			$result = $db->query("update bookmarks set popularity=popularity+1 where bid=".$bid."");
+			$result = dbquery($db, "update bookmarks set popularity=popularity+1 where bid=".$bid."");
 		}
 		else
 		{
@@ -364,34 +377,34 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	}
 	
 	// Add comment and update booksncomms
-	$result = $db->query("insert into comments values (NULL, '".$title."', '".$desc."', ".$uid.", '".date('Y-m-d H:i:s')."', 0)");
+	$result = dbquery($db, "insert into comments values (NULL, '".$title."', '".$desc."', ".$uid.", '".date('Y-m-d H:i:s')."', 0)");
 	$cid = $db->insert_id;
-	$result = $db->query("insert into booksncomms values (".$bid.",".$cid.")");
+	$result = dbquery($db, "insert into booksncomms values (".$bid.",".$cid.")");
 		
 	// See if tag exists and update, or else add it
 	$tagarray = explode(' ', $tags);
 	foreach ($tagarray as $tag)
 	{
-		$result= $db->query("select tid from tagcloud where tag='".$tag."'");
+		$result= dbquery($db, "select tid from tagcloud where tag='".$tag."'");
 		if ($result->num_rows == 0)
 		{
-			$result = $db->query("insert into tagcloud values (NULL, '".$tag."', 1)");
+			$result = dbquery($db, "insert into tagcloud values (NULL, '".$tag."', 1)");
 			$tid = $db->insert_id;
-			$result = $db->query("insert into booksntags values (".$bid.",".$tid.",1)");
+			$result = dbquery($db, "insert into booksntags values (".$bid.",".$tid.",1)");
 		}
 		else
 		{
 			$row = $result->fetch_object();
 			$tid = $row->tid;
-			$result = $db->query("update tagcloud set popularity=popularity+1 where tid=".$tid) or die($db->error);
-			$result = $db->query("select * from booksntags where tid=".$tid.' and bid='.$bid) or die($db->error);
+			$result = dbquery($db, "update tagcloud set popularity=popularity+1 where tid=".$tid);
+			$result = dbquery($db, "select * from booksntags where tid=".$tid.' and bid='.$bid);
 			if ($result->num_rows == 0)
 			{
-				$result = $db->query("insert into booksntags values (".$bid.",".$tid.", 1)") or die($db->error);
+				$result = dbquery($db, "insert into booksntags values (".$bid.",".$tid.", 1)");
 			}
 			else
 			{
-				$result = $db->query("update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid) or die ($db->error);
+				$result = dbquery($db, "update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid);
 			}			
 		}
 	}
@@ -410,17 +423,12 @@ function insertUser( $username, $email, $password )
 		$password = addslashes($password);
 	}
 	
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$check_db_email = $db->query("select uid from users where users.email='".$email."'");
+	$check_db_email = dbquery($db, "select uid from users where users.email='".$email."'");
 	if ($check_db_email->num_rows == 0)
 	{
-		$check_db_username = $db->query("select uid from users where users.username='".$username."'");
+		$check_db_username = dbquery($db, "select uid from users where users.username='".$username."'");
 		if ($check_db_username->num_rows == 0)
 		{
 			$new_user = new user;
@@ -429,7 +437,7 @@ function insertUser( $username, $email, $password )
 			$new_user->setPassword($password);
 			$new_user->setClass('user');
 			
-			$insert_db_user = $db->query("insert into users values (NULL, '".$new_user->getUsername()."', '".$new_user->getPassword()."', '".$new_user->getEmail()."', '".$new_user->getClass()."')");
+			$insert_db_user = dbquery($db, "insert into users values (NULL, '".$new_user->getUsername()."', '".$new_user->getPassword()."', '".$new_user->getEmail()."', '".$new_user->getClass()."')");
 			$uid = $db->insert_id;
 		}
 		else 
@@ -459,14 +467,9 @@ function insertUser( $username, $email, $password )
 /** sorttype: datecreated, popularity, rating, visits */
 function populateIndex($sorttype)
 {	
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$result = $db->query("
+	$result = dbquery($db, "
 	SELECT tablea.bid,
 		   tablea.url,
 	       tablea.cid,
@@ -504,7 +507,7 @@ function populateIndex($sorttype)
 	WHERE  tableb.cratingb IS NULL
 	       AND tablea.title != ''
 	GROUP  BY tablea.bid
-	ORDER  BY tablea.".$sorttype." DESC") or die($db->error);
+	ORDER  BY tablea.".$sorttype." DESC");
 	
 	$db->close();
 	return $result;
@@ -513,17 +516,12 @@ function populateIndex($sorttype)
 /** Returns a new bookmark() object */
 function fetchBookmark($bid)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 
 	$bk = new bookmark($bid);
 	
-	$bookmark = $db->query('select url, rating, datecreated from bookmarks where bid='.$bid.';');
-	$titles = $db->query('select comments.title, comments.comment, comments.cid
+	$bookmark = dbquery($db, 'select url, rating, datecreated from bookmarks where bid='.$bid.';');
+	$titles = dbquery($db, 'select comments.title, comments.comment, comments.cid
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='.$bid.' and comments.title!=\'\'
@@ -549,21 +547,16 @@ function fetchBookmark($bid)
 /** $bk as bookmark() object, adds comments to it */
 function fetchComments($bk)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$comments = $db->query('
+	$comments = dbquery($db, '
 				select comments.cid, comments.title, comments.comment, users.username, comments.dateposted
 				from comments
 				inner join booksncomms on comments.cid=booksncomms.cid
 				inner join users on comments.user=users.uid
 				where booksncomms.bid='.$bk->getBid().' 
 				order by comments.dateposted;
-	') or die($db->error);
+	');
 	
 	$i = 0;
 	
@@ -582,18 +575,13 @@ function fetchComments($bk)
 
 function fetchTags($bk)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$result = $db->query('select tagcloud.tid, tagcloud.tag, booksntags.popularity
+	$result = dbquery($db, 'select tagcloud.tid, tagcloud.tag, booksntags.popularity
 							from tagcloud
 							inner join booksntags on tagcloud.tid=booksntags.tid
 							where booksntags.bid='.$bk->getBid().'
-							order by booksntags.popularity desc') or die($db->error);
+							order by booksntags.popularity desc');
 	
 	$i = 0;
 	
@@ -607,20 +595,17 @@ function fetchTags($bk)
 	}
 }
 
-function fetchAllTags($json='false')
+function fetchAllTags($json=false, $limit=null)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$result = $db->query('select tagcloud.tid, tagcloud.tag, tagcloud.popularity
+	if (isset($limit)) { $limitS=' limit '.$limit; } else { $limitS = ''; }
+	
+	$result = dbquery($db, 'select tagcloud.tid, tagcloud.tag, tagcloud.popularity
 							from tagcloud
 							inner join booksntags on tagcloud.tid=booksntags.tid
 							group by tagcloud.tid
-							order by tagcloud.popularity desc') or die($db->error);	
+							order by tagcloud.popularity desc'.$limitS);	
 	
 	$i = 0;
 	$arr = array();
@@ -628,7 +613,7 @@ function fetchAllTags($json='false')
 	{
 		$arr[$i++] = $cur->tag." (".$cur->popularity.")";
 	}
-	if ($json=='false')
+	if ($json==false)
 	{
 		return $arr;
 	}
@@ -644,92 +629,77 @@ function fetchAllTags($json='false')
 
 function changeRating($bid, $uid, $do)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$result = $db->query('select * from userrated where bid='.$bid.' and uid='.$uid) or die($db->error);
+	$result = dbquery($db, 'select * from userrated where bid='.$bid.' and uid='.$uid);
 	if ($result->num_rows == 0)
 	{	
 		if ($do == 'plusone')
 		{
-			$result = $db->query('update bookmarks set rating=rating+1 where bid='.$bid) or die($db->error);
-			$result = $db->query('insert into userrated values ('.$bid.','.$uid.', \'1\')') or die($db->error);
+			$result = dbquery($db, 'update bookmarks set rating=rating+1 where bid='.$bid);
+			$result = dbquery($db, 'insert into userrated values ('.$bid.','.$uid.', \'1\')');
 		}
 		else
 		{
-			$result = $db->query('update bookmarks set rating=rating-1 where bid='.$bid) or die($db->error);
-			$result = $db->query('insert into userrated values ('.$bid.','.$uid.', \'-1\')') or die($db->error);
+			$result = dbquery($db, 'update bookmarks set rating=rating-1 where bid='.$bid);
+			$result = dbquery($db, 'insert into userrated values ('.$bid.','.$uid.', \'-1\')');
 		}
 	}
 	else
 	{
 		if ($do == 'plusone')
 		{
-			$result = $db->query('update bookmarks set rating=rating+1 where bid='.$bid) or die($db->error);
+			$result = dbquery($db, 'update bookmarks set rating=rating+1 where bid='.$bid);
 		}
 		else
 		{
-			$result = $db->query('update bookmarks set rating=rating-1 where bid='.$bid) or die($db->error);
+			$result = dbquery($db, 'update bookmarks set rating=rating-1 where bid='.$bid);
 		}
-		$result = $db->query('delete from userrated where bid='.$bid.' and uid='.$uid) or die($db->error);
+		$result = dbquery($db, 'delete from userrated where bid='.$bid.' and uid='.$uid);
 	}
 	$db->close();
 }
 
 function changeTitleRating($cid, $uid, $do)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$result = $db->query('select * from userratedtitles where cid='.$cid.' and uid='.$uid) or die($db->error);
+	$result = dbquery($db, 'select * from userratedtitles where cid='.$cid.' and uid='.$uid);
 	if ($result->num_rows == 0)
 	{	
 		if ($do == 'plusone')
 		{
-			$result = $db->query('update comments set rating=rating+1 where cid='.$cid) or die($db->error);
-			$result = $db->query('insert into userratedtitles values ('.$cid.','.$uid.', \'1\')') or die($db->error);
+			$result = dbquery($db, 'update comments set rating=rating+1 where cid='.$cid);
+			$result = dbquery($db, 'insert into userratedtitles values ('.$cid.','.$uid.', \'1\')');
 		}
 		else
 		{
-			$result = $db->query('update comments set rating=rating-1 where cid='.$cid) or die($db->error);
-			$result = $db->query('insert into userratedtitles values ('.$cid.','.$uid.', \'-1\')') or die($db->error);
+			$result = dbquery($db, 'update comments set rating=rating-1 where cid='.$cid);
+			$result = dbquery($db, 'insert into userratedtitles values ('.$cid.','.$uid.', \'-1\')');
 		}
 	}
 	else
 	{
 		if ($do == 'plusone')
 		{
-			$result = $db->query('update comments set rating=rating+1 where cid='.$cid) or die($db->error);
+			$result = dbquery($db, 'update comments set rating=rating+1 where cid='.$cid);
 		}
 		else
 		{
-			$result = $db->query('update comments set rating=rating-1 where cid='.$cid) or die($db->error);
+			$result = dbquery($db, 'update comments set rating=rating-1 where cid='.$cid);
 		}
-		$result = $db->query('delete from userratedtitles where cid='.$cid.' and uid='.$uid) or die($db->error);
+		$result = dbquery($db, 'delete from userratedtitles where cid='.$cid.' and uid='.$uid);
 	}
 	$db->close();
 }
 
 function visit($bid)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$result = $db->query('update bookmarks set visits=visits+1 where bid='.$bid) or die ($db->error);
+	$result = dbquery($db, 'update bookmarks set visits=visits+1 where bid='.$bid);
 
-	$result = $db->query('select url from bookmarks where bid='.$bid) or die($db->error);
+	$result = dbquery($db, 'select url from bookmarks where bid='.$bid);
 	$url = $result->fetch_field();
 							
 	$db->close();
@@ -739,14 +709,9 @@ function visit($bid)
 
 function userOwnsBookmark($bid, $uid)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$titles = $db->query('select comments.title, comments.comment, comments.cid
+	$titles = dbquery($db, 'select comments.title, comments.comment, comments.cid
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='.$bid.' 
@@ -765,17 +730,12 @@ function userOwnsBookmark($bid, $uid)
 
 function getComment($cid)
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
-	$titles = $db->query('select title, comment, dateposted, rating, username
+	$titles = dbquery($db, 'select title, comment, dateposted, rating, username
 							from comments
 							inner join users on users.uid=comments.user
-							where comments.cid='.$cid) or die($db->error);
+							where comments.cid='.$cid);
 							
 	$db->close();
 	
@@ -789,41 +749,109 @@ function getComment($cid)
 	return $comm;
 }
 
-function search($s, $in='default', $combine='or', $exact='no')
-{
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $exact=false, $sort='relevance')
+{	
+	$db = connectToDB();
+	
 	$arr = explode(' ', $s);
 	$bkarr = array();
-	switch($in)
+	
+	foreach ($arr as $w)
 	{
-		case "default":
-			foreach ($arr as $w)
+		$where = "where ";
+		if ($inTitle) 
+		{
+			if ($exact)
 			{
-				$result = $db->query("select booksncomms.bid
-								from comments
-								join booksncomms on booksncomms.cid=comments.cid
-								join booksntags on booksncomms.bid=booksntags.bid
-								join tagcloud on booksntags.tid=tagcloud.tid
-								where title like '%".$w."%' or comment like '%".$w."%' or tag like '%".$w."%'
-								group by booksncomms.bid;") or die ($db->error);
-								
-				while ($row = $result->fetch_object())
-				{
-					$bkarr[strval($row->bid)] = $row->bid;
-				}
+				$where .= " title like '".$w."'";	
 			}
-			break;		
+			else
+			{
+				$where .= " title like '%".$w."%'";	
+			}
+		}
+		if ($inDesc) 
+		{
+			if ($where != "") $where .= " or";
+			if ($exact)
+			{
+				$where .= " comment like '".$w."'";	
+			}
+			else
+			{
+				$where .= " comment like '%".$w."%'";	
+			}
+		}
+		if ($inTags)
+		{
+			if ($where != "") $where .= " or";
+			if ($exact)
+			{
+				$where .= " tag like '".$w."'";	
+			}
+			else
+			{
+				$where .= " tag like '%".$w."%'";	
+			}
+		}
+		if ($where == "where ") die('Invalid search query');
+		
+		$result = dbquery($db, "select booksncomms.bid
+						from comments
+						join booksncomms on booksncomms.cid=comments.cid
+						join booksntags on booksncomms.bid=booksntags.bid
+						join tagcloud on booksntags.tid=tagcloud.tid "
+						.$where.
+						" group by booksncomms.bid;");
+		
+		while ($row = $result->fetch_object())
+		{
+			if (isset($bkarr[strval($row->bid)]))
+			{
+				$bkarr[strval($row->bid)]++; // increase occurence of each bid for the whole query
+			}
+			else
+			{
+				$bkarr[strval($row->bid)] = 1;
+			}
+		}
+		arsort($bkarr);
 	}
+	//print "{$db->info}";
+	//print_r($bkarr);
+	$bkrel = $bkarr;
+	if ($combine=='and')
+	{
+		$bkarr = array_keys($bkarr, count($arr));
+	} 
+	else
+	{
+		$bkarr = array_keys($bkarr);
+	}
+	//print_r($bkarr);
+	$bkobjarr = array();
 	foreach ($bkarr as $b)
 	{
 		$bk = fetchBookmark($b);
-		prettyPrintBookmark($bk);
+		$bkobjarr[] = $bk;
 	}
+	switch ($sort)
+	{
+		
+		case 'relevance':
+		default:
+			foreach ($bkobjarr as $bk)
+			{
+				prettyPrintBookmark($bk, 'extra', $bkrel[$bk->getBid()]);
+			}
+			break;
+	}
+}
+
+function dbquery($db, $query)
+{
+	$result = $db->query($query) or die($db->error.'<br />'.$query);
+	return $result;
 }
 
 ?>

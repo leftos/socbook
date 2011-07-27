@@ -4,16 +4,16 @@
 
 <!-- Page dependent settings such as settitle -->
 <?php 
-	include_once("deps/main.php");
-	include_once("deps/presentation.inc");
-	include_once("deps/database.inc");
+	require_once("deps/main.php");
+	require_once("deps/presentation.inc");
+	require_once("deps/database.inc");
 	$title = settitle(__EDIT);
 	$thisPage = __EDIT;
 ?>
 
 <head>
 	<!-- Global head attributes and scripts (JQuery, etc.) -->	
-	<?php include('templates/head.inc') ?>
+	<?php require_once('templates/head.inc') ?>
 	
 	<!-- Page-specific head attributes -->
 </head>
@@ -21,15 +21,15 @@
 <body>
 	<!-- Below should remain as is on every page -->
 	<div id="title">
-		<?php include('templates/layout/title.php'); ?>
+		<?php require_once('templates/layout/title.php'); ?>
 	</div>
 	
 	<div id="language">
-		<?php include('templates/layout/language.php'); ?>
+		<?php require_once('templates/layout/language.php'); ?>
 	</div>
 	
 	<div id="navigation">
-		<?php include('templates/layout/navigation.php'); ?>
+		<?php require_once('templates/layout/navigation.php'); ?>
 	</div>
 	<!-- Above should remain as is on every page -->
 	
@@ -43,7 +43,7 @@
 			$desc = $comm->getDesc();
 		?>
 		<p><?=__NOWEDITING.'<br /><em>'.myTruncate($bk->getUrl(), 100, "/").'</em>'?></p>
-		<form action="doedit.php" method="post">
+		<form action="doedit.php" method="post"  accept-charset="utf-8">
 			<input type="hidden" name="cid" value="<?=$cid?>" />
 			<input type="hidden" name="bid" value="<?=$bid?>" />
 			<table>
@@ -80,7 +80,7 @@
 	
 	<!-- Below should remain as is on every page -->
 	<div id="footer">
-		<?php include('templates/layout/footer.php'); ?>
+		<?php require_once('templates/layout/footer.php'); ?>
 	</div>
 	<!-- Above should remain as is on every page -->
 </body>

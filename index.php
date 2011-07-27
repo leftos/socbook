@@ -4,21 +4,22 @@
 
 <!-- Page dependent settings such as settitle -->
 <?php 
-	include("deps/main.php");
-	include("deps/presentation.inc");
-	include("deps/database.inc");
+	require_once("deps/main.php");
+	require_once("deps/presentation.inc");
+	require_once("deps/database.inc");
 	$title = settitle(__HOMEPAGE);
 	$thisPage = __HOMEPAGE;
 ?>
 
 <head>
-	<?php include('templates/head.inc') ?>
+	<?php require_once('templates/head.inc') ?>
 	
 	<!-- JQuery code for tabs -->
 	<script type="text/javascript">
 	
 	$(document).ready(function() {
 	
+		/*
 		//Default Action
 		$(".tab_content").hide(); //Hide all content
 		$("ul.tabs li:first").addClass("active").show(); //Activate first tab
@@ -33,6 +34,29 @@
 			$(activeTab).fadeIn(); //Fade in the active content
 			return false;
 		});
+		*/
+		
+		$("#tabs").tabs({
+		  show: function(event, ui) {
+		    var lastOpenedPanel = $(this).data("lastOpenedPanel");
+		    if (!$(this).data("topPositionTab")) {
+		        $(this).data("topPositionTab", $(ui.panel).position().top)
+		    }
+		    // do crossfade of tabs
+		    $(ui.panel).hide().css('z-index', 2).fadeIn(1000, function() {
+		      $(this).css('z-index', '');
+		      if (lastOpenedPanel) 
+		      {
+		        lastOpenedPanel
+		          .toggleClass("ui-tabs-hide")
+		          .hide();
+		      }
+		    });
+		
+		    $(this).data("lastOpenedPanel", $(ui.panel));
+		  } 
+		});
+
 	
 	});
 	</script>
@@ -42,73 +66,38 @@
 <body>
 	<!-- Below should remain as is on every page -->
 	<div id="title">
-		<?php include('templates/layout/title.php'); ?>
+		<?php require_once('templates/layout/title.php'); ?>
 	</div>
 	
 	<div id="language">
-		<?php include('templates/layout/language.php'); ?>
+		<?php require_once('templates/layout/language.php'); ?>
 	</div>
 	
 	<div id="navigation">
-		<?php include('templates/layout/navigation.php'); ?>
-		<p><img src="/images/horizontalrule.png" style="width: 9em; height:1em" /></p>
-		<?php include('templates/tagcloud.php'); ?>
+		<?php require_once('templates/layout/navigation.php'); ?>
+		<?php require_once('templates/tagcloud.php'); ?>
 	</div>
 	<!-- Above should remain as is on every page -->
 	
+	<div id="content">	
+		<div id="tabs">
+			<ul>
+				<li><a href="/tabs/newest.php"><?php echo (__NEWESTTAB); ?></a></li>
+				<li><a href="/tabs/popular.php"><?php echo (__POPULARTAB); ?></a></li>
+				<li><a href="/tabs/toprated.php"><?php echo (__RATEDTAB); ?></a></li>
+				<li><a href="/tabs/visits.php"><?php echo (__VISITEDTAB); ?></a></li>
+			</ul>
+		</div>
+	</div>
 	
-	<ul class="tabs">
-		<li><a href="#tabnew"><?php echo (__NEWESTTAB); ?></a></li>
-		<li><a href="#tabpopular"><?php echo (__POPULARTAB); ?></a></li>
-		<li><a href="#tabtoprated"><?php echo (__RATEDTAB); ?></a></li>
-		<li><a href="#tabmostvisited"><?php echo (__VISITEDTAB); ?></a></li>
-	</ul>
-	
-	<!-- Tab functions -->
-	<?php
-		
-	?>
-	
+	<!--
 	<div class="tab_container">
-		<div id="tabnew" class="tab_content">
-			<p>
-				<?php
-				$result = populateIndex('datecreated');
-				prettyPrintBookmarks($result);
-				?>
-			</p>
-		</div>
-		<div id="tabpopular" class="tab_content">
-			<p>
-				<?php
-				$result = populateIndex('popularity');
-				prettyPrintBookmarks($result);
-				?>
-			</p>
-		</div>
-		<div id="tabtoprated" class="tab_content">
-			<p>
-				<?php
-				$result = populateIndex('rating');
-				prettyPrintBookmarks($result);
-				?>
-			</p>
-		</div>
-		<div id="tabmostvisited" class="tab_content">
-			<p>
-				<?php
-				$result = populateIndex('visits');
-				prettyPrintBookmarks($result);
-				?>
-			</p>
-		</div>
+		
 	</div>
-	
-	<div id="content">
-	</div>
+	-->
 	
 	<div id="footer">
-		<?php include('templates/layout/footer.php'); ?>
+		<?php require_once('templates/layout/footer.php'); ?>
 	</div>
 </body>
 

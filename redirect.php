@@ -1,20 +1,17 @@
 <?php
+require_once('/deps/database.inc');
+
 if (isset($_GET['action']))
 {
 	if (($_GET['action'] == 'leave') || ($_GET['action'] == 'leavehttps'))
 	{
-		@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-		if( mysqli_connect_errno() )
-		{
-			echo 'Error: Could not connect to database';
-			exit;
-		}
+		$db = connectToDB();
 		
 		$bid = $_GET['bid'];
 		
-		$result = $db->query('update bookmarks set visits=visits+1 where bid='.$bid) or die ($db->error);
+		$result = dbquery($db, 'update bookmarks set visits=visits+1 where bid='.$bid);
 	
-		$result = $db->query('select url from bookmarks where bid='.$bid) or die($db->error);
+		$result = dbquery($db, 'select url from bookmarks where bid='.$bid);
 		$murl = $result->fetch_object();
 								
 		$db->close();

@@ -1,12 +1,9 @@
 <?php
+require_once('/deps/database.inc');
+
 if ((isset($_POST['cid'])) && (isset($_POST['bid'])))
 {
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
 	$bid = $_POST['bid'];
 	$cid = $_POST['cid'];
@@ -15,11 +12,11 @@ if ((isset($_POST['cid'])) && (isset($_POST['bid'])))
 	$tags = $_POST['tags'];
 	$keeprating = $_POST['keeprating'];
 	
-	$result = $db->query("update comments set title='".$title."', comment='".$desc."' where cid=".$cid) or die($db->error);
+	$result = dbquery($db, "update comments set title='".$title."', comment='".$desc."' where cid=".$cid);
 	if ($keeprating != 'true')
 	{
-		$result = $db->query("update comments set rating=0 where cid=".$cid) or die($db->error);
-		$result = $db->query("delete from userratedtitles where cid=".$cid) or die($db->error);
+		$result = dbquery($db, "update comments set rating=0 where cid=".$cid);
+		$result = dbquery($db, "delete from userratedtitles where cid=".$cid);
 	}
 	if (isset($tags))
 	{
@@ -27,19 +24,19 @@ if ((isset($_POST['cid'])) && (isset($_POST['bid'])))
 		$tagarray = explode(' ', $tags);
 		foreach ($tagarray as $tag)
 		{
-			$result= $db->query("select tid from tagcloud where tag='".$tag."'");
+			$result= dbquery($db, "select tid from tagcloud where tag='".$tag."'");
 			if ($result->num_rows == 0)
 			{
-				$result = $db->query("insert into tagcloud values (NULL, '".$tag."', 1)");
+				$result = dbquery($db, "insert into tagcloud values (NULL, '".$tag."', 1)");
 				$tid = $db->insert_id;
-				$result = $db->query("insert into booksntags values (".$bid.",".$tid.",1)");
+				$result = dbquery($db, "insert into booksntags values (".$bid.",".$tid.",1)");
 			}
 			else
 			{
 				$row = $result->fetch_object();
 				$tid = $row->tid;
-				$result = $db->query("update tagcloud set popularity=popularity+1 where tid=".$tid) or die($db->error);
-				$result = $db->query("update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid) or die ($db->error);
+				$result = dbquery($db, "update tagcloud set popularity=popularity+1 where tid=".$tid);
+				$result = dbquery($db, "update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid);
 			}
 		}
 	}

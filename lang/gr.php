@@ -90,4 +90,12 @@ define('__DELETECOMMENTS', 'Διαγραφή και όλων των σχολίω
 
 // search.php
 define('__SEARCHFOR', 'Αναζήτηση για');
+
+// presentation.inc
+define('__NOBOOKMARKS', 'Δε βρέθηκε κανένας σελιδοδείκτης.');
+define('__LOGINTOADD1', 'Συνδεθείτε');
+define('__LOGINTOADD2', 'ή');
+define('__LOGINTOADD3', 'εγγραφείτε');
+define('__LOGINTOADD4', 'για να δημιουργήσετε ένα νέο σελιδοδείκτη.');
+define('__PLEASEADD', 'Δημιουργείστε ένα νέο σελιδοδείκτη εσείς!');
 ?>

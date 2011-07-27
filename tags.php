@@ -1,16 +1,13 @@
 <?php
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+require_once('/deps/database.inc');
+
+	$db = connectToDB();
 	
-	$result = $db->query('select tagcloud.tid, tagcloud.tag, tagcloud.popularity
+	$result = dbquery($db, 'select tagcloud.tid, tagcloud.tag, tagcloud.popularity
 							from tagcloud
 							inner join booksntags on tagcloud.tid=booksntags.tid
 							group by tagcloud.tid
-							order by tagcloud.popularity desc') or die($db->error);	
+							order by tagcloud.popularity desc');	
 	
 	$i = 0;
 	$arr = array();

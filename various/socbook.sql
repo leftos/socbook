@@ -16,6 +16,16 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `socbook`
+--
+
+/*!40000 DROP DATABASE IF EXISTS `socbook`*/;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `socbook` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `socbook`;
+
+--
 -- Table structure for table `bookmarks`
 --
 
@@ -31,18 +41,8 @@ CREATE TABLE `bookmarks` (
   `datecreated` datetime NOT NULL,
   `reported` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`bid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bookmarks`
---
-
-LOCK TABLES `bookmarks` WRITE;
-/*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES (1,'www.di.fm',1,2,0,'2011-07-24 16:24:04',0),(2,'www.radioparea.gr',1,0,0,'2011-07-24 16:24:55',0),(3,'www.github.com',2,-1,1,'2011-07-24 16:25:21',0),(4,'www.twitter.com',2,0,0,'2011-07-24 16:29:47',0),(5,'www.facebook.com',2,0,1,'2011-07-24 16:34:14',0),(6,'www.youtube.com',1,0,0,'2011-07-25 20:16:33',0);
-/*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `booksncomms`
@@ -60,16 +60,6 @@ CREATE TABLE `booksncomms` (
   CONSTRAINT `booksncomms_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `comments` (`cid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `booksncomms`
---
-
-LOCK TABLES `booksncomms` WRITE;
-/*!40000 ALTER TABLE `booksncomms` DISABLE KEYS */;
-INSERT INTO `booksncomms` VALUES (1,1),(2,2),(3,3),(4,4),(5,5),(3,6),(3,8),(5,9),(5,10),(6,11),(4,12);
-/*!40000 ALTER TABLE `booksncomms` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `booksntags`
@@ -90,16 +80,6 @@ CREATE TABLE `booksntags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `booksntags`
---
-
-LOCK TABLES `booksntags` WRITE;
-/*!40000 ALTER TABLE `booksntags` DISABLE KEYS */;
-INSERT INTO `booksntags` VALUES (1,1,1),(1,2,1),(1,3,1),(1,4,1),(1,5,1),(1,6,1),(1,7,1),(2,1,1),(2,2,1),(2,8,1),(2,9,1),(3,10,1),(3,11,1),(3,12,1),(3,22,1),(4,13,1),(4,14,1),(4,15,2),(4,16,2),(4,29,1),(4,30,1),(5,2,1),(5,13,2),(5,14,2),(5,17,1),(5,18,1),(5,19,1),(5,20,1),(5,21,1),(5,23,1),(5,24,1),(5,25,1),(6,2,1),(6,26,1),(6,27,1),(6,28,1);
-/*!40000 ALTER TABLE `booksntags` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `comments`
 --
 
@@ -116,18 +96,8 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`cid`),
   KEY `user` (`user`),
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `comments`
---
-
-LOCK TABLES `comments` WRITE;
-/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,'Digitally Imported (di.fm)','Web radio Î¼Îµ Î·Î»ÎµÎºÏ„ÏÎ¿Î½Î¹ÎºÎ® Î¼Î¿Ï…ÏƒÎ¹ÎºÎ®.',1,'2011-07-24 16:24:04',0),(2,'Radioparea.gr Web Radio','Î†Î»Î»Î¿ Î­Î½Î± web radio.',1,'2011-07-24 16:24:55',0),(3,'GitHub, source control','Î Î»Î±Ï„Ï†ÏŒÏÎ¼Î± ÎµÎ»Î­Î³Ï‡Î¿Ï… Ï€Î·Î³Î±Î¯Î¿Ï… ÎºÏŽÎ´Î¹ÎºÎ± ÎºÎ±Î¹ ÏƒÏ…Î½ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚',1,'2011-07-24 16:25:21',2),(4,'Twitter','Î¥Ï€Î·ÏÎµÏƒÎ¯Î± ÎºÎ¿Î¹Î½Ï‰Î½Î¹ÎºÎ®Ï‚ Î´Î¹ÎºÏ„ÏÏ‰ÏƒÎ·Ï‚ Î¼Îµ ÏƒÏÎ½Ï„Î¿Î¼Î± Î¼Î·Î½ÏÎ¼Î±Ï„Î±, Î­Ï‰Ï‚ 140 Ï‡Î±ÏÎ±ÎºÏ„Î®ÏÎµÏ‚.',1,'2011-07-24 16:29:47',0),(5,'Facebook','Î¤Î¿ social network Ï€Î¿Ï… Î­ÎºÎ±Î½Îµ Î¸ÏÎ±ÏÏƒÎ· ÎºÎ±Î¹ Ï€Î»Î­Î¿Î½ Ï‡ÏÎ·ÏƒÎ¹Î¼Î¿Ï€Î¿Î¹ÎµÎ¯Ï„Î±Î¹ Î±Ï€ÏŒ ÎµÎºÎ±Ï„Î¿Î¼Î¼ÏÏÎ¹Î± Ï‡ÏÎ®ÏƒÏ„ÎµÏ‚ Î±Î½Î¬ Ï„Î¿Î½ ÎºÏŒÏƒÎ¼Î¿, Î³Î¹Î± Î½Î± Î¼Î¿Î¹ÏÎ±ÏƒÏ„Î¿ÏÎ½ Ï†Ï‰Ï„Î¿Î³ÏÎ±Ï†Î¯ÎµÏ‚, Î¼Î¿Ï…ÏƒÎ¹ÎºÎ® ÎºÎ±Î¹ Î½Î­Î±.',1,'2011-07-24 16:34:14',0),(6,'GitHub, source control for the masses!','This is the one we used for this project.',2,'2011-07-25 13:08:47',1),(8,'','Î‘Ï…Ï„ÏŒ ÎµÎ¯Î½Î±Î¹ Î­Î½Î± ÏƒÏ‡ÏŒÎ»Î¹Î¿! Î© Î½Î±Î¹!',1,'2011-07-25 15:33:10',0),(9,'Facebook, the social network','Î”ÎµÎ½ Î­Ï‡Ï‰ Î½Î± Ï€Ï‰ ÎºÎ¬Ï„Î¹ Î¬Î»Î»Î¿!',2,'2011-07-25 18:37:27',1),(10,'','ÎˆÏ‡Ï‰ Î±ÏÏ‡Î¯ÏƒÎµÎ¹ Î½Î± Ï„Î¿ Î²Î±ÏÎ¹Î­Î¼Î±Î¹.',2,'2011-07-25 19:07:45',0),(11,'YouTube','Î§ÏÎµÎ¹Î¬Î¶ÎµÏ„Î±Î¹ Î½Î± Ï€Ï‰ ÎºÎ¬Ï„Î¹;',2,'2011-07-25 20:16:33',0),(12,'Tweet tweet','Î£Î¿Ï… ÎºÎ¬Î½Ï‰ Ï„Î¿Ï…Î¯Ï„, Î¼Î¿Ï… ÎºÎ¬Î½ÎµÎ¹Ï‚ Î¼Î­Î½ÏƒÎ¹Î¿, ÎµÎ¯Î¼Î±ÏƒÏ„Îµ ÏƒÏ„Î¿ Twitter.',2,'2011-07-25 20:20:06',0);
-/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `tagcloud`
@@ -141,18 +111,8 @@ CREATE TABLE `tagcloud` (
   `tag` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `popularity` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tagcloud`
---
-
-LOCK TABLES `tagcloud` WRITE;
-/*!40000 ALTER TABLE `tagcloud` DISABLE KEYS */;
-INSERT INTO `tagcloud` VALUES (1,'radio',2),(2,'music',4),(3,'streaming',1),(4,'electronic',1),(5,'trance',1),(6,'techno',1),(7,'house',1),(8,'mainsteam',1),(9,'web',1),(10,'source',1),(11,'control',1),(12,'github',1),(13,'social',3),(14,'network',3),(15,'twitter',2),(16,'tweet',2),(17,'facebook',1),(18,'poke',1),(19,'video',1),(20,'share',1),(21,'photos',1),(22,'git',1),(23,'wall',1),(24,'games',1),(25,'farmville',1),(26,'youtube',1),(27,'videos',1),(28,'videoclips',1),(29,'mentions',1),(30,'retweet',1);
-/*!40000 ALTER TABLE `tagcloud` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `userrated`
@@ -173,16 +133,6 @@ CREATE TABLE `userrated` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `userrated`
---
-
-LOCK TABLES `userrated` WRITE;
-/*!40000 ALTER TABLE `userrated` DISABLE KEYS */;
-INSERT INTO `userrated` VALUES (1,1,'1'),(1,2,'1'),(3,1,'-1');
-/*!40000 ALTER TABLE `userrated` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `userratedtitles`
 --
 
@@ -201,16 +151,6 @@ CREATE TABLE `userratedtitles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `userratedtitles`
---
-
-LOCK TABLES `userratedtitles` WRITE;
-/*!40000 ALTER TABLE `userratedtitles` DISABLE KEYS */;
-INSERT INTO `userratedtitles` VALUES (3,1,'1'),(3,2,'1'),(6,1,'1'),(9,2,'1');
-/*!40000 ALTER TABLE `userratedtitles` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `users`
 --
 
@@ -224,18 +164,8 @@ CREATE TABLE `users` (
   `email` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `class` enum('user','admin') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'leftos','fa44132b238e67958fb17d33a71d325221805079909c3a7f5bed1a03666cf834','leftos@gmail.com','admin'),(2,'loathK','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','temp@email.com','admin');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -246,4 +176,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-26  1:25:15
+-- Dump completed on 2011-07-27 19:36:25
