@@ -331,12 +331,7 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 		$uid = addslashes($uid);
 	}
 	
-	@ $db = new mysqli('localhost', 'socbook', 'socbook', 'socbook');
-	if( mysqli_connect_errno() )
-	{
-		echo 'Error: Could not connect to database';
-		exit;
-	}
+	$db = connectToDB();
 	
 	// TODO: validate()
 	// formating

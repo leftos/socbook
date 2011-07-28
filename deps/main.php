@@ -15,7 +15,7 @@ if (!isset($_SESSION["uid"])) {
 }
 
 // manual override of session uid FOR TESTING ONLY
-$_SESSION["uid"] = 1;
+$_SESSION["uid"] = 2;
 
 /*
 if (!($db = mysql_connect($_db["host"], $_db["username"], $_db["password"])))
