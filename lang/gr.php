@@ -13,7 +13,7 @@ define('__NEWEST', 'Πρόσφατες Καταχωρήσεις');
 define('__POPULAR', 'Δημοφιλείς Καταχωρήσεις');
 define('__NEWESTTAB', 'Πρόσφατοι');
 define('__POPULARTAB', 'Δημοφιλείς');
-define('__RATEDTAB', 'Καλύτερα');
+define('__RATEDTAB', 'Καλύτεροι');
 define('__VISITEDTAB', 'Επισκεψιμότητα');
 define('__SEARCH', 'Αναζήτηση');
 
@@ -56,6 +56,7 @@ define('__PLUSONE', '+1 σε αυτό το σελιδοδείκτη');
 define('__MINUSONE', '-1 σε αυτό το σελιδοδείκτη');
 define('__OWN', 'Έχετε καταχωρήσει αυτό το σελιδοδείκτη');
 define('__OWNERS', 'Χρήστες');
+define('__VISITS', 'Επισκέψεις');
 
 // database.inc
 /// insertBookmark()
@@ -66,6 +67,7 @@ define('__EMAILEXISTS', 'Το email αυτό χρησιμοποιείται απ
 /// search()
 define('__BOOKMARKS', 'σελιδοδείκτης/-ες');
 define('__FOUND', 'Βρέθηκαν');
+define('__PAGE', 'Σελίδα');
 
 // registration.php
 define('__REGISTRATION', 'Εγγραφή Νέου Χρήστη');
@@ -97,6 +99,11 @@ define('__DELETECOMMENTS', 'Διαγραφή και όλων των σχολίω
 
 // search.php
 define('__SEARCHFOR', 'Αναζήτηση για');
+define('__RELEVANCE', 'Σχετικότητα');
+define('__DESC', '(Φθίνουσα)');
+define('__ASC', '(Αύξουσα)');
+define('__POPULARITY', 'Δημοφιλία');
+define('__SORTBY', 'Ταξινόμηση κατά');
 
 // presentation.inc
 define('__NOBOOKMARKS', 'Δε βρέθηκε κανένας σελιδοδείκτης.');
@@ -105,4 +112,21 @@ define('__LOGINTOADD2', 'ή');
 define('__LOGINTOADD3', 'εγγραφείτε');
 define('__LOGINTOADD4', 'για να δημιουργήσετε ένα νέο σελιδοδείκτη.');
 define('__PLEASEADD', 'Δημιουργείστε ένα νέο σελιδοδείκτη εσείς!');
+
+// deps/validations.inc
+define('__MISSUSERNAME', 'Πρέπει να εισάγετε ένα όνομα χρήστη.');
+define('__MISSEMAIL', 'Πρέπει να εισάγετε το e-mail σας.');
+define('__MISSPASSWORD', 'Πρέπει να εισάγετε έναν κωδικό πρόσβασης.');
+
+// templates/layout/navigation.inc
+define('__ADVSEARCH', 'Προχωρημένη αναζήτηση');
+
+// advsearch.php
+define('__EXACT', 'Ταίριασμα ολόκληρης λέξης');
+define('__ANYTERM', 'Αποτελέσματα που έχουν οποιονδήποτε από τους όρους');
+define('__ALLTERMS', 'Αποτελέσματα που έχουν όλους τους όρους');
+define('__LOOKIN', 'Αναζήτηση σε');
+define('__INTITLE', 'Τίτλους');
+define('__INDESC', 'Περιγραφές');
+define('__INTAGS', 'Ετικέτες');
 ?>

@@ -12,4 +12,5 @@
 	<label style="font-size: 0.9em"><?=__SEARCH?> </label><br />
 	<input class="tags" type="text" name="s" size="20" /><br />&nbsp;
 </form>
+<a href='advsearch.php' style="font-size:0.8em"><?=__ADVSEARCH?></a>
 

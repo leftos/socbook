@@ -19,7 +19,7 @@
 	<?php require_once('templates/head.inc') ?>
 	
 	<!-- Page-specific head attributes -->
-	<script type="text/javascript" src="deps/validations.js"></script>
+	<?php require_once('deps/validations.inc') ?>
 </head>
 
 <body>
@@ -43,7 +43,7 @@
 						</tr>
 						<tr>
 							<td><?=__BOOKMARKURL?></td>
-							<td><input type="text" name="url" maxlength="2000" size="60" <? if (isset($_POST['url'])) {?>value="<?=$_POST['url']?>" <?}?>/></td>
+							<td><input type="text" name="url" size="60" <? if (isset($_POST['url'])) {?>value="<?=$_POST['url']?>" <?}?>/></td>
 						</tr>
 						<tr>
 							<td><?=__BOOKMARKTITLE?></td>

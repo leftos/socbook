@@ -18,7 +18,7 @@
 	<?php require_once('templates/head.inc') ?>
 	
 	<!-- Page-specific head attributes -->
-	<script type="text/javascript" src="deps/validations.js"></script>
+	<?php require_once('deps/validations.inc') ?>
 </head>
 
 <body>

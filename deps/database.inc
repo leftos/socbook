@@ -24,6 +24,10 @@ class bookmark
 		$this->bid = $bid;
 	}
 	
+	public function myget($p){
+		return $this->$p;
+	}
+	
 	public function getTitleCID(){
 		return $this->titleCID;
 	}
@@ -515,7 +519,7 @@ function fetchBookmark($bid)
 
 	$bk = new bookmark($bid);
 	
-	$bookmark = dbquery($db, 'select url, rating, datecreated from bookmarks where bid='.$bid.';');
+	$bookmark = dbquery($db, 'select url, rating, popularity, visits, datecreated from bookmarks where bid='.$bid.';');
 	$titles = dbquery($db, 'select comments.title, comments.comment, comments.cid
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
@@ -530,6 +534,8 @@ function fetchBookmark($bid)
 	$bk->setUrl($mybk->url);
 	$bk->setDateCreated($mybk->datecreated);
 	$bk->setRating($mybk->rating);
+	$bk->setPopularity($mybk->popularity);
+	$bk->setVisits($mybk->visits);
 	
 	fetchComments($bk);
 	fetchTags($bk);
@@ -744,7 +750,7 @@ function getComment($cid)
 	return $comm;
 }
 
-function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $exact=false, $sort='relevance')
+function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $exact=false, $sort='relevance', $order='desc', $startFrom='0')
 {	
 	$db = connectToDB();
 	
@@ -767,7 +773,7 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 		}
 		if ($inDesc) 
 		{
-			if ($where != "") $where .= " or";
+			if ($where != "where ") $where .= " or";
 			if ($exact)
 			{
 				$where .= " comment like '".$w."'";	
@@ -779,7 +785,7 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 		}
 		if ($inTags)
 		{
-			if ($where != "") $where .= " or";
+			if ($where != "where ") $where .= " or";
 			if ($exact)
 			{
 				$where .= " tag like '".$w."'";	
@@ -797,7 +803,7 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 						join booksntags on booksncomms.bid=booksntags.bid
 						join tagcloud on booksntags.tid=tagcloud.tid "
 						.$where.
-						" group by booksncomms.bid;");
+						" group by booksncomms.bid");
 		
 		while ($row = $result->fetch_object())
 		{
@@ -831,9 +837,26 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 		$bkobjarr[] = $bk;
 	}
 	
+	if ($sort!='relevance')
+	{
+		// print_r($bkobjarr);	echo "<br /><br />";
+		quickSort($bkobjarr, $sort);
+		// print_r($bkobjarr);	echo "<br /><br />";
+		if ($order=='desc') $bkobjarr = array_reverse($bkobjarr);		
+		// print_r($bkobjarr);	echo "<br /><br />";
+	}
+	
 	$c = count($bkarr);
 	if ($c == 0) echo __NOBOOKMARKS;
 	else echo '<p>'.__FOUND.' '.count($bkarr).' '.__BOOKMARKS.'</p>';
+	
+	$t = $bkobjarr;
+	$bkobjarr = array();
+	for ($i=$startFrom; $i<$startFrom+15; $i++)
+	{
+		if (!(isset($t[$i]))) break;
+		$bkobjarr[] = $t[$i];
+	}
 	
 	echo '<ul class="search">';
 	switch ($sort)
@@ -845,14 +868,98 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 				prettyPrintBookmark($bk, 'extra', $bkrel[$bk->getBid()]);
 			}
 			break;
+		case 'dateCreated':
+		case 'visits':
+		case 'rating':
+		case 'popularity':
+			foreach ($bkobjarr as $bk)
+			{
+				prettyPrintBookmark($bk, $sort);
+			}
+			break;
 	}
 	echo '</ul>';
+
+	if (count($bkobjarr) > 15)
+	{
+		echo '<p>'.__PAGE.' ';
+		$pages = count($bkobjarr) / 15;
+		for ($i=0;$i<$pages;$i++)
+		{ 
+			if (($startFrom > $i*15) && ($startFrom >($i+1)*15))
+			{
+				$query = "search.php?s=".$s."&inTitle=".$inTitle."&inDesc=".$inDesc
+								."&inTags=".$inTags."&combine=".$combine."&exact=".$exact
+								."&startFrom=".$startFrom."&sort=".$sort."&order=".$order; ?>
+				<a href="<?=$query?>"><?$i+1?></a>
+			<? 
+			} else {
+				echo $i+1;
+			}
+			if ($i<$pages-1) echo ',&nbsp;';
+		}
+	}
 }
 
-function dbquery($db, $query)
+function dbquery($_db, $query)
 {
-	$result = $db->query($query) or die($db->error.'<br />'.$query);
+	$result = $_db->query($query) or die($_db->error.'<br />'.$query);
 	return $result;
 }
 
+function quickSort( &$array, $property )
+{
+    $cur = 1;
+    $stack[1]['l'] = 0;
+    $stack[1]['r'] = count($array)-1;
+    
+    do
+    {
+        $l = $stack[$cur]['l'];
+        $r = $stack[$cur]['r'];
+        $cur--;
+        
+        do
+        {
+            $i = $l;
+            $j = $r;
+            $tmp = $array[(int)( ($l+$r)/2 )];
+            
+            // partion the array in two parts.
+            // left from $tmp are with smaller values,
+            // right from $tmp are with bigger ones
+            do
+            {
+            	while( $array[$i]->myget($property) < $tmp->myget($property) )
+                $i++;
+                
+                while( $tmp->myget($property) < $array[$j]->myget($property) )
+                $j--;
+				
+                // swap elements from the two sides
+                if( $i <= $j)
+                {
+                    $w = $array[$i];
+                    $array[$i] = $array[$j];
+                    $array[$j] = $w;
+                    
+                    $i++;
+                    $j--;
+                }
+                
+            }while( $i <= $j );
+            
+            if( $i < $r )
+            {
+                $cur++;
+                $stack[$cur]['l'] = $i;
+                $stack[$cur]['r'] = $r;
+            }
+            $r = $j;
+            
+        } while( $l < $r );
+        
+    }while( $cur != 0 );
+    
+} 
 ?>

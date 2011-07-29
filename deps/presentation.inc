@@ -41,6 +41,7 @@ function prettyPrintBookmarks($result)
 			$image = "<img src=\"/images/star_16.png\" title=\"".__OWN."\" />";
 		}
 		echo ("<li><a href=\"viewbookmark.php?bid=".$row->bid."\">".$row->title."</a>&nbsp;&nbsp;&nbsp;".$image." <br /> <span class=\"bookurl\">".$row->url."</span><br /><span class=\"bookdesc\">(".$row->info.") " . $row->comment."</span>");
+		echo ("<li>&nbsp;</li>");
 	}
 	echo ("</ul>");
 }
@@ -66,7 +67,7 @@ function prettyPrintBookmark($bk, $_info='date', $_extra=null)
 	$url = $bk->getUrl();
 	switch ($_info)
 	{
-		case 'date':
+		case 'dateCreated':
 			$info = $bk->getDateCreated();
 			break;
 		case 'rating':
@@ -84,7 +85,7 @@ function prettyPrintBookmark($bk, $_info='date', $_extra=null)
 	}
 	
 	echo ("<li><a href=\"viewbookmark.php?bid=".$bid."\">".$title."</a>&nbsp;&nbsp;&nbsp;".$image." <br /> <span class=\"bookurl\">".$url."</span><br /><span class=\"bookdesc\">(".$info.") " . $comment."</span>");
-
+	echo ("<li>&nbsp;</li>");
 }
 
 function showValidRatingButtons($bid, $uid)

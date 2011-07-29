@@ -190,7 +190,6 @@ td
 
 .search li {
 	list-style-type: none;
-	padding: 0.5em 0;
 	font-size: 1.1em;
 }
 
@@ -213,5 +212,13 @@ td
  
 .tag_cloud a:hover {
     text-decoration: underline;
+}
+
+form td {
+	padding-left: 0 15px;
+}
+
+form tr {
+	padding: 5px 0;
 }
 

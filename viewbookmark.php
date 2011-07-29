@@ -138,6 +138,8 @@
 		<p><?=__DESCRIPTION?>: <br /><? if ($cid==0) {echo $bk->getDesc();} else {$comm=getComment($cid); echo $comm->getDesc();} ?></p>
 		<p>
 			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<? showValidRatingButtons($bid, $_SESSION['uid']); ?>
+			<br />
+			<?=__VISITS?>: <?=$bk->getVisits() ?>
 		</p>
 		<p>
 			<?=__TAGS?>: <?php 

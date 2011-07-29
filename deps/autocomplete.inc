@@ -48,6 +48,7 @@
 					return false;
 				},
 				select: function( event, ui ) {
+					this.value = trim(this.value);
 					var terms = split( this.value );
 					// remove the current input
 					terms.pop();
@@ -68,7 +69,8 @@
 					{
 						this.value = temp2;
 					}
-					
+					this.value = trim(this.value);
+					this.value = this.value + " ";
 					// alert(this);	
 					
 					setCaretToPos(this, this.value.length);

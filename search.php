@@ -30,7 +30,6 @@
 	
 	<div id="navigation">
 		<?php require_once('templates/layout/navigation.php'); ?>
-		<p><img src="/images/horizontalrule.png" style="width: 9em; height:1em" /></p>
 		<?php require_once('templates/tagcloud.php'); ?>
 	</div>
 	<!-- Above should remain as is on every page -->
@@ -41,40 +40,46 @@
 			if (isset($_GET['s'])) 
 			{
 				if (isset($_GET['inTitle'])) {
-					if ($_GET['inTitle'] == 'false') {
+					if ($_GET['inTitle'] == '0') {
 						$inTitle = false;
+					} else {
+						$inTitle = true;
 					}
 				} else {
 					$inTitle = true;
 				}
 				
 				if (isset($_GET['inDesc'])) {
-					if ($_GET['inDesc'] == 'false') {
+					if ($_GET['inDesc'] == '0') {
 						$inDesc = false;
+					} else {
+						$inDesc = true;
 					}
 				} else {
 					$inDesc = true;
 				}
 				
 				if (isset($_GET['inTags'])) {
-					if ($_GET['inTags'] == 'false') {
+					if ($_GET['inTags'] == '0') {
 						$inTags = false;
+					} else {
+						$inTags = true;
 					}
 				} else {
 					$inTags = true;
 				}
 				
 				if (isset($_GET['combine'])) {
-					if ($_GET['combine'] == 'and') {
-						$combine = 'and';
-					} 
+					$combine = $_GET['combine'];
 				} else {
 					$combine = 'or';
 				}
 				
 				if (isset($_GET['exact'])) {
-					if ($_GET['exact'] == 'true') {
+					if ($_GET['exact'] == '1') {
 						$exact = true;
+					} else {
+						$exact = false;
 					}
 				} else {
 					$exact = false;
@@ -86,11 +91,62 @@
 					$sort = 'relevance';
 				}
 				
+				if (isset($_GET['order'])) {
+					$order = $_GET['order'];
+				} else {
+					$order = 'desc';
+				}
+				
+				if (isset($_GET['startFrom'])) {
+					$startFrom = $_GET['startFrom'];
+				} else {
+					$startFrom = '0';
+				}
+				
 				$s = clearExtraSpaces($_GET['s']);
 				$s = str_replace(',', '', $s);
-				search($s, $inTitle, $inDesc, $inTags, $combine, $exact, $sort); 
-			}
-		?>
+			?>
+			<p style="font-size: 0.8em">
+				<? $query = "search.php?s=".$s."&inTitle=".$inTitle."&inDesc=".$inDesc
+								."&inTags=".$inTags."&combine=".$combine."&exact=".$exact
+								."&startFrom=".$startFrom; ?>
+				<?=__SORTBY?>:&nbsp;
+				<? if (!($sort=='relevance' && $order=='desc')) { ?>
+				<a href="<?=$query?>&sort=relevance&order=desc"><?=__RELEVANCE." ".__DESC?></a>&nbsp;
+				<? } ?>
+				<? if (!(($sort=='relevance') && ($order=='asc'))) { ?>
+				<a href="<?=$query?>&sort=relevance&order=asc"><?=__RELEVANCE." ".__ASC?></a>&nbsp;
+				<? } ?>
+				<? if (!(($sort=='dateCreated') && ($order=='desc'))) { ?>
+				<a href="<?=$query?>&sort=dateCreated&order=desc"><?=__DATECREATED." ".__DESC?></a>&nbsp;
+				<? } ?>
+				<? if (!(($sort=='dateCreated') && ($order=='asc'))) { ?>
+				<a href="<?=$query?>&sort=dateCreated&order=asc"><?=__DATECREATED." ".__ASC?></a>&nbsp;
+				<? } ?>
+				<? if (!(($sort=='popularity') && ($order=='desc'))) { ?>
+				<a href="<?=$query?>&sort=popularity&order=desc"><?=__POPULARITY." ".__DESC?></a>&nbsp;
+				<? } ?>
+				<? if (!(($sort=='popularity') && ($order=='asc'))) { ?>
+				<a href="<?=$query?>&sort=popularity&order=asc"><?=__POPULARITY." ".__ASC?></a>&nbsp;
+				<? } ?>
+				<? if (!(($sort=='rating') && ($order=='desc'))) { ?>
+				<a href="<?=$query?>&sort=rating&order=desc"><?=__RATING." ".__DESC?></a>&nbsp;
+				<? } ?>
+				<? if (!(($sort=='rating') && ($order=='asc'))) { ?>
+				<a href="<?=$query?>&sort=rating&order=asc"><?=__RATING." ".__ASC?></a>&nbsp;
+				<? } ?>
+				<? if (!(($sort=='visits') && ($order=='desc'))) { ?>
+				<a href="<?=$query?>&sort=visits&order=desc"><?=__VISITS." ".__DESC?></a>&nbsp;
+				<? } ?>
+				<? if (!(($sort=='visits') && ($order=='asc'))) { ?>
+				<a href="<?=$query?>&sort=visits&order=asc"><?=__VISITS." ".__ASC?></a>&nbsp;
+				<? } ?>
+				
+			</p>
+			<?
+				search($s, $inTitle, $inDesc, $inTags, $combine, $exact, $sort, $order, $startFrom); 
+				}
+			?>
 	</div>
 	
 	<!-- Below should remain as is on every page -->
