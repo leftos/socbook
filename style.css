@@ -221,4 +221,62 @@ form td {
 form tr {
 	padding: 5px 0;
 }
+/*
+#tabs {
+	padding: 0px;
+	background: none;
+	border-width: 0px;
+}
 
+#tabs-nohdr .ui-tabs-nav {
+	padding-left: 0px;
+	background: transparent;
+	border-width: 0px 0px 1px 0px;
+	border-radius: 0px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+}
+
+#tabs .ui-tabs-nav li {
+	margin-top: 0.6em;
+	font-size: 80%;
+}
+
+#tabs .ui-tabs-nav li.ui-tabs-selected {
+	margin-top: 0em;
+	font-size: 100%;
+}
+	
+#tabs .ui-tabs-panel {
+	background: url(images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top #f5f3e5;
+	border-width: 0px 1px 1px 1px;
+}
+*/
+
+#tabs {
+	padding: 0px;
+	background: none;
+	border-width: 0px;
+}
+#tabs .ui-tabs-nav {
+	padding-left: 0px;
+	background: transparent;
+	border-width: 0px 0px 1px 0px;
+	border-radius: 0px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+}
+#tabs .ui-tabs-panel {
+	background: url(images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top #f5f3e5;
+	border-width: 0px 1px 1px 1px;
+}
+
+#tabs .ui-tabs-nav li {
+	margin-top: 0.3em;
+	font-size: 90%;
+}
+
+#tabs .ui-tabs-nav li.ui-tabs-selected {
+	margin-top: 0em;
+	font-size: 100%;
+}
