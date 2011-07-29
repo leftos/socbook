@@ -1,4 +1,7 @@
 <?php
+// global/others
+define('__REFRESHONPOST', 'Προσπαθήσατε να ανανεώσετε σελίδα που αποτελεί αποτέλεσμα κάποιας εντολής σας.');
+define('__REFRESHONPOST2', 'Για να μην επιχειρηθεί και δεύτερη φορά η ίδια εντολή, ακυρώσαμε το αίτημά σας.');
 	
 // deps/main.php	
 define('__TITLE', 'Κοινωνικοί Σελιδοδείκτες');
@@ -59,6 +62,10 @@ define('__OWNERS', 'Χρήστες');
 define('__BOOKMARKEXISTS', 'Έχετε ήδη καταχωρήσει σελιδοδείκτη για αυτή τη σελίδα.');
 define('__USEREXISTS', 'Ο χρήστης υπάρχει ήδη στο σύστημα');
 define('__EMAILEXISTS', 'Το email αυτό χρησιμοποιείται από άλλο λογαριασμό');
+
+/// search()
+define('__BOOKMARKS', 'σελιδοδείκτης/-ες');
+define('__FOUND', 'Βρέθηκαν');
 
 // registration.php
 define('__REGISTRATION', 'Εγγραφή Νέου Χρήστη');

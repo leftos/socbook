@@ -64,7 +64,7 @@
 				else
 				{
 					//Invalid secret key
-					echo "something you did is wrong, you are not supposed to even print this";
+					echo "<p>".__REFRESHONPOST."</p><p>".__REFRESHONPOST2."</p>";
 				}
 			}
 			else

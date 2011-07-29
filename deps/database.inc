@@ -830,9 +830,14 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 		$bk = fetchBookmark($b);
 		$bkobjarr[] = $bk;
 	}
+	
+	$c = count($bkarr);
+	if ($c == 0) echo __NOBOOKMARKS;
+	else echo '<p>'.__FOUND.' '.count($bkarr).' '.__BOOKMARKS.'</p>';
+	
+	echo '<ul class="search">';
 	switch ($sort)
-	{
-		
+	{		
 		case 'relevance':
 		default:
 			foreach ($bkobjarr as $bk)
@@ -841,6 +846,7 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 			}
 			break;
 	}
+	echo '</ul>';
 }
 
 function dbquery($db, $query)

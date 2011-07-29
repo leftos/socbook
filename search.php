@@ -37,7 +37,6 @@
 	
 	<div id="content">
 		<h3><?=__SEARCHFOR?> <?=$_GET['s']?></h3>
-		<ul class="search">
 		<?php 
 			if (isset($_GET['s'])) 
 			{
@@ -92,7 +91,6 @@
 				search($s, $inTitle, $inDesc, $inTags, $combine, $exact, $sort); 
 			}
 		?>
-		</ul>
 	</div>
 	
 	<!-- Below should remain as is on every page -->
