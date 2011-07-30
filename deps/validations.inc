@@ -1,6 +1,3 @@
-/**
- * @author
- */
 <script type="text/javascript" language="javascript">
 function validateRegisterForm()
 {
