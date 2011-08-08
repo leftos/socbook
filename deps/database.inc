@@ -394,7 +394,8 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 		else
 		{
 			$row = $result->fetch_object();
-			$tid = $row->tid;
+			$tid = $row->tid;			
+			
 			$result = dbquery($db, "update tagcloud set popularity=popularity+1 where tid=".$tid);
 			$result = dbquery($db, "select * from booksntags where tid=".$tid.' and bid='.$bid);
 			if ($result->num_rows == 0)
@@ -406,6 +407,7 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 				$result = dbquery($db, "update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid);
 			}			
 		}
+		$result = dbquery($db, "insert into commsntags values (".$cid.",".$tid.")");
 	}
 	
 	$db->close();

@@ -49,15 +49,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td><?=__EMAIL?></td>
-					<td>
-						<input type="text" name="email" id="email" maxlength="50" size="30">
-					</td>
-				</tr>
-				<tr>
 					<td><?=__PASSWORD?></td>
 					<td>
 						<input type="password" name="password" id="password" maxlength="50" size="30">
+					</td>
+				</tr>
+				<tr>
+					<td><?=__EMAIL?></td>
+					<td>
+						<input type="text" name="email" id="email" maxlength="50" size="30">
 					</td>
 				</tr>
 				<tr>

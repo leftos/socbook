@@ -30,13 +30,19 @@ if ((isset($_POST['cid'])) && (isset($_POST['bid'])))
 				$result = dbquery($db, "insert into tagcloud values (NULL, '".$tag."', 1)");
 				$tid = $db->insert_id;
 				$result = dbquery($db, "insert into booksntags values (".$bid.",".$tid.",1)");
+				$result = dbquery($db, "insert into commsntags values (".$bid.",".$tid.",1)");
 			}
 			else
 			{
 				$row = $result->fetch_object();
 				$tid = $row->tid;
-				$result = dbquery($db, "update tagcloud set popularity=popularity+1 where tid=".$tid);
-				$result = dbquery($db, "update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid);
+				
+				$result = dbquery($db, "select * from commsntags where cid=".$cid." and tid=".$tid);
+				if ($result->num_rows == 0)
+				{
+					$result = dbquery($db, "update tagcloud set popularity=popularity+1 where tid=".$tid);
+					$result = dbquery($db, "update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid);
+				}
 			}
 		}
 	}
