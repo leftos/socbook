@@ -41,8 +41,18 @@ CREATE TABLE `bookmarks` (
   `datecreated` datetime NOT NULL,
   `reported` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`bid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bookmarks`
+--
+
+LOCK TABLES `bookmarks` WRITE;
+/*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
+INSERT INTO `bookmarks` VALUES (14,'www.facebook.com',4,0,0,'2011-08-08 16:45:42',0);
+/*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `booksncomms`
@@ -60,6 +70,16 @@ CREATE TABLE `booksncomms` (
   CONSTRAINT `booksncomms_ibfk_2` FOREIGN KEY (`cid`) REFERENCES `comments` (`cid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `booksncomms`
+--
+
+LOCK TABLES `booksncomms` WRITE;
+/*!40000 ALTER TABLE `booksncomms` DISABLE KEYS */;
+INSERT INTO `booksncomms` VALUES (14,28),(14,30);
+/*!40000 ALTER TABLE `booksncomms` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `booksntags`
@@ -80,6 +100,16 @@ CREATE TABLE `booksntags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `booksntags`
+--
+
+LOCK TABLES `booksntags` WRITE;
+/*!40000 ALTER TABLE `booksntags` DISABLE KEYS */;
+INSERT INTO `booksntags` VALUES (14,54,2),(14,55,2),(14,56,1),(14,60,1);
+/*!40000 ALTER TABLE `booksntags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `comments`
 --
 
@@ -96,8 +126,45 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`cid`),
   KEY `user` (`user`),
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comments`
+--
+
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` VALUES (28,'Facebook, the social network','Ένα δημοφιλές social network.',7,'2011-08-08 16:47:39',0),(30,'Facebook και τα μυαλά στα μπλέντερ','Μπλα μπλα',8,'2011-08-08 16:49:37',0);
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `commsntags`
+--
+
+DROP TABLE IF EXISTS `commsntags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `commsntags` (
+  `cid` int(11) NOT NULL,
+  `tid` int(11) NOT NULL,
+  PRIMARY KEY (`cid`,`tid`),
+  KEY `tid` (`tid`),
+  CONSTRAINT `commsntags_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `comments` (`cid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `commsntags_ibfk_2` FOREIGN KEY (`tid`) REFERENCES `tagcloud` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `commsntags`
+--
+
+LOCK TABLES `commsntags` WRITE;
+/*!40000 ALTER TABLE `commsntags` DISABLE KEYS */;
+INSERT INTO `commsntags` VALUES (28,54),(30,54),(28,55),(30,55),(28,56),(30,60);
+/*!40000 ALTER TABLE `commsntags` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `tagcloud`
@@ -111,8 +178,18 @@ CREATE TABLE `tagcloud` (
   `tag` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `popularity` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tagcloud`
+--
+
+LOCK TABLES `tagcloud` WRITE;
+/*!40000 ALTER TABLE `tagcloud` DISABLE KEYS */;
+INSERT INTO `tagcloud` VALUES (54,'social',2),(55,'network',2),(56,'facebook',1),(60,'dog',1);
+/*!40000 ALTER TABLE `tagcloud` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `userrated`
@@ -133,6 +210,15 @@ CREATE TABLE `userrated` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `userrated`
+--
+
+LOCK TABLES `userrated` WRITE;
+/*!40000 ALTER TABLE `userrated` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userrated` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `userratedtitles`
 --
 
@@ -151,6 +237,15 @@ CREATE TABLE `userratedtitles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `userratedtitles`
+--
+
+LOCK TABLES `userratedtitles` WRITE;
+/*!40000 ALTER TABLE `userratedtitles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userratedtitles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -164,8 +259,18 @@ CREATE TABLE `users` (
   `email` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `class` enum('user','admin') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (7,'leftos','fa44132b238e67958fb17d33a71d325221805079909c3a7f5bed1a03666cf834','leftos@gmail.com','user'),(8,'marios','551916735aeecf1474109865fda11948173d76b1a705293de527130b8dc7271b','not@yourbusiness.com','user');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -176,4 +281,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-08-08 18:54:13
+-- Dump completed on 2011-08-08 20:40:30

@@ -16,6 +16,7 @@
 	<?php require_once('templates/head.inc') ?>
 	
 	<!-- Page-specific head attributes -->
+	<?php require_once('deps/validations.inc') ?>
 </head>
 
 <body>
@@ -43,9 +44,11 @@
 					$comm = getComment($cid);
 					$title = $comm->getTitle();
 					$desc = $comm->getDesc();
+					$tags = fetchUserTags($bk);
+					$tagsString = implode(' ', $tags);
 				?>
 				<p><?=__NOWEDITING.'<br /><em>'.myTruncate($bk->getUrl(), 100, "/").'</em>'?></p>
-				<form action="doedit.php" method="post"  accept-charset="utf-8">
+				<form id='editbookmark' action="doedit.php" method="post" accept-charset="utf-8">
 					<input type="hidden" name="cid" value="<?=$cid?>" />
 					<input type="hidden" name="bid" value="<?=$bid?>" />
 					<table>
@@ -62,7 +65,7 @@
 						</tr>
 						<tr>
 							<td><?=__TAGS?></td>
-							<td> <input type="text" name="tags" maxlength="200" size="60" placeholder="<?=__ONLYADDTAGS?>" />
+							<td> <input class="tags" type="text" name="tags" maxlength="200" size="60" value="<?=$tagsString?>" />
 							</td>
 						</tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>

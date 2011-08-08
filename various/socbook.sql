@@ -41,7 +41,7 @@ CREATE TABLE `bookmarks` (
   `datecreated` datetime NOT NULL,
   `reported` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`bid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,24 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`cid`),
   KEY `user` (`user`),
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `commsntags`
+--
+
+DROP TABLE IF EXISTS `commsntags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `commsntags` (
+  `cid` int(11) NOT NULL,
+  `tid` int(11) NOT NULL,
+  PRIMARY KEY (`cid`,`tid`),
+  KEY `tid` (`tid`),
+  CONSTRAINT `commsntags_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `comments` (`cid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `commsntags_ibfk_2` FOREIGN KEY (`tid`) REFERENCES `tagcloud` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +128,7 @@ CREATE TABLE `tagcloud` (
   `tag` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `popularity` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +181,7 @@ CREATE TABLE `users` (
   `email` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `class` enum('user','admin') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -176,4 +193,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-08-08 18:54:13
+-- Dump completed on 2011-08-08 20:40:30

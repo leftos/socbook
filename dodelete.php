@@ -11,18 +11,10 @@ if (isset($_POST['bid']))
 	$deletecomments = $_POST['deletecomments'];
 	
 	$result = dbquery($db, 'delete from booksncomms where cid='.$cid);
-	$result = dbquery($db, 'delete from comments where cid='.$cid);
 	
-	$temp = dbquery($db, 'select * from commsntags where cid='.$cid);
-	while ($row = $temp->fetch_object())
-	{
-		$tid = $row->tid;
-		$result = dbquery($db, 'update tagcloud set popularity=popularity-1 where tid='.$tid);
-		$result = dbquery($db, 'update booksntags set popularity=popularity-1 where tid='.$tid.' and bid='.$bid);
-		$result = dbquery($db, 'delete from commsntags where cid='.$cid.' and tid='.$tid);
-	}
-	$result = dbquery($db, 'delete from booksntags where popularity=0');
-	$result = dbquery($db, 'delete from tagcloud where popularity=0');
+	deleteUserTags($cid);
+	
+	$result = dbquery($db, 'delete from comments where cid='.$cid);
 	
 	$result = dbquery($db, 'select *
 							from comments
