@@ -467,7 +467,7 @@ function insertUser( $username, $email, $password )
 }
 
 /** sorttype: datecreated, popularity, rating, visits */
-function populateIndex($sorttype)
+function populateIndex($sorttype, $limit=10)
 {	
 	$db = connectToDB();
 	
@@ -509,7 +509,8 @@ function populateIndex($sorttype)
 	WHERE  tableb.cratingb IS NULL
 	       AND tablea.title != ''
 	GROUP  BY tablea.bid
-	ORDER  BY tablea.".$sorttype." DESC");
+	ORDER  BY tablea.".$sorttype." DESC 
+	LIMIT  ".$limit.");
 	
 	$db->close();
 	return $result;

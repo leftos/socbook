@@ -15,4 +15,5 @@
 	<input class="tags" type="text" name="s" size="20" /><br />&nbsp;
 </form>
 <a href='advsearch.php' style="font-size:0.8em"><?=__ADVSEARCH?></a>
+<p><a href='rss/rss_newest.php'><img src="images/rss.jpg" style="width: 1em" title="<?=__RSSNEWEST?>" /></a></p>
 

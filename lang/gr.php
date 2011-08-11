@@ -120,6 +120,7 @@ define('__MISSPASSWORD', 'Πρέπει να εισάγετε έναν κωδικ
 
 // templates/layout/navigation.inc
 define('__ADVSEARCH', 'Προχωρημένη αναζήτηση');
+define('__RSSNEWEST', 'Εγγραφείτε στη ροή RSS με τους 10 νεώτερους σελιδοδείκτες');
 
 // advsearch.php
 define('__EXACT', 'Ταίριασμα ολόκληρης λέξης');
