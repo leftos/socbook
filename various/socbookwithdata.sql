@@ -50,7 +50,7 @@ CREATE TABLE `bookmarks` (
 
 LOCK TABLES `bookmarks` WRITE;
 /*!40000 ALTER TABLE `bookmarks` DISABLE KEYS */;
-INSERT INTO `bookmarks` VALUES (14,'www.facebook.com',4,0,0,'2011-08-08 16:45:42',0);
+INSERT INTO `bookmarks` VALUES (14,'www.facebook.com',2,0,0,'2011-08-08 16:45:42',0);
 /*!40000 ALTER TABLE `bookmarks` ENABLE KEYS */;
 UNLOCK TABLES;
 

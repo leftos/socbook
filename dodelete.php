@@ -8,11 +8,11 @@ if (isset($_POST['bid']))
 	
 	$bid = $_POST['bid'];
 	$cid = $_POST['cid'];
-	$deletecomments = $_POST['deletecomments'];
-	
-	$result = dbquery($db, 'delete from booksncomms where cid='.$cid);
+	if (isset($_POST['deletecomments'])) $deletecomments = 'true'; else $deletecomments = 'false';
 	
 	deleteUserTags($cid);
+	
+	$result = dbquery($db, 'delete from booksncomms where cid='.$cid);
 	
 	$result = dbquery($db, 'delete from comments where cid='.$cid);
 	
