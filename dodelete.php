@@ -16,6 +16,8 @@ if (isset($_POST['bid']))
 	
 	$result = dbquery($db, 'delete from comments where cid='.$cid);
 	
+	$result = dbquery($db, 'update bookmarks set popularity=popularity-1 where bid='.$bid);
+	
 	$result = dbquery($db, 'select *
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
