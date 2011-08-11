@@ -510,7 +510,7 @@ function populateIndex($sorttype, $limit=10)
 	       AND tablea.title != ''
 	GROUP  BY tablea.bid
 	ORDER  BY tablea.".$sorttype." DESC 
-	LIMIT  ".$limit.");"
+	LIMIT  ".$limit);
 	
 	$db->close();
 	return $result;
