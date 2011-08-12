@@ -14,8 +14,6 @@ function settitle($string) {
 
 function prettyPrintBookmarks($result)
 {
-	global $_SESSION;
-	
 	if ($result->num_rows == 0)
 	{
 		echo "<p>".__NOBOOKMARKS."</p>";
@@ -48,8 +46,6 @@ function prettyPrintBookmarks($result)
 
 function prettyPrintBookmark($bk, $_info='date', $_extra=null)
 {
-	global $_SESSION;
-	
 	$image = "";
 	if ($own=userOwnsBookmark($bk->getBid(), $_SESSION['uid']))
 	{
