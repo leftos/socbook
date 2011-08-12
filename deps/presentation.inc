@@ -12,6 +12,8 @@ function settitle($string) {
 	return $title;
 }
 
+/** Used with a dbquery result that contains bid, url, a proposed title and comment,
+ *  as well as an info column that should contain any additional information to be printed. */
 function prettyPrintBookmarks($result)
 {
 	if ($result->num_rows == 0)
@@ -44,6 +46,7 @@ function prettyPrintBookmarks($result)
 	echo ("</ul>");
 }
 
+/** Used with a bookmark instance */
 function prettyPrintBookmark($bk, $_info='date', $_extra=null)
 {
 	$image = "";

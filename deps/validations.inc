@@ -36,6 +36,13 @@ function validateAddBookmarkForm()
 	document.forms["addbookmark"]["tags"].value = tags;
 }
 
+function validateEditBookmarkForm()
+{
+	var tags=document.forms["editbookmark"]["tags"].value;
+	tags = trim(tags); //trim is in autocomplete.inc
+	document.forms["editbookmark"]["tags"].value = tags;
+}
+
 function validateAdvSearchForm()
 {
 	var elem = document.getElementById("inTitle");

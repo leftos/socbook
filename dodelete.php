@@ -8,10 +8,16 @@ if (isset($_POST['bid']))
 	
 	$bid = $_POST['bid'];
 	$cid = $_POST['cid'];
-	$deletecomments = $_POST['deletecomments'];
+	if (isset($_POST['deletecomments'])) $deletecomments = 'true'; else $deletecomments = 'false';
+	
+	deleteUserTags($cid);
 	
 	$result = dbquery($db, 'delete from booksncomms where cid='.$cid);
-	$result = dbquery($db, 'delete from comments where cid='.$cid);	
+	
+	$result = dbquery($db, 'delete from comments where cid='.$cid);
+	
+	$result = dbquery($db, 'update bookmarks set popularity=popularity-1 where bid='.$bid);
+	
 	$result = dbquery($db, 'select *
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
@@ -32,8 +38,8 @@ if (isset($_POST['bid']))
 			$popularity = $row->popularity;
 			$result = dbquery($db, 'update tagcloud set popularity=popularity-'.$popularity.' where tid='.$tid);
 			$result = dbquery($db, 'delete from booksntags where bid='.$bid.' and tid='.$tid);
-			$result = dbquery($db, 'delete from tagcloud where popularity=0');
 		}
+		$result = dbquery($db, 'delete from tagcloud where popularity=0');
 		$result = dbquery($db, 'delete from bookmarks where bid='.$bid);
 	} 
 	else if ($deletecomments=='true')

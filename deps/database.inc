@@ -394,7 +394,8 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 		else
 		{
 			$row = $result->fetch_object();
-			$tid = $row->tid;
+			$tid = $row->tid;			
+			
 			$result = dbquery($db, "update tagcloud set popularity=popularity+1 where tid=".$tid);
 			$result = dbquery($db, "select * from booksntags where tid=".$tid.' and bid='.$bid);
 			if ($result->num_rows == 0)
@@ -406,6 +407,7 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 				$result = dbquery($db, "update booksntags set popularity=popularity+1 where bid=".$bid." and tid=".$tid);
 			}			
 		}
+		$result = dbquery($db, "insert into commsntags values (".$cid.",".$tid.")");
 	}
 	
 	$db->close();
@@ -438,6 +440,7 @@ function insertUser( $username, $email, $password )
 			
 			$insert_db_user = dbquery($db, "insert into users values (NULL, '".$new_user->getUsername()."', '".$new_user->getPassword()."', '".$new_user->getEmail()."', '".$new_user->getClass()."')");
 			$uid = $db->insert_id;
+			//$_SESSION['uid']= $uid;
 		}
 		else 
 		{
@@ -464,7 +467,7 @@ function insertUser( $username, $email, $password )
 }
 
 /** sorttype: datecreated, popularity, rating, visits */
-function populateIndex($sorttype)
+function populateIndex($sorttype, $limit=10)
 {	
 	$db = connectToDB();
 	
@@ -506,7 +509,8 @@ function populateIndex($sorttype)
 	WHERE  tableb.cratingb IS NULL
 	       AND tablea.title != ''
 	GROUP  BY tablea.bid
-	ORDER  BY tablea.".$sorttype." DESC");
+	ORDER  BY tablea.".$sorttype." DESC 
+	LIMIT  ".$limit);
 	
 	$db->close();
 	return $result;
@@ -596,6 +600,26 @@ function fetchTags($bk)
 	}
 }
 
+function fetchUserTags($bk)
+{
+	$db = connectToDB();
+	
+	$cid = userOwnsBookmark($bk->getBid(), $_SESSION['uid']);
+	
+	$result = dbquery($db, 'select tagcloud.tag
+							from tagcloud
+							inner join commsntags on tagcloud.tid=commsntags.tid
+							where commsntags.cid='.$cid);
+	
+	$arr = array();
+	while ($cur = $result->fetch_object())
+	{
+		$arr[] = $cur->tag;
+	}
+							
+	return $arr;
+}
+
 function fetchAllTags($json=false, $limit=null)
 {
 	$db = connectToDB();
@@ -626,6 +650,28 @@ function fetchAllTags($json=false, $limit=null)
 	
 	$db->close();
 
+}
+
+function deleteUserTags($cid)
+{
+	$db = connectToDB();
+	
+	$result = dbquery($db, 'select bid from booksncomms where cid='.$cid);
+	$cur = $result->fetch_object();
+	$bid = $cur->bid;
+	
+	$temp = dbquery($db, 'select * from commsntags where cid='.$cid);
+	while ($row = $temp->fetch_object())
+	{
+		$tid = $row->tid;
+		$result = dbquery($db, 'update tagcloud set popularity=popularity-1 where tid='.$tid);
+		$result = dbquery($db, 'update booksntags set popularity=popularity-1 where tid='.$tid.' and bid='.$bid);
+		$result = dbquery($db, 'delete from commsntags where cid='.$cid.' and tid='.$tid);
+	}
+	$result = dbquery($db, 'delete from booksntags where popularity=0');
+	$result = dbquery($db, 'delete from tagcloud where popularity=0');
+	
+	$db->close();
 }
 
 function changeRating($bid, $uid, $do)
@@ -708,6 +754,7 @@ function visit($bid)
 	exit;
 }
 
+/** Returns cid of user's title for bookmark, if they own it */
 function userOwnsBookmark($bid, $uid)
 {
 	$db = connectToDB();
