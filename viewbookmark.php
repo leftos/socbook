@@ -113,14 +113,14 @@
 					<?php
 					if ($cid = userOwnsBookmark($bid, $_SESSION['uid'])) { ?>
 					<img src="images/star_16.png" title="<?=__OWN?>" />&nbsp;&nbsp;&nbsp;&nbsp;
-					<form action="edit.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/edit.png" title="<?=__EDIT?>" /></form>
-					<form action="delete.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" /></form>
+					<form action="editbookmark-form.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/edit.png" title="<?=__EDIT?>" /></form>
+					<form action="deletebookmark-form.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" /></form>
 					<? } else if ($_SESSION['uid']!=0) { ?>					
-					<form action="add.php" method="post"><input type="hidden" name="url" value="<?=$bk->getUrl()?>" /><input type="image" src="images/add_16.png" title="<?=__ADDTOMINE?>" /></form>
+					<form action="addbookmark-form.php" method="post"><input type="hidden" name="url" value="<?=$bk->getUrl()?>" /><input type="image" src="images/add_16.png" title="<?=__ADDTOMINE?>" /></form>
 					<? } ?>
 				</td>
 				<td>
-					<form action="report.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="image" src="images/speaker_16.png" title="<?=__REPORT?>" /></form>
+					<form action="reportbookmark-form.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="image" src="images/speaker_16.png" title="<?=__REPORT?>" /></form>
 				</td>
 			</tr>
 		</table>
@@ -188,7 +188,7 @@
 					<a onclick="javascript:ShowHide('HiddenDiv_2')" href="javascript:;"><?=__ADDCOMMENT?></a>
 				</div>
 				<div class="hiddenDivA" id="HiddenDiv_2" style="DISPLAY: none" >
-					<form action="addcomment.php" method="post">
+					<form action="addcomment-exec.php" method="post">
 						<textarea name="comm" placeholder="<?=__BENICE?>" rows="8" cols="50"></textarea><br />
 						<input type="hidden" name="bid" value="<?=$bid?>" />
 						<input type="hidden" name="uid" value="<?=$_SESSION['uid']?>" />

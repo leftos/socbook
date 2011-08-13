@@ -62,10 +62,10 @@
 			<div id="content">	
 				<div id="tabs">
 					<ul>
-						<li><a href="/tabs/newest.php"><?php echo (__NEWESTTAB); ?></a></li>
-						<li><a href="/tabs/popular.php"><?php echo (__POPULARTAB); ?></a></li>
-						<li><a href="/tabs/toprated.php"><?php echo (__RATEDTAB); ?></a></li>
-						<li><a href="/tabs/visits.php"><?php echo (__VISITEDTAB); ?></a></li>
+						<li><a href="tabs/newest.php"><?php echo (__NEWESTTAB); ?></a></li>
+						<li><a href="tabs/popular.php"><?php echo (__POPULARTAB); ?></a></li>
+						<li><a href="tabs/toprated.php"><?php echo (__RATEDTAB); ?></a></li>
+						<li><a href="tabs/visits.php"><?php echo (__VISITEDTAB); ?></a></li>
 					</ul>
 				</div>
 			</div>

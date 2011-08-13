@@ -35,7 +35,7 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<form action="search.php" method="get" onsubmit="return validateAdvSearchForm()" accept-charset="utf-8">
+		<form action="search-exec.php" method="get" onsubmit="return validateAdvSearchForm()" accept-charset="utf-8">
 			<table style="font-size: 0.9em">
 				<tr>
 					<td><label><?=__SEARCHFOR?></label></td>

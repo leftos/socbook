@@ -10,10 +10,10 @@
 	<? } ?>
 </ul>
 <p><img src="/images/horizontalrule.png" style="width: 10em"/></p>
-<form action="search.php" method="get" accept-charset="utf-8">
+<form action="search-exec.php" method="get" accept-charset="utf-8">
 	<label style="font-size: 0.9em"><?=__SEARCH?> </label><br />
 	<input class="tags" type="text" name="s" size="20" /><br />&nbsp;
 </form>
-<a href='advsearch.php' style="font-size:0.8em"><?=__ADVSEARCH?></a>
+<a href='search-form.php' style="font-size:0.8em"><?=__ADVSEARCH?></a>
 <p><a href='rss/rss_newest.php'><img src="images/rss.jpg" style="width: 1em" title="<?=__RSSNEWEST?>" /></a></p>
 

@@ -1008,5 +1008,6 @@ function quickSort( &$array, $property )
         
     }while( $cur != 0 );
     
-} 
+}
+
 ?>
