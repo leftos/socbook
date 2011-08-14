@@ -2,11 +2,11 @@
  	<li><?php if ($thisPage==__HOMEPAGE) {echo(__HOMEPAGE);} else {echo ("<a href=\"index.php\">".__HOMEPAGE."</a>");} ?></li>
  	<li>&nbsp;</li>
  	<? if ($_SESSION['uid'] != 0) { ?>
-	<li><?php if ($thisPage==__ADDBOOKMARK) {echo(__ADDBOOKMARK);} else {echo ("<a href=\"add.php\">".__ADDBOOKMARK."</a>");} ?></li>
+	<li><?php if ($thisPage==__ADDBOOKMARK) {echo(__ADDBOOKMARK);} else {echo ("<a href=\"addbookmark-form.php\">".__ADDBOOKMARK."</a>");} ?></li>
 	<li>&nbsp;</li>
 	<? } ?>
 	<? if ($_SESSION['uid'] == 0) { ?>
-	<li><?php if ($thisPage==__REGISTRATION) {echo(__REGISTRATION);} else {echo ("<a href=\"registration.php\">".__REGISTRATION."</a>");} ?></li>
+	<li><?php if ($thisPage==__REGISTRATION) {echo(__REGISTRATION);} else {echo ("<a href=\"registration-form.php\">".__REGISTRATION."</a>");} ?></li>
 	<? } ?>
 </ul>
 <p><img src="/images/horizontalrule.png" style="width: 10em"/></p>

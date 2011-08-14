@@ -17,7 +17,7 @@ define('__RATEDTAB', 'Καλύτεροι');
 define('__VISITEDTAB', 'Επισκεψιμότητα');
 define('__SEARCH', 'Αναζήτηση');
 
-// add.php
+// addbookmark-form.php
 define('__ADDBOOKMARK', 'Προσθήκη Σελιδοδείκτη');
 define('__BOOKMARKADD', 'Προσθήκη');
 define('__BOOKMARKURL', 'URL');
@@ -25,7 +25,7 @@ define('__BOOKMARKTITLE','Τίτλος');
 define('__BOOKMARKDESCRIPTION','Περιγραφή');
 define('__BOOKMARKTAGS','Ετικέτες');
 
-// addresult.php
+// addbookmark-exec.php
 define('__BOOKMARKADDED', 'Ο σελιδοδείκτης καταχωρήθηκε!');
 define('__VISITBOOKMARK', 'Δείτε την καταχώρησή σας');
 define('__ADDANOTHER', 'Προσθέστε άλλο σελιδοδείκτη');
@@ -69,27 +69,27 @@ define('__BOOKMARKS', 'σελιδοδείκτης/-ες');
 define('__FOUND', 'Βρέθηκαν');
 define('__PAGE', 'Σελίδα');
 
-// registration.php
+// registration-form.php
 define('__REGISTRATION', 'Εγγραφή Νέου Χρήστη');
 define('__REGISTERBUTTON','Εγγραφή');
 define('__USERNAME','Όνομα Χρήστη');
 define('__EMAIL','Διεύθυνση Ηλ. Ταχυδρομίου');
 define('__PASSWORD','Κωδικός Πρόσβασης');
 
-// report.php
+// reportbookmark-form.php
 define('__REPORT', 'Αναφορά σελιδοδείκτη');
 define('__SUREREPORT', 'Είστε σίγουροι ότι θέλετε να αναφέρετε αυτό το σελιδοδείκτη;');
 define('__SUREREPORT2', 'Πραγματοποιήστε την αναφορά μόνο αν θεωρείτε το περιεχόμενο προσβλητικό ή παράνομο.');
 define('__CONFIRM', 'Επιβεβαίωση');
 
-// edit.php
+// editbookmark-form.php
 define('__EDIT', 'Επεξεργασία σελιδοδείκτη');
 define('__NOWEDITING', 'Επεξεργάζεστε το σελιδοδείκτη με URL');
 define('__ONLYADDTAGS', 'Μπορείτε μόνο να προσθέσετε ετικέτες');
 define('__KEEPRATING', 'Διατήρηση της βαθμολογίας του τίτλου');
 define('__KEEPRATINGNOTICE', 'Χρησιμοποιείστε την παραπάνω επιλογή μόνο εάν κάνετε μικρές αλλαγές (διόρθωση ορθογραφικού λάθους, κλπ.)');
 
-// delete.php
+// deletebookmark-form.php
 define('__DELETE', 'Διαγραφή σελιδοδείκτη');
 define('__SUREDELETE', 'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το σελιδοδείκτη;');
 define('__SUREDELETE2', 'Η ενέργια αυτή είναι μη αναστρέψιμη.');
@@ -97,7 +97,7 @@ define('__SUREDELETE3', 'Αν και άλλοι χρήστες έχουν κατ
 define('__GOBACK', 'Επιστροφή');
 define('__DELETECOMMENTS', 'Διαγραφή και όλων των σχολίων που έχετε κάνει στο σελιδοδείκτη');
 
-// search.php
+// search-exec.php
 define('__SEARCHFOR', 'Αναζήτηση για');
 define('__RELEVANCE', 'Σχετικότητα');
 define('__DESC', '(Φθίνουσα)');
@@ -122,7 +122,7 @@ define('__MISSPASSWORD', 'Πρέπει να εισάγετε έναν κωδικ
 define('__ADVSEARCH', 'Προχωρημένη αναζήτηση');
 define('__RSSNEWEST', 'Εγγραφείτε στη ροή RSS με τους 10 νεώτερους σελιδοδείκτες');
 
-// advsearch.php
+// advsearch-exec.php
 define('__EXACT', 'Ταίριασμα ολόκληρης λέξης');
 define('__ANYTERM', 'Αποτελέσματα που έχουν οποιονδήποτε από τους όρους');
 define('__ALLTERMS', 'Αποτελέσματα που έχουν όλους τους όρους');

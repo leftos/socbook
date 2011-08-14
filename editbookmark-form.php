@@ -48,7 +48,7 @@
 					$tagsString = implode(' ', $tags);
 				?>
 				<p><?=__NOWEDITING.'<br /><em>'.myTruncate($bk->getUrl(), 100, "/").'</em>'?></p>
-				<form id='editbookmark' action="doedit.php" method="post" accept-charset="utf-8">
+				<form id='editbookmark' action="editbookmark-exec.php" method="post" accept-charset="utf-8">
 					<input type="hidden" name="cid" value="<?=$cid?>" />
 					<input type="hidden" name="bid" value="<?=$bid?>" />
 					<table>

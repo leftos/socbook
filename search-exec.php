@@ -107,7 +107,7 @@
 				$s = str_replace(',', '', $s);
 			?>
 			<p style="font-size: 0.8em">
-				<? $query = "search.php?s=".$s."&inTitle=".$inTitle."&inDesc=".$inDesc
+				<? $query = "search-exec.php?s=".$s."&inTitle=".$inTitle."&inDesc=".$inDesc
 								."&inTags=".$inTags."&combine=".$combine."&exact=".$exact
 								."&startFrom=".$startFrom; ?>
 				<?=__SORTBY?>:&nbsp;

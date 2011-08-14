@@ -21,12 +21,12 @@ function prettyPrintBookmarks($result)
 		echo "<p>".__NOBOOKMARKS."</p>";
 		if ($_SESSION['uid'] == 0) 
 		{
-			echo "<p><a href=\"/registration.php\">".__LOGINTOADD1."</a> ";
+			echo "<p><a href=\"/registration-form.php\">".__LOGINTOADD1."</a> ";
 			echo __LOGINTOADD2." ";
 			echo "<a href=\"/login.php\">".__LOGINTOADD3."</a> ";
 			echo __LOGINTOADD4."</p>";
 		}
-		else echo "<p><a href=\"/add.php\">".__PLEASEADD."</a></p>";
+		else echo "<p><a href=\"/addbookmark-form.php\">".__PLEASEADD."</a></p>";
 	}
 	
 	echo ("<ul>");

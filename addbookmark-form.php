@@ -36,7 +36,7 @@
 	<div id="wrap">
 		<div id="contentwrap">
 			<div id="content">
-				<form id='addbookmark' action='addresult.php' onsubmit="return validateAddBookmarkForm()" method='post' accept-charset='UTF-8'>
+				<form id='addbookmark' action='addbookmark-exec.php' onsubmit="return validateAddBookmarkForm()" method='post' accept-charset='UTF-8'>
 					<table border="0">
 						<tr>
 							<td><input type='hidden' name='form_secret' id='form_secret' value="<?php echo $_SESSION['FORM_SECRET'];?>"></td>

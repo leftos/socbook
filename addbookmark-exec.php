@@ -56,7 +56,7 @@
 			
 					echo ('<p>'.__BOOKMARKADDED.'</p>');
 					echo ('<p><a href="viewbookmark.php?bid='.$bid.'">'.__VISITBOOKMARK.'</a></p>');
-					echo ('<p><a href="add.php">'.__ADDANOTHER.'</a></p>');
+					echo ('<p><a href="addbookmark-form.php">'.__ADDANOTHER.'</a></p>');
 					echo ('<p><a href="index.php">'.__RETURNTOMAIN.'</a></p>');
 					
 					unset($_SESSION['FORM_SECRET']);
