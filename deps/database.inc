@@ -935,7 +935,7 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 		{ 
 			if (($startFrom > $i*15) && ($startFrom >($i+1)*15))
 			{
-				$query = "search.php?s=".$s."&inTitle=".$inTitle."&inDesc=".$inDesc
+				$query = "search-exec.php?s=".$s."&inTitle=".$inTitle."&inDesc=".$inDesc
 								."&inTags=".$inTags."&combine=".$combine."&exact=".$exact
 								."&startFrom=".$startFrom."&sort=".$sort."&order=".$order; ?>
 				<a href="<?=$query?>"><?$i+1?></a>

@@ -54,7 +54,7 @@
 		<p><?=__SUREREPORT?></p>
 		<p><em><?=$bk->getTitle()?> (<?=$bk->getUrl()?>)</em></p>
 		<p><?=__SUREREPORT2?></p>
-		<form action="doreport.php" method="post">
+		<form action="reportbookmark-exec.php" method="post">
 			<input type="hidden" name="bid" value="<?=$bid?>" />
 			<input type="submit" value="<?=__CONFIRM?>" />&nbsp;
 			<input type="button" value="<?=__GOBACK?>" onclick="parent.location = 'viewbookmark.php?bid=<?=$bid?>'" />

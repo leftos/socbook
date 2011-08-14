@@ -148,7 +148,7 @@
 			{
 				if ($i > 0) echo (', ');
 				$tag = $bk->getTag($i);
-				echo "<a href=\"search.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
+				echo "<a href=\"search-exec.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
 			}
 			?><br />
 			<? if ($max==10) { ?>
@@ -162,7 +162,7 @@
 						{
 							if ($i > 10) echo (', ');
 							$tag = $bk->getTag($i);
-							echo "<a href=\"search.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
+							echo "<a href=\"search-exec.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
 						}
 					?>
 					</div> 
