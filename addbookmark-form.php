@@ -36,7 +36,7 @@
 	<div id="wrap">
 		<div id="contentwrap">
 			<div id="content">
-				<form id='addbookmark' action='addresult.php' onsubmit="return validateAddBookmarkForm()" method='post' accept-charset='UTF-8'>
+				<form id='addbookmark' action='addbookmark-exec.php' onsubmit="return validateAddBookmarkForm()" method='post' accept-charset='UTF-8'>
 					<table border="0">
 						<tr>
 							<td><input type='hidden' name='form_secret' id='form_secret' value="<?php echo $_SESSION['FORM_SECRET'];?>"></td>
@@ -51,7 +51,7 @@
 						</tr>
 						<tr>
 							<td><?=__BOOKMARKDESCRIPTION?></td>
-							<td><textarea name="desc" rows="8" cols="40" /></textarea></td>
+							<td><textarea name="desc" rows="5" cols="60" /></textarea></td>
 						</tr>
 						<tr>
 							<td><?=__BOOKMARKTAGS?></td>

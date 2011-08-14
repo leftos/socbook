@@ -1,18 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html>
+
 <!-- Page dependent settings such as settitle -->
 <?php 
 	require_once("deps/main.php");
 	require_once("deps/presentation.inc");
 	require_once("deps/database.inc");
-	$title = settitle(__REGISTRATION);
-	$thisPage = __REGISTRATION;
+	$title = settitle(__LOGIN);
+	$thisPage = __LOGIN;
 	
 	//Prevent duplicate form submission
 	$form_secret = md5(uniqid(rand(), true));
 	$_SESSION['FORM_SECRET'] = $form_secret;
 ?>
+
 <head>
 	<!-- Global head attributes and scripts (JQuery, etc.) -->	
 	<?php require_once('templates/head.inc') ?>
@@ -37,7 +39,7 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<form id='register' action='registration-exec.php' onsubmit="return validateRegisterForm()" method='post' accept-charset='UTF-8'>
+		<form id='login' action='login-exec.php' onsubmit="return validateLoginForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
 				<tr>
 					<td><input type='hidden' name='form_secret' id='form_secret' value="<?php echo $_SESSION['FORM_SECRET'];?>"></td>
@@ -55,18 +57,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td><?=__EMAIL?></td>
-					<td>
-						<input type="text" name="email" id="email" maxlength="50" size="30">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" name="Register" value="<?=__REGISTERBUTTON?>"></td>
+					<td colspan="2"><input type="submit" name="Login" value="<?=__LOGINBUTTON?>"></td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	
 	<!-- Below should remain as is on every page -->
 	<div id="footer">
 		<?php require_once('templates/layout/footer.php'); ?>

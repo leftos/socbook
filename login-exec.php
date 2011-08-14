@@ -7,8 +7,8 @@
 	require_once("deps/main.php");
 	require_once("deps/presentation.inc");
 	require_once("deps/database.inc");
-	$title = settitle(__ADDBOOKMARK);
-	$thisPage = '__ADDRESULT';
+	$title = settitle(__LOGIN);
+	$thisPage = __LOGIN;
 ?>
 
 <head>
@@ -35,42 +35,34 @@
 	
 	<div id="content">
 		<?php
-
+		
 			$form_secret = $_POST['form_secret'];
-			$url=$_POST['url'];
-			$title=$_POST['title'];
-			$desc=$_POST['desc'];
-			$tags=$_POST['tags'];
+			$username=$_POST['username'];
+			$password=$_POST['password'];
 			
 			if(isset($_SESSION['FORM_SECRET']))
 			{
 				if(strcasecmp($form_secret, $_SESSION['FORM_SECRET'])===0)
 				{
-					if( !$url || !$title || !$desc || !$tags )
+					if( !$username || !$email || !$password )
 					{
 						echo __NOTALLDETAILS.'<br />';
 						exit;
 					}
-			
-					$bid = insertBookmark($url, $title, $desc, $tags, $_SESSION['uid']);
-			
-					echo ('<p>'.__BOOKMARKADDED.'</p>');
-					echo ('<p><a href="viewbookmark.php?bid='.$bid.'">'.__VISITBOOKMARK.'</a></p>');
-					echo ('<p><a href="addbookmark-form.php">'.__ADDANOTHER.'</a></p>');
-					echo ('<p><a href="index.php">'.__RETURNTOMAIN.'</a></p>');
 					
+					$uid = validateUser( $username, $password);
 					unset($_SESSION['FORM_SECRET']);
 				}
 				else
 				{
 					//Invalid secret key
-					echo "<p>".__REFRESHONPOST."</p><p>".__REFRESHONPOST2."</p>";
+					echo "something you did is wrong, you are not supposed to even print this";
 				}
 			}
 			else
 			{
 				//Secret key missing
-				echo ('<p>'.__BOOKMARKADDED.'</p>');
+				echo "form data has been processed";
 			}
 		?>
 	</div>
