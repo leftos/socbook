@@ -169,7 +169,7 @@ class bookmark
 		{
 			if ($i > 0) {$ownersStr .= ", ";}
 			$itemid = array_pop($ownersid);
-			$ownersStr .= "<a href=\"/profile.php?uid=".$itemid."\">".$item."</a>";
+			$ownersStr .= '<a href="profile.php?uid="'.$itemid.'">'.$item.'</a>';
 			$i++;
 		}
 		
@@ -323,6 +323,64 @@ function connectToDB($host='localhost', $username='socbook', $password='socbook'
 	return $_db;
 }
 
+function insertUser( $username, $email, $password )
+{
+	if( !get_magic_quotes_gpc() )
+	{
+		$username = addslashes($username);
+		$email = addslashes($email);
+		$password = addslashes($password);
+	}
+	
+	$db = connectToDB();
+	
+	$check_db_email = dbquery($db, "select uid from users where users.email='".$email."'");
+	if ($check_db_email->num_rows == 0)
+	{
+		$check_db_username = dbquery($db, "select uid from users where users.username='".$username."'");
+		if ($check_db_username->num_rows == 0)
+		{
+			$new_user = new user;
+			$new_user->setUsername($username);
+			$new_user->setEmail($email);
+			$new_user->setPassword($password);
+			$new_user->setClass('user');
+			
+			$insert_db_user = dbquery($db, "insert into users values (NULL, '"
+										.$new_user->getUsername()."', '"
+										.$new_user->getPassword()."', '"
+										.$new_user->getEmail()."', '"
+										.$new_user->getClass()."')");
+			$uid = $db->insert_id;
+		}
+		else 
+		{
+			$check_db_username->free();
+			$check_db_email->free();
+			$db->close();
+			echo (__USEREXISTS);
+			exit;
+		} 
+	}
+	else
+	{
+		$check_db_email->free();
+		$db->close();
+		echo (__EMAILEXISTS);
+		exit;
+	}
+	
+	$check_db_email->free();
+	$check_db_username->free();
+	$db->close();
+	
+	return $uid;
+}
+
+function validateUser( $username, $password )
+{
+	
+}
 
 function insertBookmark( $url, $title, $desc, $tags, $uid )
 {
@@ -413,57 +471,6 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	$db->close();
 	
 	return $bid;
-}
-
-function insertUser( $username, $email, $password )
-{
-	if( !get_magic_quotes_gpc() )
-	{
-		$username = addslashes($username);
-		$email = addslashes($email);
-		$password = addslashes($password);
-	}
-	
-	$db = connectToDB();
-	
-	$check_db_email = dbquery($db, "select uid from users where users.email='".$email."'");
-	if ($check_db_email->num_rows == 0)
-	{
-		$check_db_username = dbquery($db, "select uid from users where users.username='".$username."'");
-		if ($check_db_username->num_rows == 0)
-		{
-			$new_user = new user;
-			$new_user->setUsername($username);
-			$new_user->setEmail($email);
-			$new_user->setPassword($password);
-			$new_user->setClass('user');
-			
-			$insert_db_user = dbquery($db, "insert into users values (NULL, '".$new_user->getUsername()."', '".$new_user->getPassword()."', '".$new_user->getEmail()."', '".$new_user->getClass()."')");
-			$uid = $db->insert_id;
-			//$_SESSION['uid']= $uid;
-		}
-		else 
-		{
-			$check_db_username->free();
-			$check_db_email->free();
-			$db->close();
-			echo (__USEREXISTS);
-			exit;
-		} 
-	}
-	else
-	{
-		$check_db_email->free();
-		$db->close();
-		echo (__EMAILEXISTS);
-		exit;
-	}
-	
-	$check_db_email->free();
-	$check_db_username->free();
-	$db->close();
-	
-	return $uid;
 }
 
 /** sorttype: datecreated, popularity, rating, visits */
@@ -773,7 +780,10 @@ function userOwnsBookmark($bid, $uid)
 		$row = $titles->fetch_object();
 		return $row->cid;
 	}
-	return 0;
+	else
+	{
+		return 0;
+	}
 }
 
 function getComment($cid)

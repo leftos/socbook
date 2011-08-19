@@ -8,13 +8,14 @@ $_db["database"] = "socbook";
 session_start();
 
 // if guest
-if (!isset($_SESSION["uid"])) {
-	$_SESSION["uid"] = 0;
-	$_SESSION["lang"] = 'gr';
-	$_SESSION["admin"] = 0;
+if (!isset($_SESSION['uid'])) {
+	$_SESSION['uid'] = 0;
+	$_SESSION['lang'] = 'gr';
+	$_SESSION['admin'] = 0;
 }
 
-// manual override of session uid FOR TESTING ONLY
+//manual override of session uid FOR TESTING ONLY
+//Here be dragons
 $_SESSION['uid'] = 0;
 
 /*

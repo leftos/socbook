@@ -3,7 +3,7 @@
 <html>
 <!-- Page dependent settings such as settitle -->
 <?php 
-	require_once("deps/main.php");
+	require_once("deps/session.inc");
 	require_once("deps/presentation.inc");
 	require_once("deps/database.inc");
 	$title = settitle(__REGISTRATION);

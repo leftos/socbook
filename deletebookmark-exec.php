@@ -1,6 +1,6 @@
 <?php
 require_once('/deps/database.inc');
-require_once('/deps/main.php');
+require_once('/deps/session.inc');
 
 if (isset($_POST['bid']))
 {

@@ -1,10 +1,10 @@
 <?php
 while(!file_exists(getcwd()."/.htroot")){chdir('..');}
 
-require_once('deps/main.php');
-$lang = $_SESSION["lang"];
-require_once("lang/".$lang.".php");
+require_once('deps/session.inc');
 require_once('deps/database.inc');
+$lang = $_SESSION['lang'];
+require_once("lang/".$lang.".php");
 
 function settitle($string) {
 	$title = __TITLE;
@@ -18,15 +18,15 @@ function prettyPrintBookmarks($result)
 {
 	if ($result->num_rows == 0)
 	{
-		echo "<p>".__NOBOOKMARKS."</p>";
+		echo '<p>'.__NOBOOKMARKS.'</p>';
 		if ($_SESSION['uid'] == 0) 
 		{
-			echo "<p><a href=\"/registration-form.php\">".__LOGINTOADD1."</a> ";
-			echo __LOGINTOADD2." ";
-			echo "<a href=\"/login.php\">".__LOGINTOADD3."</a> ";
-			echo __LOGINTOADD4."</p>";
+			echo '<p><a href="registration-form.php">'.__LOGINTOADD1.'</a>';
+			echo __LOGINTOADD2.' ';
+			echo '<a href="login-form.php">'.__LOGINTOADD3.'</a>';
+			echo __LOGINTOADD4.'</p>';
 		}
-		else echo "<p><a href=\"/addbookmark-form.php\">".__PLEASEADD."</a></p>";
+		else echo '<p><a href="addbookmark-form.php">'.__PLEASEADD.'</a></p>';
 	}
 	
 	echo ("<ul>");
@@ -38,12 +38,18 @@ function prettyPrintBookmarks($result)
 			$comm = getComment($own);
 			$row->title = $comm->getTitle();
 			$row->desc = $comm->getDesc();
-			$image = "<img src=\"/images/star_16.png\" title=\"".__OWN."\" />";
+			$image = '<img src="/images/star_16.png" title="'.__OWN.'" />';
 		}
-		echo ("<li><a href=\"viewbookmark.php?bid=".$row->bid."\">".$row->title."</a>&nbsp;&nbsp;&nbsp;".$image." <br /> <span class=\"bookurl\">".$row->url."</span><br /><span class=\"bookdesc\">(".$row->info.") " . $row->comment."</span>");
-		echo ("<li>&nbsp;</li>");
+		echo ('<li><a href="viewbookmark.php?bid='
+				.$row->bid.'">'
+				.$row->title.'</a>&nbsp;&nbsp;&nbsp;'
+				.$image.'<br /><span class="bookurl">'
+				.$row->url.'</span><br /><span class="bookdesc">('
+				.$row->info.')'
+				.$row->comment.'</span>');
+		echo ('<li>&nbsp;</li>');
 	}
-	echo ("</ul>");
+	echo ('</ul>');
 }
 
 /** Used with a bookmark instance */
@@ -55,7 +61,7 @@ function prettyPrintBookmark($bk, $_info='date', $_extra=null)
 		$comm = getComment($own);
 		$title = $comm->getTitle();
 		$comment = $comm->getDesc();
-		$image = "<img src=\"/images/star_16.png\" title=\"".__OWN."\" />";
+		$image = '<img src="/images/star_16.png" title="'.__OWN.'" />';
 	}
 	else
 	{
@@ -83,8 +89,14 @@ function prettyPrintBookmark($bk, $_info='date', $_extra=null)
 			break;
 	}
 	
-	echo ("<li><a href=\"viewbookmark.php?bid=".$bid."\">".$title."</a>&nbsp;&nbsp;&nbsp;".$image." <br /> <span class=\"bookurl\">".$url."</span><br /><span class=\"bookdesc\">(".$info.") " . $comment."</span>");
-	echo ("<li>&nbsp;</li>");
+	echo ('<li><a href="viewbookmark.php?bid='
+			.$bid.'">'
+			.$title.'</a>&nbsp;&nbsp;&nbsp;'
+			.$image.'<br /><span class="bookurl">'
+			.$url.'</span><br /><span class="bookdesc">('
+			.$info.')'
+			.$comment.'</span>');
+	echo ('<li>&nbsp;</li>');
 }
 
 function showValidRatingButtons($bid, $uid)
@@ -97,18 +109,20 @@ function showValidRatingButtons($bid, $uid)
 	$result = dbquery($db, 'select * from userrated where bid='.$bid.' and uid='.$uid);
 	if ($result->num_rows == 0)
 	{
-		echo "<a href=\"#\" id=\"plusOneLink\"><img src=\"images/plus-8.png\" title=\"".__PLUSONE."\" /></a> <a href=\"#\" id=\"minusOneLink\"><img src=\"images/minus-8.png\" title=\"".__MINUSONE."\" /></a>";
+		echo '<a href="#" id="plusOneLink"><img src="images/plus-8.png" title="'
+				.__PLUSONE.'"/></a> <a href="#" id="minusOneLink"><img src="images/minus-8.png" title="'
+				.__MINUSONE.'" /></a>';
 	}
 	else
 	{
 		$row = $result->fetch_object();
 		if ($row->rating=='-1')
 		{
-			echo "<a href=\"#\" id=\"plusOneLink\"><img src=\"images/plus-8.png\" title=\"".__PLUSONE."\" /></a>";
+			echo '<a href="#" id="plusOneLink"><img src="images/plus-8.png" title="'.__PLUSONE.'" /></a>';
 		}
 		else
 		{
-			echo "<a href=\"#\" id=\"minusOneLink\"><img src=\"images/minus-8.png\" title=\"".__MINUSONE."\" /></a>";
+			echo '<a href="#" id="minusOneLink"><img src="images/minus-8.png" title="'.__MINUSONE.'" /></a>';
 		}
 	}
 }
@@ -180,19 +194,51 @@ function addPlusMinus($bid, $db, $result, $uid, $skipfirst)
 		
 		if ($temp->num_rows == 0)
 		{
-			echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\" accept-charset=\"utf-8\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"plusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/plus-8.png\" title=\"".__PLUSONEONTITLE."\" /></form>&nbsp;";
-			echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\" accept-charset=\"utf-8\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"minusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/minus-8.png\" title=\"".__MINUSONEONTITLE."\" /></form>";
+			echo '<form action="viewbookmark.php?bid='
+					.$bid.'" method="post" accept-charset="utf-8">
+					<input type="hidden" name="action" value="ratingT" />
+					<input type="hidden" name="dod" value="plusone" />
+					<input type="hidden" name="cid" value="'
+					.$row->cid.'" />
+					<input type="image" src=images/plus-8.png" title="'
+					.__PLUSONEONTITLE.'" />
+					</form>&nbsp;';
+			echo '<form action="viewbookmark.php?bid='
+					.$bid.'" method="post" accept-charset="utf-8">
+					<input type="hidden" name="action" value="ratingT" />
+					<input type="hidden" name="dod" value="minusone" />
+					<input type="hidden" name="cid" value="'
+					.$row->cid.'" />
+					<input type="image" src="images/minus-8.png" title="'
+					.__MINUSONEONTITLE.'" />
+					</form>';
 		}
 		else
 		{
 			$cur = $temp->fetch_object();
 			if ($cur->rating == '-1')
 			{
-				echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\" accept-charset=\"utf-8\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"plusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/plus-8.png\" title=\"".__PLUSONEONTITLE."\" /></form>";
+				echo '<form action="viewbookmark.php?bid='
+				.$bid.'" method="post" accept-charset="utf-8">
+				<input type="hidden" name="action" value="ratingT" />
+				<input type="hidden" name="dod" value="plusone" />
+				<input type="hidden" name="cid" value="'
+				.$row->cid.'" />
+				<input type="image" src="images/plus-8.png" title="'
+				.__PLUSONEONTITLE.'" />
+				</form>';
 			}
 			else
 			{
-				echo "<form action=\"viewbookmark.php?bid=".$bid."\" method=\"post\" accept-charset=\"utf-8\"><input type=\"hidden\" name=\"action\" value=\"ratingT\" /><input type=\"hidden\" name=\"dod\" value=\"minusone\" /><input type=\"hidden\" name=\"cid\" value=\"".$row->cid."\" /><INPUT TYPE=\"image\" SRC=\"images/minus-8.png\" title=\"".__MINUSONEONTITLE."\" /></form>";
+				echo '<form action="viewbookmark.php?bid='
+				.$bid.'" method="post" accept-charset="utf-8">
+				<input type="hidden" name="action" value="ratingT" />
+				<input type="hidden" name="dod" value="minusone" />
+				<input type="hidden" name="cid" value="'
+				.$row->cid.'" />
+				<input type="image" src="images/minus-8.png" title="'
+				.__MINUSONEONTITLE.'" />
+				</form>';
 			}
 		}
 	}
