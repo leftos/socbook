@@ -3,8 +3,8 @@ while(!file_exists(getcwd()."/.htroot")){chdir('..');}
 
 require_once('deps/session.inc');
 require_once('deps/database.inc');
-$lang = $_SESSION['lang'];
-require_once("lang/".$lang.".php");
+$lang = $_SESSION['LANG'];
+require_once('lang/'.$lang.'.php');
 
 function settitle($string) {
 	$title = __TITLE;
@@ -19,7 +19,7 @@ function prettyPrintBookmarks($result)
 	if ($result->num_rows == 0)
 	{
 		echo '<p>'.__NOBOOKMARKS.'</p>';
-		if ($_SESSION['uid'] == 0) 
+		if ($_SESSION['UID'] == 0) 
 		{
 			echo '<p><a href="registration-form.php">'.__LOGINTOADD1.'</a>';
 			echo __LOGINTOADD2.' ';
@@ -33,7 +33,7 @@ function prettyPrintBookmarks($result)
 	while ($row = $result->fetch_object())
 	{
 		$image = "";
-		if ($own=userOwnsBookmark($row->bid, $_SESSION['uid']))
+		if ($own=userOwnsBookmark($row->bid, $_SESSION['UID']))
 		{
 			$comm = getComment($own);
 			$row->title = $comm->getTitle();
@@ -56,7 +56,7 @@ function prettyPrintBookmarks($result)
 function prettyPrintBookmark($bk, $_info='date', $_extra=null)
 {
 	$image = "";
-	if ($own=userOwnsBookmark($bk->getBid(), $_SESSION['uid']))
+	if ($own=userOwnsBookmark($bk->getBid(), $_SESSION['UID']))
 	{
 		$comm = getComment($own);
 		$title = $comm->getTitle();
@@ -134,8 +134,8 @@ function checkIfOtherTitles($bid)
 	$result = dbquery($db, 'select comments.title
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
-							where booksncomms.bid='.$bid.'
-							and comments.title!=\'\'');
+							where booksncomms.bid='
+							.$bid.' and comments.title!=NULL');
 	
 	$db->close();
 	
@@ -160,9 +160,9 @@ function showSuggestedTitles($bid, $uid, $own)
 	$result = dbquery($db, 'select comments.title, comments.comment, comments.cid, comments.rating
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
-							where booksncomms.bid='.$bid.' and comments.title!=\'\'
-							'.$check.'
-							order by comments.rating desc');
+							where booksncomms.bid='
+							.$bid.' and comments.title!=NULL'
+							.$check.' order by comments.rating desc');
 	
 	addPlusMinus($bid, $db, $result, $uid, $skip);
 	$db->close();
@@ -172,7 +172,7 @@ function addPlusMinusTitle($bid, $cid, $uid)
 {
 	$db = connectToDB();
 	
-	// echo $bid.' '.$cid.' '.$uid;
+	//echo $bid.' '.$cid.' '.$uid;
 	$result = dbquery($db, 'select comments.title, comments.cid, comments.rating, comments.user
 							from comments
 							where cid='.$cid);

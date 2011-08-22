@@ -53,6 +53,8 @@
 					
 					$uid = insertUser( $username, $email, $password);
 					unset($_SESSION['FORM_SECRET']);
+					header("Location: profile.php?uid=".$uid);
+					exit;
 				}
 				else
 				{

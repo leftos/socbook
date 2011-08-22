@@ -2,7 +2,9 @@
 header("Content-type: text/html; charset=utf-8");
 
 // Global require to allows us to skip optional parameters in functions
+require_once('session.inc');
 require_once('par.class.php');
+require_once('formating.inc');
 
 class bookmark
 {
@@ -141,13 +143,12 @@ class bookmark
 	{
 		$db = connectToDB();
 		
-		$result = dbquery($db, "select username, uid
+		$result = dbquery($db, 'select username, uid
 								from users
 								inner join comments on comments.user=users.uid
 								inner join booksncomms on booksncomms.cid=comments.cid
-								where booksncomms.bid=".$this->bid."
-								and comments.title!=''
-								order by users.username");
+								where booksncomms.bid='
+								.$this->bid.' and comments.title!=NULL order by users.username');
 		
 		$owners = array();
 		$ownersid = array();
@@ -325,19 +326,16 @@ function connectToDB($host='localhost', $username='socbook', $password='socbook'
 
 function insertUser( $username, $email, $password )
 {
-	if( !get_magic_quotes_gpc() )
-	{
-		$username = addslashes($username);
-		$email = addslashes($email);
-		$password = addslashes($password);
-	}
-	
 	$db = connectToDB();
 	
-	$check_db_email = dbquery($db, "select uid from users where users.email='".$email."'");
+	$username = sanitizeSqlInput($db, $username);
+	$email = sanitizeSqlInput($db, $email);
+	$password = sanitizeSqlInput($db, $password);
+	
+	$check_db_email = dbquery($db, "SELECT uid FROM users WHERE users.email='".$email."'");
 	if ($check_db_email->num_rows == 0)
 	{
-		$check_db_username = dbquery($db, "select uid from users where users.username='".$username."'");
+		$check_db_username = dbquery($db, "SELECT uid FROM users WHERE users.username='".$username."'");
 		if ($check_db_username->num_rows == 0)
 		{
 			$new_user = new user;
@@ -378,30 +376,51 @@ function insertUser( $username, $email, $password )
 }
 
 function validateUser( $username, $password )
-{
+{	
+	$db = connectToDB();
 	
+	$username = sanitizeSqlInput($db, $username);
+	$password = sanitizeSqlInput($db, $password);
+	
+	$check_db_user = dbquery($db, "SELECT uid, class FROM users WHERE username='"
+									.$username."' AND password='"
+									.hash('sha256',$password)."'");
+
+	if ($check_db_user->num_rows == 1)
+	{
+		$member = $check_db_user->fetch_object();
+		
+		session_regenerate_id();
+		
+		$_SESSION['UID'] = $member->uid;
+		$_SESSION['CLASS'] = $member->class;
+										
+		session_write_close();
+		
+		$check_db_user->free();
+		$db->close();
+	
+		return 0;
+	}
+	else
+	{
+		$check_db_user->free();
+		$db->close();
+		
+		return 1;
+	}
 }
 
 function insertBookmark( $url, $title, $desc, $tags, $uid )
 {
-	if( !get_magic_quotes_gpc() )
-	{
-		$url = addslashes($url);
-		$title = addslashes($title);
-		$desc = addslashes($desc);
-		$tags = addslashes($tags);
-		$uid = addslashes($uid);
-	}
+	$url = formatBookmarkLink($url);
 	
 	$db = connectToDB();
 	
-	// TODO: validate()
-	// formating
-	foreach (array('http://','https://') as $strip)
-	{
-		$url = str_replace($strip, '', $url);
-	}
-	$url = rtrim($url, '/');
+	$url = sanitizeSqlInput($db, $url);
+	$title = sanitizeSqlInput($db, $title);
+	$desc = sanitizeSqlInput($db, $desc);
+	$tags = sanitizeSqlInput($db, $tags);
 	
 	// See if bookmark exists and update, or else add it
 	$result = dbquery($db, "select bid from bookmarks where url='".$url."'");
@@ -530,12 +549,13 @@ function fetchBookmark($bid)
 
 	$bk = new bookmark($bid);
 	
-	$bookmark = dbquery($db, 'select url, rating, popularity, visits, datecreated from bookmarks where bid='.$bid.';');
+	$bookmark = dbquery($db, 'select url, rating, popularity, visits, datecreated from bookmarks where bid='.$bid);
+	
 	$titles = dbquery($db, 'select comments.title, comments.comment, comments.cid
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
-							where booksncomms.bid='.$bid.' and comments.title!=\'\'
-							order by comments.rating desc limit 1');
+							where booksncomms.bid='
+							.$bid.' and comments.title!=NULL order by comments.rating desc limit 1');
 	
 	$best_title_comment = $titles->fetch_object();
 	$bk->setTitle($best_title_comment->title);
@@ -566,9 +586,8 @@ function fetchComments($bk)
 				from comments
 				inner join booksncomms on comments.cid=booksncomms.cid
 				inner join users on comments.user=users.uid
-				where booksncomms.bid='.$bk->getBid().' 
-				order by comments.dateposted;
-	');
+				where booksncomms.bid='
+				.$bk->getBid().' order by comments.dateposted');
 	
 	$i = 0;
 	
@@ -592,8 +611,8 @@ function fetchTags($bk)
 	$result = dbquery($db, 'select tagcloud.tid, tagcloud.tag, booksntags.popularity
 							from tagcloud
 							inner join booksntags on tagcloud.tid=booksntags.tid
-							where booksntags.bid='.$bk->getBid().'
-							order by booksntags.popularity desc');
+							where booksntags.bid='
+							.$bk->getBid().' order by booksntags.popularity desc');
 	
 	$i = 0;
 	
@@ -611,7 +630,7 @@ function fetchUserTags($bk)
 {
 	$db = connectToDB();
 	
-	$cid = userOwnsBookmark($bk->getBid(), $_SESSION['uid']);
+	$cid = userOwnsBookmark($bk->getBid(), $_SESSION['UID']);
 	
 	$result = dbquery($db, 'select tagcloud.tag
 							from tagcloud
@@ -766,12 +785,12 @@ function userOwnsBookmark($bid, $uid)
 {
 	$db = connectToDB();
 	
-	$titles = dbquery($db, 'select comments.title, comments.comment, comments.cid
+	$titles = dbquery($db, "select comments.title, comments.comment, comments.cid
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
-							where booksncomms.bid='.$bid.' 
-							and comments.user='.$uid.'
-							and comments.title!=\'\'');
+							where booksncomms.bid="
+							.$bid." and comments.user="
+							.$uid." and comments.title!=NULL");
 							
 	$db->close();
 	

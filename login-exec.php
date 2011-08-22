@@ -44,14 +44,28 @@
 			{
 				if(strcasecmp($form_secret, $_SESSION['FORM_SECRET'])===0)
 				{
-					if( !$username || !$email || !$password )
+					if( !$username || !$password )
 					{
 						echo __NOTALLDETAILS.'<br />';
 						exit;
 					}
+					else 
+					{
+						unset($_SESSION['FORM_SECRET']);				
 					
-					$uid = validatexUser( $username, $password);
-					unset($_SESSION['FORM_SECRET']);
+						if (!validateUser( $username, $password))
+						{
+							echo (__LOGINSUCCESS);
+							header("Location: profile.php?uid=".$_SESSION['UID']);
+							exit;
+						}
+						else
+						{
+							echo (__LOGINGFAIL);
+							header("Location: login-form.php");
+							exit;
+						}
+					}
 				}
 				else
 				{

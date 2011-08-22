@@ -46,7 +46,7 @@ if (isset($_POST['bid']))
 	{
 		$temp = dbquery($db, 'select * from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
-							where comments.user='.$_SESSION['uid']);
+							where comments.user='.$_SESSION['UID']);
 		while ($row = $temp->fetch_object())
 		{
 			$result = dbquery($db, 'delete from booksncomms where cid='.$row->cid);
@@ -56,6 +56,6 @@ if (isset($_POST['bid']))
 							
 	$db->close();
 	header("Location: index.php");
-	exit;
+	exit();
 }
 ?>

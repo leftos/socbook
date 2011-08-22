@@ -38,7 +38,7 @@ function tag_cloud()
 	{
 		$size = $min_size + ($count - $minimum_count)
 				* ($max_size - $min_size) / $spread;
-		$cloud_tags[] = '<a style="font-size: '. floor($size) . 'px'
+		$cloud_tags[] = '<a style="font-size: '.floor($size).'px'
 		. '" class="tag_cloud" href="search-exec.php?s=' . $tag . '&exact=1'
 		. '" title="' . $tag . ' (' . $count . ')">'
 		. htmlspecialchars(stripslashes($tag)) . '</a>';		

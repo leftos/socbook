@@ -30,11 +30,11 @@
 	{
 		if ($_POST['action'] == 'rating')
 		{
-			changeRating($bid, $_SESSION['uid'], $_POST['dod']);
+			changeRating($bid, $_SESSION['UID'], $_POST['dod']);
 		}
 		else if ($_POST['action'] == 'ratingT')
 		{
-			changeTitleRating($_POST['cid'], $_SESSION['uid'], $_POST['dod']);
+			changeTitleRating($_POST['cid'], $_SESSION['UID'], $_POST['dod']);
 		}
 	}
 	$bk = fetchBookmark($bid);
@@ -99,23 +99,23 @@
 				<td width=80%>
 					<h2>
 						<?php 
-							if ($temp = userOwnsBookmark($bid, $_SESSION['uid']))
+							if ($temp = userOwnsBookmark($bid, $_SESSION['UID']))
 							{
 								$cid = $temp;
 							} else {
 								$cid = $bk->getTitleCID();
 							}
-							addPlusMinusTitle($bid, $cid, $_SESSION['uid'], 'true'); 
+							addPlusMinusTitle($bid, $cid, $_SESSION['UID'], 'true'); 
 						?>
 					</h2>
 				</td>
 				<td class="report" width=20%>
 					<?php
-					if ($cid = userOwnsBookmark($bid, $_SESSION['uid'])) { ?>
+					if ($cid = userOwnsBookmark($bid, $_SESSION['UID'])) { ?>
 					<img src="images/star_16.png" title="<?=__OWN?>" />&nbsp;&nbsp;&nbsp;&nbsp;
 					<form action="editbookmark-form.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/edit.png" title="<?=__EDIT?>" /></form>
 					<form action="deletebookmark-form.php" method="post"><input type="hidden" name="bid" value="<?=$bid?>" /><input type="hidden" name="cid" value="<?=$cid?>" /><input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" /></form>
-					<? } else if ($_SESSION['uid']!=0) { ?>					
+					<? } else if ($_SESSION['UID']!=0) { ?>					
 					<form action="addbookmark-form.php" method="post"><input type="hidden" name="url" value="<?=$bk->getUrl()?>" /><input type="image" src="images/add_16.png" title="<?=__ADDTOMINE?>" /></form>
 					<? } ?>
 				</td>
@@ -130,14 +130,14 @@
 			<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
 			<a onclick="javascript:ShowHide('HiddenDiv_1')" href="javascript:;"><?=__SHOWSUGGESTED?></a>
 		</div>
-		<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? $own=userOwnsBookmark($bid, $_SESSION['uid']); showSuggestedTitles($bid, $_SESSION['uid'], $own); ?></div>					
+		<div class="hiddenDivA" id="HiddenDiv_1" style="DISPLAY: none" ><? $own=userOwnsBookmark($bid, $_SESSION['UID']); showSuggestedTitles($bid, $_SESSION['UID'], $own); ?></div>					
 		<? } ?>
 
 		<p><a href="redirect.php?action=leave&bid=<?=$bk->getBid()?>"><?=myTruncate($bk->getUrl(), 150, "/") ?></a>&nbsp;
 			<a href="redirect.php?action=leavehttps&bid=<?=$bk->getBid()?>"><img src="images/lock_small.png" alt="<?=__VISITHTTPS?>" title="<?=__VISITHTTPS?>" /></a></p>
 		<p><?=__DESCRIPTION?>: <br /><? if ($cid==0) {echo $bk->getDesc();} else {$comm=getComment($cid); echo $comm->getDesc();} ?></p>
 		<p>
-			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<? showValidRatingButtons($bid, $_SESSION['uid']); ?>
+			<?=__RATING?>: <?=$bk->getRating() ?>&nbsp;&nbsp;&nbsp;&nbsp;<? showValidRatingButtons($bid, $_SESSION['UID']); ?>
 			<br />
 			<?=__VISITS?>: <?=$bk->getVisits() ?>
 		</p>
@@ -148,7 +148,7 @@
 			{
 				if ($i > 0) echo (', ');
 				$tag = $bk->getTag($i);
-				echo "<a href=\"search-exec.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
+				echo '<a href="search-exec.php?s='.$tag->getTagW().'">'.$tag->getTagW().'</a> ('.$tag->getPopularity().')';
 			}
 			?><br />
 			<? if ($max==10) { ?>
@@ -162,7 +162,7 @@
 						{
 							if ($i > 10) echo (', ');
 							$tag = $bk->getTag($i);
-							echo "<a href=\"search-exec.php?s=".$tag->getTagW()."\">".$tag->getTagW()."</a> (".$tag->getPopularity().")";
+							echo '<a href="search-exec.php?s='.$tag->getTagW().'">'.$tag->getTagW().'</a> ('.$tag->getPopularity().')';
 						}
 					?>
 					</div> 
@@ -182,7 +182,7 @@
 			<a onclick="javascript:ShowHide('HiddenDiv_4')" href="javascript:;"><? echo(__COMMENTS.' ('.$bk->getCommentCount().')'); ?></a>
 		</div>
 		<div class="hiddenDivA" id="HiddenDiv_4" style="DISPLAY: none" >
-			<?php if ($_SESSION['uid']!=0) { ?>
+			<?php if ($_SESSION['UID']!=0) { ?>
 				<div id="hiddenDivQ">
 					<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
 					<a onclick="javascript:ShowHide('HiddenDiv_2')" href="javascript:;"><?=__ADDCOMMENT?></a>
@@ -191,7 +191,7 @@
 					<form action="addcomment-exec.php" method="post">
 						<textarea name="comm" placeholder="<?=__BENICE?>" rows="8" cols="50"></textarea><br />
 						<input type="hidden" name="bid" value="<?=$bid?>" />
-						<input type="hidden" name="uid" value="<?=$_SESSION['uid']?>" />
+						<input type="hidden" name="uid" value="<?=$_SESSION['UID']?>" />
 						<input type="submit" value="<?=__ADDCOMMENT?>" />
 					</form>
 				</div>

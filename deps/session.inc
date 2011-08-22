@@ -8,16 +8,15 @@ $_db["database"] = "socbook";
 session_start();
 
 // if guest
-if (!isset($_SESSION['uid'])) {
-	$_SESSION['uid'] = 0;
-	$_SESSION['lang'] = 'gr';
-	$_SESSION['admin'] = 0;
+if (!isset($_SESSION['UID'])) {
+	$_SESSION['UID'] = 0;
+	$_SESSION['LANG'] = 'gr';
+	$_SESSION['CLASS'] = 'guest';
 }
 
 //manual override of session uid FOR TESTING ONLY
 //Here be dragons
-$_SESSION['uid'] = 0;
-
+print_r($_SESSION);
 /*
 if (!($db = mysql_connect($_db["host"], $_db["username"], $_db["password"])))
 {

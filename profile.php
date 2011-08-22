@@ -7,8 +7,8 @@
 	require_once("deps/session.inc");
 	require_once("deps/presentation.inc");
 	require_once("deps/database.inc");
-	$title = settitle(__HOMEPAGE);
-	$thisPage = __HOMEPAGE;
+	$title = settitle(__PROFILE);
+	$thisPage = __PROFILE;
 ?>
 <head>
 	<?php require_once('templates/head.inc') ?>
@@ -61,10 +61,11 @@
 			<div id="content">	
 				<div id="tabs">
 					<ul>
-						<li><a href="tabs/newest.php"><?php echo (__NEWESTTAB); ?></a></li>
-						<li><a href="tabs/popular.php"><?php echo (__POPULARTAB); ?></a></li>
-						<li><a href="tabs/toprated.php"><?php echo (__RATEDTAB); ?></a></li>
-						<li><a href="tabs/visits.php"><?php echo (__VISITEDTAB); ?></a></li>
+						<li><a href="tabs/profile/bookmarks.php"><?php echo (__MYBOOKMARKS); ?></a></li>
+						<li><a href="tabs/profile/personal.php"><?php echo (__PERSONALINFO); ?></a></li>
+						<?php if( $_SESSION['CLASS'] == 'admin' ) { ?>
+						<li><a href="tabs/profile/reported.php"><?php echo (__REPORTED); ?></a></li>
+						<?php } ?>
 					</ul>
 				</div>
 			</div>
