@@ -135,7 +135,7 @@ function checkIfOtherTitles($bid)
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='
-							.$bid.' and comments.title!=NULL');
+							.$bid.' and comments.title!=""');
 	
 	$db->close();
 	
@@ -161,7 +161,7 @@ function showSuggestedTitles($bid, $uid, $own)
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='
-							.$bid.' and comments.title!=NULL'
+							.$bid.' and comments.title!=""'
 							.$check.' order by comments.rating desc');
 	
 	addPlusMinus($bid, $db, $result, $uid, $skip);
@@ -200,9 +200,9 @@ function addPlusMinus($bid, $db, $result, $uid, $skipfirst)
 					<input type="hidden" name="dod" value="plusone" />
 					<input type="hidden" name="cid" value="'
 					.$row->cid.'" />
-					<input type="image" src=images/plus-8.png" title="'
+					<input type="image" src="images/plus-8.png" title="'
 					.__PLUSONEONTITLE.'" />
-					</form>&nbsp;';
+					</form>';
 			echo '<form action="viewbookmark.php?bid='
 					.$bid.'" method="post" accept-charset="utf-8">
 					<input type="hidden" name="action" value="ratingT" />

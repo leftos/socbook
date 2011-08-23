@@ -121,6 +121,9 @@ define('__MISSPASSWORD', 'Πρέπει να εισάγετε έναν κωδικ
 // templates/layout/navigation.inc
 define('__ADVSEARCH', 'Προχωρημένη αναζήτηση');
 define('__RSSNEWEST', 'Εγγραφείτε στη ροή RSS με τους 10 νεώτερους σελιδοδείκτες');
+define('__LOGIN', 'Σύνδεση');
+define('__LOGINBUTTON', 'Σύνδεση');
+define('__LOGOUT', 'Αποσύνδεση');
 
 // advsearch-exec.php
 define('__EXACT', 'Ταίριασμα ολόκληρης λέξης');
@@ -130,4 +133,9 @@ define('__LOOKIN', 'Αναζήτηση σε');
 define('__INTITLE', 'Τίτλους');
 define('__INDESC', 'Περιγραφές');
 define('__INTAGS', 'Ετικέτες');
+
+//profile.php
+define('__PROFILE', 'Προφίλ');
+define('__MYBOOKMARKS', 'Οι σελιδοδείκτες μου');
+define('__PERSONALINFO', 'Προσωπικές πληροφορίες');
 ?>
