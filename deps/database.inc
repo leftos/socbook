@@ -147,7 +147,7 @@ class bookmark
 								inner join comments on comments.user=users.uid
 								inner join booksncomms on booksncomms.cid=comments.cid
 								where booksncomms.bid='
-								.$this->bid.' and comments.title!=NULL order by users.username');
+								.$this->bid.' and comments.title!="" order by users.username');
 		
 		$owners = array();
 		$ownersid = array();
@@ -547,7 +547,7 @@ function fetchBookmark($bid)
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
 							where booksncomms.bid='
-							.$bid.' and comments.title!=NULL order by comments.rating desc limit 1');
+							.$bid.' and comments.title!="" order by comments.rating desc limit 1');
 	
 	$best_title_comment = $titles->fetch_object();
 	$bk->setTitle($best_title_comment->title);
@@ -777,12 +777,12 @@ function userOwnsBookmark($bid, $uid)
 {
 	$db = connectToDB();
 	
-	$titles = dbquery($db, "select comments.title, comments.comment, comments.cid
+	$titles = dbquery($db, 'select comments.title, comments.comment, comments.cid
 							from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
-							where booksncomms.bid="
-							.$bid." and comments.user="
-							.$uid." and comments.title!=NULL");
+							where booksncomms.bid='
+							.$bid.' and comments.user='
+							.$uid.' and comments.title!=""');
 							
 	$db->close();
 	
