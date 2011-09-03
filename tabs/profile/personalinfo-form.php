@@ -1,6 +1,6 @@
 <?php
 while(!file_exists(getcwd()."/.htroot")){chdir('..');}
-
+require_once ('deps/session.inc');
 require_once ('deps/database.inc');
 require_once ('deps/presentation.inc');
 
@@ -9,9 +9,6 @@ $member = fetchUser( $_SESSION['UID'] );
 <div class="tab_page">
 		<form id='register' action='tabs/profile/personalinfo-exec.php' onsubmit="return validateRegisterForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
-				<tr>
-					<td><input type='hidden' name='form_secret' id='form_secret' value="<?php echo $_SESSION['FORM_SECRET'];?>"></td>
-				</tr>
 				<tr>
 					<td><?=__USERNAME?></td>
 					<td><?echo $member->username;?></td>

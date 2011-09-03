@@ -3,6 +3,7 @@ while(!file_exists(getcwd()."/.htroot")){chdir('..');}
 require_once( 'deps/session.inc');
 require_once( 'deps/database.inc');
 require_once( 'deps/formating.inc');
+require_once( 'deps/presentation.inc');
 
 $member = fetchUser( $_SESSION['UID'] );
 
@@ -18,8 +19,6 @@ if(!empty($new_email)){
 		$result = dbquery( $db, "UPDATE users SET users.email='"
 								.$new_email."' WHERE users.uid="
 								.$_SESSION['UID'] );
-
-		$result->free();
 	}
 }
 
@@ -31,13 +30,19 @@ if(!empty($new_password)){
 		$result = dbquery( $db, "UPDATE users SET users.password='"
 								.$new_password."' WHERE users.uid="
 								.$_SESSION['UID'] );
-	
-		$result->free();
 	}
 }
 
 $db->close();
 
-header("Location: ../../profile");
-exit();
 ?>
+<html>
+<head>
+<script type="text/javascript">
+function delayedRedirect(){
+    window.location = "/profile.php"
+}
+</script>
+</head>
+<body onLoad="setTimeout('delayedRedirect()', 2000)"><?=__PROFILEUPDATED?></body>
+</html>

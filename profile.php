@@ -61,7 +61,7 @@
 			<div id="content">	
 				<div id="tabs">
 					<ul>
-						<li><a href="tabs/profile/mybookmarks.php"><?php echo (__MYBOOKMARKS); ?></a></li>
+						<li><a href="tabs/profile/bookmarks.php"><?php echo (__MYBOOKMARKS); ?></a></li>
 						<li><a href="tabs/profile/personalinfo-form.php"><?php echo (__PERSONALINFO); ?></a></li>
 						<?php if( $_SESSION['CLASS'] == 'admin' ) { ?>
 						<li><a href="tabs/profile/reported.php"><?php echo (__REPORTED); ?></a></li>
