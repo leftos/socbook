@@ -812,6 +812,23 @@ function visit($bid)
 	exit;
 }
 
+function adminDeleteBookmark($bid)
+{
+	$db = connectToDB();
+	
+	$result = dbquery($db, 'select cid from booksncomms where booksncomms.bid='.$bid);
+	
+	while ($row = $result->fetch_object())
+	{
+		deleteUserTags($cid);
+		$result = dbquery($db, 'delete from booksncomms where cid='.$cid);
+		$result = dbquery($db, 'delete from comments where cid='.$cid);
+	}
+	
+	$result = dbquery($db, 'delete from bookmarks where bid='.$bid);
+	$db->close();
+}
+
 /** Returns cid of user's title for bookmark, if they own it */
 function userOwnsBookmark($bid, $uid)
 {

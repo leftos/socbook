@@ -6,6 +6,7 @@ require_once "deps/presentation.inc";
 ?>
 <div class="tab_page">
 	<p>
+		<ul>
 		<?php
 			$result = getUserBookmarks($_SESSION['UID']);
 			while ($row = $result->fetch_object())
@@ -14,5 +15,6 @@ require_once "deps/presentation.inc";
 				prettyPrintBookmark($bk);
 			};
 		?>
+		</ul>
 	</p>
 </div>
