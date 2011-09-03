@@ -7,8 +7,12 @@ require_once ('deps/presentation.inc');
 <div class="tab_page">
 	<p>
 		<?php
-			$result = populateIndex('datecreated');
-			prettyPrintBookmarks($result);
+			$reported = getReportedBookmarks();
+			while ($row = $reported->fetch_object())
+			{
+				$bk = fetchBookmark($row->bid);
+				prettyPrintBookmark($bk);
+			};
 		?>
 	</p>
 </div>

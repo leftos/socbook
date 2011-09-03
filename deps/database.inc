@@ -513,6 +513,17 @@ function getUserBookmarks($uid)
 	return $result;
 }
 
+function getReportedBookmarks()
+{
+	$db = connectToDB();
+	
+	$result = dbquery( $db, 'SELECT bookmarks.bid FROM bookmarks WHERE reported=1 ORDER BY datecreated');
+	
+	$db->close();
+	
+	return $result;
+}
+
 /** sorttype: datecreated, popularity, rating, visits */
 function populateIndex($sorttype, $limit=10)
 {	

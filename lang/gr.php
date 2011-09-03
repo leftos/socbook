@@ -139,4 +139,5 @@ define('__PROFILE', 'Προφίλ');
 define('__MYBOOKMARKS', 'Οι σελιδοδείκτες μου');
 define('__PERSONALINFO', 'Προσωπικές πληροφορίες');
 define('__UPDATEBUTTON', 'Ενημέρωση');
+define('__REPORTED', 'Αναφορές');
 ?>

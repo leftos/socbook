@@ -18,8 +18,6 @@ if(!empty($new_email)){
 		$result = dbquery( $db, "UPDATE users SET users.email='"
 								.$new_email."' WHERE users.uid="
 								.$_SESSION['UID'] );
-
-		$result->free();
 	}
 }
 
@@ -31,8 +29,6 @@ if(!empty($new_password)){
 		$result = dbquery( $db, "UPDATE users SET users.password='"
 								.$new_password."' WHERE users.uid="
 								.$_SESSION['UID'] );
-	
-		$result->free();
 	}
 }
 
