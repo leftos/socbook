@@ -1,8 +1,8 @@
 <?php
 while(!file_exists(getcwd()."/.htroot")){chdir('..');}
-require_once( 'deps/session.inc');
-require_once( 'deps/database.inc');
-require_once( 'deps/presentation.inc');
+require_once ('deps/session.inc');
+require_once ('deps/database.inc');
+require_once ('deps/presentation.inc');
 
 $member = fetchUser( $_SESSION['UID'] );
 ?>

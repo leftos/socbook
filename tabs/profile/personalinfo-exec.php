@@ -3,6 +3,7 @@ while(!file_exists(getcwd()."/.htroot")){chdir('..');}
 require_once( 'deps/session.inc');
 require_once( 'deps/database.inc');
 require_once( 'deps/formating.inc');
+require_once( 'deps/presentation.inc');
 
 $member = fetchUser( $_SESSION['UID'] );
 
@@ -34,6 +35,14 @@ if(!empty($new_password)){
 
 $db->close();
 
-header("Location: ../../profile");
-exit();
 ?>
+<html>
+<head>
+<script type="text/javascript">
+function delayedRedirect(){
+    window.location = "/profile.php"
+}
+</script>
+</head>
+<body onLoad="setTimeout('delayedRedirect()', 2000)"><?=__PROFILEUPDATED?></body>
+</html>
