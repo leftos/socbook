@@ -12,6 +12,10 @@ if ((isset($_POST['cid'])) && (isset($_POST['bid'])))
 	$tags = $_POST['tags'];
 	if (isset($_POST['keeprating'])) $keeprating = $_POST['keeprating']; else $keeprating = 'false';
 	
+	$title = sanitizeSqlInput($db, $title);
+	$desc = sanitizeSqlInput($db, $desc);
+	$tags = sanitizeSqlInput($db, $tags);
+	
 	$result = dbquery($db, "update comments set title='".$title."', comment='".$desc."' where cid=".$cid);
 	if ($keeprating != 'true')
 	{

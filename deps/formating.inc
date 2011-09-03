@@ -14,6 +14,7 @@ function formatBookmarkLink( $url )
 function sanitizeSqlInput($_db, $string)
 {
 	$string = @trim($string);
+	$string = strip_tags($string);
 	if(get_magic_quotes_gpc())
 	{
 		$string = stripslashes($string);

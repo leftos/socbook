@@ -53,7 +53,7 @@ function prettyPrintBookmarks($result)
 }
 
 /** Used with a bookmark instance */
-function prettyPrintBookmark($bk, $_info='date', $_extra=null)
+function prettyPrintBookmark($bk, $_info='dateCreated', $_extra=null)
 {
 	$image = "";
 	if ($own=userOwnsBookmark($bk->getBid(), $_SESSION['UID']))

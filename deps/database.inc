@@ -492,6 +492,22 @@ function insertBookmark( $url, $title, $desc, $tags, $uid )
 	return $bid;
 }
 
+function getUserBookmarks($uid)
+{
+	$db = connectToDB();
+	
+	$result = dbquery($db, '
+	SELECT bookmarks.bid
+	FROM bookmarks
+	INNER JOIN booksncomms ON booksncomms.bid = bookmarks.bid
+	INNER JOIN comments ON booksncomms.cid = comments.cid
+	WHERE comments.user = '.$uid.' AND comments.title !=""
+	ORDER BY title');
+	
+	$db->close();
+	return $result;
+}
+
 /** sorttype: datecreated, popularity, rating, visits */
 function populateIndex($sorttype, $limit=10)
 {	
