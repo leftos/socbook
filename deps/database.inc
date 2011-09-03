@@ -2,7 +2,6 @@
 header("Content-type: text/html; charset=utf-8");
 
 // Global require to allows us to skip optional parameters in functions
-require_once('session.inc');
 require_once('par.class.php');
 require_once('formating.inc');
 
@@ -390,24 +389,17 @@ function validateUser( $username, $password )
 	{
 		$member = $check_db_user->fetch_object();
 		
-		session_regenerate_id();
-		
-		$_SESSION['UID'] = $member->uid;
-		$_SESSION['CLASS'] = $member->class;
-										
-		session_write_close();
-		
 		$check_db_user->free();
 		$db->close();
 	
-		return 0;
+		return $member;
 	}
 	else
 	{
 		$check_db_user->free();
 		$db->close();
 		
-		return 1;
+		return 0;
 	}
 }
 
