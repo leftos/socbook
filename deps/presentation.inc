@@ -45,7 +45,7 @@ function prettyPrintBookmarks($result)
 				.$row->title.'</a>&nbsp;&nbsp;&nbsp;'
 				.$image.'<br /><span class="bookurl">'
 				.$row->url.'</span><br /><span class="bookdesc">('
-				.$row->info.')'
+				.$row->info.') '
 				.$row->comment.'</span>');
 		echo ('<li>&nbsp;</li>');
 	}
@@ -94,7 +94,7 @@ function prettyPrintBookmark($bk, $_info='dateCreated', $_extra=null)
 			.$title.'</a>&nbsp;&nbsp;&nbsp;'
 			.$image.'<br /><span class="bookurl">'
 			.$url.'</span><br /><span class="bookdesc">('
-			.$info.')'
+			.$info.') '
 			.$comment.'</span>');
 	echo ('<li>&nbsp;</li>');
 }
