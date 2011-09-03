@@ -16,7 +16,8 @@ if (!isset($_SESSION['UID'])) {
 
 //manual override of session uid FOR TESTING ONLY
 //Here be dragons
-print_r($_SESSION);
+//print_r($_SESSION);
+//print_r($_SERVER);
 /*
 if (!($db = mysql_connect($_db["host"], $_db["username"], $_db["password"])))
 {

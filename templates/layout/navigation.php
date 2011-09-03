@@ -4,7 +4,7 @@
  	<? if ($_SESSION['UID'] != 0) { ?>
 	<li><?php if ($thisPage==__ADDBOOKMARK) {echo(__ADDBOOKMARK);} else {echo ('<a href="addbookmark-form.php">'.__ADDBOOKMARK.'</a>');} ?></li>
 	<li>&nbsp;</li>
-	<li><?php if ($thisPage==__PROFILE) {echo(__PROFILE);} else {echo ('<a href="profile.php?uid='.$_SESSION['UID'].'">'.__PROFILE.'</a>');} ?></li>
+	<li><?php if ($thisPage==__PROFILE) {echo(__PROFILE);} else {echo ('<a href="profile.php">'.__PROFILE.'</a>');} ?></li>
 	<li>&nbsp;</li>
 	<li><?php if ($thisPage==__LOGOUT) {echo(__LOGOUT);} else {echo ('<a href="logout-exec.php">'.__LOGOUT.'</a>');} ?></li>
 	<li>&nbsp;</li>

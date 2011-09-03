@@ -20,7 +20,7 @@ if(isset($_SESSION['FORM_SECRET']))
 		unset($_SESSION['FORM_SECRET']);
 
 		$member = validateUser($username, $password);
-		if(!$member)
+		if($member === 0)
 		{
 			header("Location: login-form.php");
 			exit ;
@@ -34,7 +34,7 @@ if(isset($_SESSION['FORM_SECRET']))
 										
 			session_write_close();
 			
-			header("Location: profile.php?uid=" . $_SESSION['UID']);
+			header("Location: profile.php");
 			exit ;
 		}
 	}

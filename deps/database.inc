@@ -403,6 +403,19 @@ function validateUser( $username, $password )
 	}
 }
 
+function fetchUser( $uid )
+{
+	$db = connectToDB();
+	
+	$result = dbquery( $db, "SELECT username,password,email FROM users WHERE uid=".$uid);
+	$user_info = $result->fetch_object();
+	
+	$result->free();
+	$db->close();
+	
+	return $user_info;
+}
+
 function insertBookmark( $url, $title, $desc, $tags, $uid )
 {
 	$url = formatBookmarkLink($url);
