@@ -949,7 +949,7 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 	
 	$t = $bkobjarr;
 	$bkobjarr = array();
-	for ($i=$startFrom; $i<$startFrom+15; $i++)
+	for ($i=$startFrom; $i<$startFrom+14; $i++)
 	{
 		if (!(isset($t[$i]))) break;
 		$bkobjarr[] = $t[$i];
