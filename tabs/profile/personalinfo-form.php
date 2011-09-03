@@ -14,17 +14,18 @@ $member = fetchUser( $_SESSION['UID'] );
 					<td><?echo $member->username;?></td>
 				</tr>
 				<tr>
-					<td><?=__EMAIL?></td>
-					<td>
-						<input type="text" name="email" id="email" maxlength="50" size="30" value="<?echo $member->email;?>">
-					</td>
-				</tr>
-				<tr>
 					<td><?=__PASSWORD?></td>
 					<td>
 						<input type="password" name="password" id="password" maxlength="50" size="30">
 					</td>
 				</tr>
+				<tr>
+					<td><?=__EMAIL?></td>
+					<td>
+						<input type="text" name="email" id="email" maxlength="50" size="30" value="<?echo $member->email;?>">
+					</td>
+				</tr>
+				
 
 				<tr>
 					<td colspan="2"><input type="submit" name="Register" value="<?=__CONFIRM?>"></td>

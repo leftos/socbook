@@ -53,8 +53,8 @@ function prettyPrintBookmarks($result)
 }
 
 /** Used with a bookmark instance */
-function prettyPrintBookmark($bk, $_info='dateCreated', $_extra=null)
-{
+function prettyPrintBookmark($bk, $_info='dateCreated', $_extra=null, $admin=false)
+{	
 	$image = "";
 	if ($own=userOwnsBookmark($bk->getBid(), $_SESSION['UID']))
 	{
@@ -96,7 +96,7 @@ function prettyPrintBookmark($bk, $_info='dateCreated', $_extra=null)
 			.$url.'</span><br /><span class="bookdesc">('
 			.$info.') '
 			.$comment.'</span>');
-	echo ('<li>&nbsp;</li>');
+	if ($admin == false) echo ('<li>&nbsp;</li>');
 }
 
 function showValidRatingButtons($bid, $uid)
