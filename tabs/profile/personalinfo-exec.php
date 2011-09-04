@@ -40,7 +40,7 @@ $db->close();
 <head>
 <script type="text/javascript">
 function delayedRedirect(){
-    window.location = "/profile.php"
+    window.location = "../../profile.php"
 }
 </script>
 </head>

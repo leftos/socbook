@@ -38,7 +38,7 @@ function prettyPrintBookmarks($result)
 			$comm = getComment($own);
 			$row->title = $comm->getTitle();
 			$row->desc = $comm->getDesc();
-			$image = '<img src="/images/star_16.png" title="'.__OWN.'" />';
+			$image = '<img src="images/star_16.png" title="'.__OWN.'" />';
 		}
 		echo ('<li><a href="viewbookmark.php?bid='
 				.$row->bid.'">'
@@ -61,7 +61,7 @@ function prettyPrintBookmark($bk, $_info='dateCreated', $_extra=null, $admin=fal
 		$comm = getComment($own);
 		$title = $comm->getTitle();
 		$comment = $comm->getDesc();
-		$image = '<img src="/images/star_16.png" title="'.__OWN.'" />';
+		$image = '<img src="images/star_16.png" title="'.__OWN.'" />';
 	}
 	else
 	{

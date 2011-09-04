@@ -51,6 +51,6 @@ function tag_cloud()
 ?>
 
 <? $html = tag_cloud(); if ($html!='') { ?> 
-	<p><img src="/images/horizontalrule.png" style="width: 10em; height:1em" /></p>
+	<p><img src="images/horizontalrule.png" style="width: 10em; height:1em" /></p>
 	<div class="tag_cloud"><p><?=$html?></p></div>
 <? } ?>

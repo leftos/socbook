@@ -34,19 +34,51 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<?php
-		$bid = $_POST['bid'];
-		
-		$bk = fetchBookmark( $bid );
-		for ($i=0; $i< $bk->getCommentCount(); $i++)
-		{
-			$comment = $bk->getComment($i);
-			$commentdate = $comment->getDatePosted();
-			$commenttitle = $comment->getTitle();
-			$commentdesc = $comment->getDesc();
-			$commentuser = $comment->getUsername();
-		}		
-		?>
+			<table border="0">
+				<?php
+				if( isset($_POST['bid']) ){
+					$bid = $_POST['bid'];
+				} elseif( isset($_GET['bid']) ){
+					$bid = $_GET['bid'];
+				}
+				
+				$start = 0;
+				$bk = fetchBookmark( $bid );
+				?>
+				<tr>
+					<td></td><td>CID</td><td><?=__BOOKMARKTITLE?></td><td><?=__BOOKMARKDESCRIPTION?></td>
+				</tr>
+				<?php
+				for ($i=0; $i< $bk->getCommentCount(); $i++)
+				{
+					$comment = $bk->getComment($i);
+					$comment_cid = $comment->getCid();
+					$comment_title = $comment->getTitle();
+					$comment_desc = $comment->getDesc();
+
+				?>
+				<tr>
+					<form id='admineditbookmark' action="adminedit-exec.php" onsubmit="return validateAddBookmarkForm()" method="post" accept-charset="utf-8">
+						<td><input type="hidden" name="bid" id="bid" value="<?echo $bid?>"></td>
+						<td><?echo $comment_cid;?><input type="hidden" name="cid" id="cid" value="<?echo $comment_cid?>"></td>
+						<?php if( !empty( $comment_title ) ){ ?>
+							<td><input type="text" name="title" maxlength="140" size="40" value="<?echo $comment_title;?>" /></td>
+						<?php } else { ?>
+							<td><input type="text" name="title" maxlength="140" size="40" value="Comment" disabled="yes" /></td>
+						<?php } ?>
+						<td><textarea name="desc" rows="2" cols="60"><?echo $comment_desc;?></textarea></td>
+						<td colspan="2"><input type="submit" value=<?=__CONFIRM?>></td>
+					</form>
+				</tr>
+				<?
+				}		
+				?>
+			</table>
+			<form action="verify-exec.php" method="post">
+				<input type="hidden" name="bid" value="<?=$bid?>" />
+				<input type="hidden" name="start" value="<?=$start?>" />
+				<input type="image" src="images/check_16.png" title="<?=__VERIFY?>" />
+			</form>
 	</div>
 	
 	<!-- Below should remain as is on every page -->

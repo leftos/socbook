@@ -25,8 +25,6 @@ $member = fetchUser( $_SESSION['UID'] );
 						<input type="text" name="email" id="email" maxlength="50" size="30" value="<?echo $member->email;?>">
 					</td>
 				</tr>
-				
-
 				<tr>
 					<td colspan="2"><input type="submit" name="Register" value="<?=__CONFIRM?>"></td>
 				</tr>

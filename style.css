@@ -273,7 +273,7 @@ form tr {
 	-webkit-border-radius: 0px;
 }
 #tabs .ui-tabs-panel {
-	background: url(images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top #f5f3e5;
+/*	background: url(images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top #f5f3e5; */
 	border-width: 0px 1px 1px 1px;
 }
 

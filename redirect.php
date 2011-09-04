@@ -1,5 +1,5 @@
 <?php
-require_once('/deps/database.inc');
+require_once( 'deps/database.inc');
 
 if (isset($_GET['action']))
 {

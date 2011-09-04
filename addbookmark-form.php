@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html>
 
@@ -51,7 +51,7 @@
 						</tr>
 						<tr>
 							<td><?=__BOOKMARKDESCRIPTION?></td>
-							<td><textarea name="desc" rows="5" cols="60" /></textarea></td>
+							<td><textarea name="desc" rows="5" cols="60"></textarea></td>
 						</tr>
 						<tr>
 							<td><?=__BOOKMARKTAGS?></td>

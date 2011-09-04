@@ -23,10 +23,10 @@ require_once ('deps/presentation.inc');
 						<input type="hidden" name="start" value="<?=$start?>" />
 						<input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" />
 					</form>
-					<form action="verify-exec.php" method="post">
+					<form action="adminedit-form.php" method="post">
 						<input type="hidden" name="bid" value="<?=$row->bid?>" />
 						<input type="hidden" name="start" value="<?=$start?>" />
-						<input type="image" src="images/check_16.png" title="<?=__VERIFY?>" />
+						<input type="image" src="images/edit.png" title="<?=__EDIT?>" />
 					</form>
 				</li>
 				<li>&nbsp;</li>
