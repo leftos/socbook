@@ -874,6 +874,15 @@ function visit($bid)
 	exit;
 }
 
+function verifyBookmark($bid)
+{
+	$db = connectToDB();
+	
+	$result = dbquery($db, 'update bookmarks set reported=0 where bid='.$bid);
+	
+	$db->close();
+}
+
 function adminDeleteBookmark($bid)
 {
 	$db = connectToDB();

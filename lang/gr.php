@@ -147,4 +147,7 @@ define('__REPORTED', 'Αναφορές');
 
 // tabs/profile/personalinfo-exec.php
 define('__PROFILEUPDATED', 'Οι προσωπικές πληροφορίες ανανεώθηκαν επιτυχώς. Παρακαλώ περιμένετε...');
+
+// tabs/profile/reported.php
+define('__VERIFY', 'Διαγραφή αναφοράς');
 ?>

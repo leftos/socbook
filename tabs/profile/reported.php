@@ -17,10 +17,19 @@ require_once ('deps/presentation.inc');
 				$bk = fetchBookmark($row->bid);
 				prettyPrintBookmark($bk, 'dateCreated', null, true);
 				?>
-				<li><form action="admindelete-form.php" method="post">
-					<input type="hidden" name="bid" value="<?=$row->bid?>" />
-					<input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" />
-				</form></li><li>&nbsp;</li>
+				<li>
+					<form action="admindelete-form.php" method="post">
+						<input type="hidden" name="bid" value="<?=$row->bid?>" />
+						<input type="hidden" name="start" value="<?=$start?>" />
+						<input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" />
+					</form>
+					<form action="verify-exec.php" method="post">
+						<input type="hidden" name="bid" value="<?=$row->bid?>" />
+						<input type="hidden" name="start" value="<?=$start?>" />
+						<input type="image" src="images/check_16.png" title="<?=__VERIFY?>" />
+					</form>
+				</li>
+				<li>&nbsp;</li>
 				<?
 			};
 		?>			

@@ -48,8 +48,9 @@
 				<p><?=__SUREDELETE2?></p>
 				<form action="admindelete-exec.php" method="post">
 					<input type="hidden" name="bid" value="<?=$bid?>" />
+					<input type="hidden" name="start" value="<?=$_POST['start']?>" />
 					<input type="submit" value="<?=__CONFIRM?>" />
-					<input type="button" value="<?=__GOBACK?>" onclick="parent.location = 'profile.php'" />
+					<input type="button" value="<?=__GOBACK?>" onclick="parent.location = 'profile.php?start=<?=$_POST['start']?>'" />
 				</form>
 			</div>
 		</div>
