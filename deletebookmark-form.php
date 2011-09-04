@@ -48,7 +48,7 @@
 				<p><em><?=$bk->getTitle()?> (<?=$bk->getUrl()?>)</em></p>
 				<p><?=__SUREDELETE2?></p>
 				<p><?=__SUREDELETE3?></p>
-				<form action="delete-exec.php" method="post">
+				<form action="deletebookmark-exec.php" method="post">
 					<input type="hidden" name="bid" value="<?=$bid?>" />
 					<input type="hidden" name="cid" value="<?=$cid?>" />
 					<input type="checkbox" name="deletecomments" value="true" />&nbsp;<?=__DELETECOMMENTS?><br /><br />
