@@ -61,8 +61,9 @@
 			<div id="content">	
 				<div id="tabs">
 					<ul>
+						<?php if (isset($_GET['start'])) $_start=$_GET['start']; else $_start=0; ?>
 						<?php if( $_SESSION['CLASS'] == 'admin' ) { ?>
-						<li><a href="tabs/profile/reported.php"><?php echo (__REPORTED); ?></a></li>
+						<li><a href="tabs/profile/reported.php?start=<?=$_start?>"><?php echo (__REPORTED); ?></a></li>
 						<?php } ?>
 						<li><a href="tabs/profile/bookmarks.php"><?php echo (__MYBOOKMARKS); ?></a></li>
 						<li><a href="tabs/profile/personalinfo-form.php"><?php echo (__PERSONALINFO); ?></a></li>

@@ -513,15 +513,26 @@ function getUserBookmarks($uid)
 	return $result;
 }
 
-function getReportedBookmarks()
+function getReportedBookmarks($start)
 {
 	$db = connectToDB();
 	
-	$result = dbquery( $db, 'SELECT bookmarks.bid FROM bookmarks WHERE reported=1 ORDER BY datecreated');
+	$result = dbquery( $db, 'SELECT bookmarks.bid FROM bookmarks WHERE reported=1 ORDER BY datecreated LIMIT '.$start.', 15');	
 	
 	$db->close();
 	
 	return $result;
+}
+
+function checkIfMoreReported($start)
+{
+	$db = connectToDB();
+	
+	$more = dbquery( $db, 'SELECT bookmarks.bid FROM bookmarks WHERE reported=1 ORDER BY datecreated LIMIT '.($start+15).', 1');
+	
+	$db->close();
+	
+	return $more;
 }
 
 /** sorttype: datecreated, popularity, rating, visits */

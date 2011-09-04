@@ -8,7 +8,10 @@ require_once ('deps/presentation.inc');
 	<p>
 		<ul>
 		<?php
-			$reported = getReportedBookmarks();
+			$start = $_GET['start'];
+			
+			$reported = getReportedBookmarks($start);			
+			
 			while ($row = $reported->fetch_object())
 			{
 				$bk = fetchBookmark($row->bid);
@@ -20,7 +23,21 @@ require_once ('deps/presentation.inc');
 				</form></li><li>&nbsp;</li>
 				<?
 			};
-		?>
+		?>			
 		</ul>
+	</p>
+	<p>
+		<?
+			if ($start >= 15)
+			{
+				?><a href="profile.php?start=<?=($start-15)?>"><?=__PREVIOUS15?></a><?
+			}
+			
+			$more = checkIfMoreReported($start);
+			if ($more->num_rows > 0)
+			{
+				?>&nbsp;<a href="profile.php?start=<?=($start+15)?>"><?=__NEXT15?></a><?
+			}
+		?>
 	</p>
 </div>

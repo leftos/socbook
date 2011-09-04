@@ -69,6 +69,10 @@ define('__BOOKMARKS', 'σελιδοδείκτης/-ες');
 define('__FOUND', 'Βρέθηκαν');
 define('__PAGE', 'Σελίδα');
 
+//reported.php
+define('__PREVIOUS15', 'Προηγούμενες 15');
+define('__NEXT15', 'Επόμενες 15');
+
 // registration-form.php
 define('__REGISTRATION', 'Εγγραφή Νέου Χρήστη');
 define('__REGISTERBUTTON','Εγγραφή');
@@ -140,5 +144,7 @@ define('__MYBOOKMARKS', 'Οι σελιδοδείκτες μου');
 define('__PERSONALINFO', 'Προσωπικές πληροφορίες');
 define('__UPDATEBUTTON', 'Ενημέρωση');
 define('__REPORTED', 'Αναφορές');
+
+// tabs/profile/personalinfo-exec.php
 define('__PROFILEUPDATED', 'Οι προσωπικές πληροφορίες ανανεώθηκαν επιτυχώς. Παρακαλώ περιμένετε...');
 ?>
