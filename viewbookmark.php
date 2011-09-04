@@ -151,7 +151,7 @@
 				echo '<a href="search-exec.php?s='.$tag->getTagW().'">'.$tag->getTagW().'</a> ('.$tag->getPopularity().')';
 			}
 			?><br />
-			<? if ($max==10) { ?>
+			<? if ($bk->getTagCount() > 10) { ?>
 				<div id="hiddenDivQ">
 					<script language="JavaScript">function ShowHide(divId){if(document.getElementById(divId).style.display == 'none'){document.getElementById(divId).style.display='block';}else{document.getElementById(divId).style.display = 'none';}}</script>
 					<a onclick="javascript:ShowHide('HiddenDiv_3')" href="javascript:;"><?=__SHOWOTHERTAGS ?></a>
