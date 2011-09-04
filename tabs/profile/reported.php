@@ -45,7 +45,8 @@ require_once ('deps/presentation.inc');
 			$more = checkIfMoreReported($start);
 			if ($more->num_rows > 0)
 			{
-				?>&nbsp;<a href="profile.php?start=<?=($start+15)?>"><?=__NEXT15?></a><?
+				if ($start >= 15) { echo " - "; }
+				?><a href="profile.php?start=<?=($start+15)?>"><?=__NEXT15?></a><?
 			}
 		?>
 	</p>
