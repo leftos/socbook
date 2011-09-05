@@ -64,7 +64,7 @@
 						<?php if( !empty( $comment_title ) ){ ?>
 							<td><input type="text" name="title" maxlength="140" size="40" value="<?echo $comment_title;?>" /></td>
 						<?php } else { ?>
-							<td><input type="text" name="title" maxlength="140" size="40" value="Comment" disabled="yes" /></td>
+							<td><input type="text" name="title" maxlength="140" size="40" value="<?=__COMMENT?>" disabled="yes" /></td>
 						<?php } ?>
 						<td><textarea name="desc" rows="2" cols="60"><?echo $comment_desc;?></textarea></td>
 						<td colspan="2"><input type="submit" value=<?=__CONFIRM?>></td>
