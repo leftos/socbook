@@ -356,7 +356,7 @@ function insertUser( $username, $email, $password )
 			$check_db_email->free();
 			$db->close();
 			echo (__USEREXISTS);
-			exit;
+			return 0;
 		} 
 	}
 	else
@@ -364,7 +364,7 @@ function insertUser( $username, $email, $password )
 		$check_db_email->free();
 		$db->close();
 		echo (__EMAILEXISTS);
-		exit;
+		return 0;
 	}
 	
 	$check_db_email->free();
@@ -888,7 +888,7 @@ function adminDeleteBookmark($bid)
 	$db = connectToDB();
 	
 	$temp = dbquery($db, 'select cid from booksncomms where bid='.$bid);
-	print_r($result);
+	//print_r($result);
 	
 	while ($row = $temp->fetch_object())
 	{
