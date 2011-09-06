@@ -39,11 +39,18 @@
 				<?php
 				if (isset($_POST['bid'])) {
 					$bid = $_POST['bid'];
-				} elseif (isset($_GET['bid'])) {
-					$bid = $_GET['bid'];
+				} elseif (isset($_SESSION['bid'])) {
+					$bid = $_SESSION['bid'];
+					unset($_SESSION['bid']);
 				}
 
-				$start = 0;
+				if (isset($_POST['start'])) {
+					$start = $_POST['start'];
+				} elseif (isset($_SESSION['start'])) {
+					$start = $_SESSION['start'];
+					unset($_SESSION['start']);
+				}
+				
 				$bk = fetchBookmark($bid);
 				?>
 				<thead>
@@ -64,6 +71,7 @@
 						<form id='admineditbookmark' action="adminedit-exec.php" onsubmit="return validateAddBookmarkForm()" method="post" accept-charset="utf-8">
 							<input type="hidden" name="bid" id="bid" value="<?=$bid?>">
 							<input type="hidden" name="cid" id="cid" value="<?=$comment_cid?>">
+							<input type="hidden" name="start" value="<?=$start?>" />
 							<td><?=$comment_cid;?></td>
 							<?php if( !empty( $comment_title ) ){?>
 							<td><input type="text" name="title" maxlength="140" size="40" value="<?=$comment_title;?>" /></td>

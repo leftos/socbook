@@ -29,18 +29,22 @@ if (!empty($_REQUEST['Edit'])) {
 
 	header("Location: adminedit-form.php?bid=" . $bid);
 } else if (!empty($_REQUEST['Delete'])) {
-	$db = connectToDB();
-
-	$result = dbquery($db, "SELECT * FROM booksncomms WHERE booksncomms.bid=" . $bid);
-	if ($result -> num_rows == 1) {
+	
+	$other = checkIfOtherTitles($bid);
+	if ($other == 0) {
 		adminDeleteBookmark($bid);
 
-		header("Location: profile.php");
+		header("Location: profile.php?start=".$_POST['start']);
 	} else {
+		$db = connectToDB();
+		
 		$delete_cid = dbquery($db, 'DELETE FROM booksncomms WHERE cid='.$cid);
 		$delete_comment = dbquery($db, 'DELETE FROM comments WHERE cid='.$cid);
 		
-		header("Location: adminedit-form.php?bid=" . $bid);
+		$db->close();
+		$_SESSION['bid'] = $bid;
+		$_SESSION['start'] = $_POST['start'];
+		header("Location: adminedit-form.php");
 	}
 }
 ?>
