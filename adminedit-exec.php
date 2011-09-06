@@ -31,15 +31,27 @@ if (!empty($_REQUEST['Edit'])) {
 } else if (!empty($_REQUEST['Delete'])) {
 	
 	$other = checkIfOtherTitles($bid);
-	if ($other == 0) {
+	if ($other == 0) 
+	{
 		adminDeleteBookmark($bid);
 
 		header("Location: profile.php?start=".$_POST['start']);
-	} else {
+	} 
+	else 
+	{
 		$db = connectToDB();
 		
-		$delete_cid = dbquery($db, 'DELETE FROM booksncomms WHERE cid='.$cid);
-		$delete_comment = dbquery($db, 'DELETE FROM comments WHERE cid='.$cid);
+		$result = dbquery($db, 'SELECT * FROM comments WHERE cid='.$cid.' AND title!=""');
+		// if comment to be deleted is a simple comment
+		if ($result->num_rows == 0)
+		{
+			$delete_cid = dbquery($db, 'DELETE FROM booksncomms WHERE cid='.$cid);
+			$delete_comment = dbquery($db, 'DELETE FROM comments WHERE cid='.$cid);
+		}
+		else // if it is a title/comment
+		{
+			deleteBookmark($bid, $cid, false);
+		}
 		
 		$db->close();
 		$_SESSION['bid'] = $bid;

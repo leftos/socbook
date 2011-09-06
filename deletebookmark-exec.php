@@ -6,7 +6,7 @@ if (isset($_POST['bid']))
 {
 	$bid = $_POST['bid'];
 	$cid = $_POST['cid'];
-	if (isset($_POST['deletecomments'])) $deletecomments = 'true'; else $deletecomments = 'false';
+	if (isset($_POST['deletecomments'])) $deletecomments = true; else $deletecomments = false;
 	
 	deleteBookmark($bid, $cid, $deletecomments);
 	

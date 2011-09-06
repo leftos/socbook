@@ -721,7 +721,7 @@ function fetchAllTags($json=false, $limit=null)
 
 }
 
-function deleteBookmark($bid, $cid, $deletecomments)
+function deleteBookmark($bid, $cid, $deletecomments=false)
 {
 	$db = connectToDB();
 	
@@ -757,7 +757,7 @@ function deleteBookmark($bid, $cid, $deletecomments)
 		$result = dbquery($db, 'delete from tagcloud where popularity=0');
 		$result = dbquery($db, 'delete from bookmarks where bid='.$bid);
 	} 
-	else if ($deletecomments=='true')
+	else if ($deletecomments==true)
 	{
 		$temp = dbquery($db, 'select * from comments
 							inner join booksncomms on comments.cid=booksncomms.cid
