@@ -150,7 +150,10 @@ define('__PROFILEUPDATED', 'Οι προσωπικές πληροφορίες α�
 
 // tabs/profile/reported.php
 define('__VERIFY', 'Διαγραφή αναφοράς');
+
 // adminedit-form.php
 define('__ADMINEDIT','Διόρθωση Σελιδοδείκτη');
-define('__COMMENT', 'Σχόλιο');
+define('__COMMENT','Σχόλιο');
+define('__ADMINEDITCOMMENT','Διόρθωση Σχολίου');
+define('__ADMINDELETECOMMENT','Διαγραφή Σχολίου');
 ?>

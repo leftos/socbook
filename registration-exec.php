@@ -20,8 +20,11 @@ if(isset($_SESSION['FORM_SECRET']))
 		
 		unset($_SESSION['FORM_SECRET']);
 		
-		insertUser($username, $email, $password);
-		header("Location: profile.php?uid=".$_SESSION['UID']);
+		if( insertUser($username, $email, $password) == 0 ){
+			header("Location: registration-form.php");
+		} else {
+			header("Location: login-form.php");
+		}
 		exit ;
 	}
 	else
