@@ -30,33 +30,33 @@ if (!empty($_REQUEST['Edit'])) {
 	header("Location: adminedit-form.php?bid=" . $bid);
 } else if (!empty($_REQUEST['Delete'])) {
 	
-	$other = checkIfOtherTitles($bid);
-	if ($other == 0) 
-	{
-		adminDeleteBookmark($bid);
-
-		header("Location: profile.php?start=".$_POST['start']);
-	} 
-	else 
-	{
-		$db = connectToDB();
+	$db = connectToDB();
 		
-		$result = dbquery($db, 'SELECT * FROM comments WHERE cid='.$cid.' AND title!=""');
-		// if comment to be deleted is a simple comment
-		if ($result->num_rows == 0)
+	$result = dbquery($db, 'SELECT * FROM comments WHERE cid='.$cid.' AND title!=""');
+	// if comment to be deleted is a simple comment
+	if ($result->num_rows == 0)
+	{
+		$delete_cid = dbquery($db, 'DELETE FROM booksncomms WHERE cid='.$cid);
+		$delete_comment = dbquery($db, 'DELETE FROM comments WHERE cid='.$cid);
+	} 
+	else // if it is a title/comment
+	{
+		$other = checkIfOtherTitles($bid);
+		if ($other == 0) 
 		{
-			$delete_cid = dbquery($db, 'DELETE FROM booksncomms WHERE cid='.$cid);
-			$delete_comment = dbquery($db, 'DELETE FROM comments WHERE cid='.$cid);
+			adminDeleteBookmark($bid);
+			$db->close();
+			header("Location: profile.php?start=".$_POST['start']);
+			exit;
 		}
-		else // if it is a title/comment
+		else 
 		{
 			deleteBookmark($bid, $cid, false);
 		}
-		
-		$db->close();
-		$_SESSION['bid'] = $bid;
-		$_SESSION['start'] = $_POST['start'];
-		header("Location: adminedit-form.php");
 	}
+	$db->close();
+	$_SESSION['bid'] = $bid;
+	$_SESSION['start'] = $_POST['start'];
+	header("Location: adminedit-form.php");
 }
 ?>
