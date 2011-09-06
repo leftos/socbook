@@ -9,11 +9,19 @@ require_once "deps/presentation.inc";
 		<ul>
 		<?php
 			$result = getUserBookmarks($_SESSION['UID']);
-			while ($row = $result->fetch_object())
+			if ($result->num_rows > 0)
 			{
-				$bk = fetchBookmark($row->bid);
-				prettyPrintBookmark($bk);
-			};
+				while ($row = $result->fetch_object())
+				{
+					$bk = fetchBookmark($row->bid);
+					prettyPrintBookmark($bk);
+				}
+			}
+			else 
+			{
+				echo '<p>'.__NOBOOKMARKS.'</p>';
+				echo '<p><a href="addbookmark-form.php">'.__PLEASEADD.'</a></p>';
+			}
 		?>
 		</ul>
 	</p>

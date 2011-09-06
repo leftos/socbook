@@ -128,6 +128,7 @@ define('__RSSNEWEST', 'Εγγραφείτε στη ροή RSS με τους 10 �
 define('__LOGIN', 'Σύνδεση');
 define('__LOGINBUTTON', 'Σύνδεση');
 define('__LOGOUT', 'Αποσύνδεση');
+define('__PROFILEADMIN', 'Προφίλ / Διαχείρηση');
 
 // advsearch-exec.php
 define('__EXACT', 'Ταίριασμα ολόκληρης λέξης');
