@@ -33,137 +33,137 @@ define('__RETURNTOMAIN', 'Return to homepage');
 define('__NOTALLDETAILS', 'You didn\'t enter all required information.');
 
 // viewbookmark.php
-define('__VIEWBOOKMARK', 'Προβολή Σελιδοδείκτη');
-define('__DESCRIPTION', 'Περιγραφή');
-define('__RATING', 'Βαθμολογία');
-define('__COMMENTS', 'Σχόλια');
-define('__ONDATE', 'Στις');
-define('__COMMUSER', 'ο/η χρήστης');
-define('__COMMPOSTED', 'δημοσίευσε');
-define('__COMMADDED', 'πρόσθεσε αυτή τη σελίδα στους σελιδοδείκτες του με τίτλο');
-define('__COMMDESC', 'και την περιγραφή');
-define('__DATECREATED', 'Ημερομηνία δημιουργίας');
-define('__TAGS', 'Ετικέτες');
-define('__SHOWSUGGESTED', 'Εμφάνιση άλλων προτεινόμενων τίτλων');
-define('__ADDCOMMENT', 'Προσθήκη Σχόλιου');
-define('__BENICE', 'Θυμηθείτε να είστε πάντα ευγενικοί στα σχόλιά σας. Προσβλητικά σχόλια θα διαγράφονται.');
-define('__VISITHTTPS', 'Επισκεφθείτε τον ιστότοπο μέσω ασφαλούς σύνδεσης HTTPS (εφ\'όσων διατίθεται)');
-define('__SHOWOTHERTAGS', 'Εμφάνιση και των υπόλοιπων ετικετών');
-define('__ADDTOMINE', 'Προσθήκη στους σελιδοδείκτες μου');
-define('__PLUSONEONTITLE', "+1 σε αυτόν τον τίτλο");
-define('__MINUSONEONTITLE', "-1 σε αυτόν τον τίτλο");
-define('__PLUSONE', '+1 σε αυτό το σελιδοδείκτη');
-define('__MINUSONE', '-1 σε αυτό το σελιδοδείκτη');
-define('__OWN', 'Έχετε καταχωρήσει αυτό το σελιδοδείκτη');
-define('__OWNERS', 'Χρήστες');
-define('__VISITS', 'Επισκέψεις');
+define('__VIEWBOOKMARK', 'View Bookmark');
+define('__DESCRIPTION', 'Description');
+define('__RATING', 'Rating');
+define('__COMMENTS', 'Comments');
+define('__ONDATE', 'On');
+define('__COMMUSER', 'user');
+define('__COMMPOSTED', 'posted');
+define('__COMMADDED', 'added this page to their bookmarks with the title');
+define('__COMMDESC', 'and description');
+define('__DATECREATED', 'Date Created');
+define('__TAGS', 'Tags');
+define('__SHOWSUGGESTED', 'Show all suggested titles');
+define('__ADDCOMMENT', 'Add comment');
+define('__BENICE', 'Always remember to be nice in your comments. Offensive comments will be deleted.');
+define('__VISITHTTPS', 'Visit this website via HTTPS (if available)');
+define('__SHOWOTHERTAGS', 'Show more tags');
+define('__ADDTOMINE', 'Add to My Bookmarks');
+define('__PLUSONEONTITLE', "+1 on this title");
+define('__MINUSONEONTITLE', "-1 on this title");
+define('__PLUSONE', '+1 on this bookmark');
+define('__MINUSONE', '-1 on this bookmark');
+define('__OWN', 'You\'ve already added this bookmark to your profile.');
+define('__OWNERS', 'Users');
+define('__VISITS', 'Visits');
 
 // database.inc
 /// insertBookmark()
-define('__BOOKMARKEXISTS', 'Έχετε ήδη καταχωρήσει σελιδοδείκτη για αυτή τη σελίδα.');
-define('__USEREXISTS', 'Ο χρήστης υπάρχει ήδη στο σύστημα');
-define('__EMAILEXISTS', 'Το email αυτό χρησιμοποιείται από άλλο λογαριασμό');
+define('__BOOKMARKEXISTS', 'You have already added a bookmark for this URL.');
+define('__USEREXISTS', 'A user with this username already exists.');
+define('__EMAILEXISTS', 'A user has already registered with this e-mail.');
 
 /// search()
-define('__BOOKMARKS', 'σελιδοδείκτης/-ες');
-define('__FOUND', 'Βρέθηκαν');
-define('__PAGE', 'Σελίδα');
+define('__BOOKMARKS', 'bookmark(s)');
+define('__FOUND', 'Found');
+define('__PAGE', 'Page');
 
 //reported.php
-define('__PREVIOUS15', 'Προηγούμενες 15');
-define('__NEXT15', 'Επόμενες 15');
+define('__PREVIOUS15', 'Previous 15');
+define('__NEXT15', 'Next 15');
 
 // registration-form.php
-define('__REGISTRATION', 'Εγγραφή Νέου Χρήστη');
-define('__REGISTERBUTTON','Εγγραφή');
-define('__USERNAME','Όνομα Χρήστη');
-define('__EMAIL','Διεύθυνση Ηλ. Ταχυδρομίου');
-define('__PASSWORD','Κωδικός Πρόσβασης');
-define('__MEMBEREXISTS', 'Το όνομα χρήστη ή το e-mail υπάρχουν ήδη.');
+define('__REGISTRATION', 'Register');
+define('__REGISTERBUTTON','Register');
+define('__USERNAME','Username');
+define('__EMAIL','E-mail');
+define('__PASSWORD','Password');
+define('__MEMBEREXISTS', 'This username and/or e-mail are already registered.');
 
 // reportbookmark-form.php
-define('__REPORT', 'Αναφορά σελιδοδείκτη');
-define('__SUREREPORT', 'Είστε σίγουροι ότι θέλετε να αναφέρετε αυτό το σελιδοδείκτη;');
-define('__SUREREPORT2', 'Πραγματοποιήστε την αναφορά μόνο αν θεωρείτε το περιεχόμενο προσβλητικό ή παράνομο.');
-define('__CONFIRM', 'Επιβεβαίωση');
+define('__REPORT', 'Report bookmark');
+define('__SUREREPORT', 'Are you sure you want to report this bookmark?');
+define('__SUREREPORT2', 'Report a bookmark only if you consider its contents offending and/or illegal.');
+define('__CONFIRM', 'Confirm');
 
 // editbookmark-form.php
-define('__EDIT', 'Επεξεργασία σελιδοδείκτη');
-define('__NOWEDITING', 'Επεξεργάζεστε το σελιδοδείκτη με URL');
-define('__ONLYADDTAGS', 'Μπορείτε μόνο να προσθέσετε ετικέτες');
-define('__KEEPRATING', 'Διατήρηση της βαθμολογίας του τίτλου');
-define('__KEEPRATINGNOTICE', 'Χρησιμοποιείστε την παραπάνω επιλογή μόνο εάν κάνετε μικρές αλλαγές (διόρθωση ορθογραφικού λάθους, κλπ.)');
+define('__EDIT', 'Edit Bookmark');
+define('__NOWEDITING', 'You\'re editing the bookmark with URL');
+define('__ONLYADDTAGS', 'You can only add tags');
+define('__KEEPRATING', 'Keep title rating');
+define('__KEEPRATINGNOTICE', 'Only use the above option for small changes (fixing spelling errors, etc.)');
 
 // deletebookmark-form.php
-define('__DELETE', 'Διαγραφή σελιδοδείκτη');
-define('__SUREDELETE', 'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το σελιδοδείκτη;');
-define('__SUREDELETE2', 'Η ενέργια αυτή είναι μη αναστρέψιμη.');
-define('__SUREDELETE3', 'Αν και άλλοι χρήστες έχουν καταχωρήσει το σελιδοδείκτη, ο σελιδοδείκτης θα παραμείνει στην υπηρεσία, αλλά θα αφαιρεθεί από το προφίλ σας, καθώς και ο τίτλος και η περιγραφή που δώσατε, ανεξαρτήτως βαθμολογίας. Οι ετικέτες που προσθέσατε δε θα διαγραφούν, εκτός της περίπτωσης που διαγραφεί και ο σελιδοδείκτης.');
-define('__GOBACK', 'Επιστροφή');
-define('__DELETECOMMENTS', 'Διαγραφή και όλων των σχολίων που έχετε κάνει στο σελιδοδείκτη');
+define('__DELETE', 'Delete Bookmark');
+define('__SUREDELETE', 'Are you sure you want to delete this bookmark?');
+define('__SUREDELETE2', 'This action cannot be undone.');
+define('__SUREDELETE3', 'If more users have added this bookmark, it will remain on the service, but will be removed from your profile, along with your title and description, irregardless of rating.');
+define('__GOBACK', 'Go Back');
+define('__DELETECOMMENTS', 'Delete all comments you\'ve made on this bookmark as well');
 
 // search-exec.php
-define('__SEARCHFOR', 'Αναζήτηση για');
-define('__RELEVANCE', 'Σχετικότητα');
-define('__DESC', '(Φθίνουσα)');
-define('__ASC', '(Αύξουσα)');
-define('__POPULARITY', 'Δημοφιλία');
-define('__SORTBY', 'Ταξινόμηση κατά');
+define('__SEARCHFOR', 'Search for');
+define('__RELEVANCE', 'Relevance');
+define('__DESC', '(Descending)');
+define('__ASC', '(Ascending)');
+define('__POPULARITY', 'Popularity');
+define('__SORTBY', 'Sort by');
 
 // presentation.inc
-define('__NOBOOKMARKS', 'Δε βρέθηκε κανένας σελιδοδείκτης.');
-define('__LOGINTOADD1', 'Συνδεθείτε');
-define('__LOGINTOADD2', 'ή');
-define('__LOGINTOADD3', 'εγγραφείτε');
-define('__LOGINTOADD4', 'για να δημιουργήσετε ένα νέο σελιδοδείκτη.');
-define('__PLEASEADD', 'Δημιουργείστε ένα νέο σελιδοδείκτη εσείς!');
+define('__NOBOOKMARKS', 'No bookmark found.');
+define('__LOGINTOADD1', 'Login');
+define('__LOGINTOADD2', 'or');
+define('__LOGINTOADD3', 'register');
+define('__LOGINTOADD4', 'in order to add a bookmark.');
+define('__PLEASEADD', 'Add a bookmark yourselves!');
 
 // deps/validations.inc
-define('__MISSUSERNAME', 'Πρέπει να εισάγετε ένα όνομα χρήστη.');
-define('__MISSEMAIL', 'Πρέπει να εισάγετε το e-mail σας.');
-define('__MISSPASSWORD', 'Πρέπει να εισάγετε έναν κωδικό πρόσβασης.');
+define('__MISSUSERNAME', 'You must enter a username.');
+define('__MISSEMAIL', 'You must enter an e-mail.');
+define('__MISSPASSWORD', 'You must enter a password.');
 
 // login-form.php
-define('__NOTMEMBER', 'Λάθος όνομα χρήστη ή/και κωδικός.');
+define('__NOTMEMBER', 'Wrong username and/or password.');
 
 // templates/layout/navigation.inc
-define('__ADVSEARCH', 'Προχωρημένη αναζήτηση');
-define('__RSSNEWEST', 'Εγγραφείτε στη ροή RSS με τους 10 νεώτερους σελιδοδείκτες');
-define('__LOGIN', 'Σύνδεση');
-define('__LOGINBUTTON', 'Σύνδεση');
-define('__LOGOUT', 'Αποσύνδεση');
-define('__PROFILEADMIN', 'Προφίλ / Διαχείρηση');
+define('__ADVSEARCH', 'Advanced Search');
+define('__RSSNEWEST', 'Subscribe to the 10 newest bookmarks RSS feed');
+define('__LOGIN', 'Login');
+define('__LOGINBUTTON', 'Login');
+define('__LOGOUT', 'Logout');
+define('__PROFILEADMIN', 'Profile / Administration');
 
 // advsearch-exec.php
-define('__EXACT', 'Ταίριασμα ολόκληρης λέξης');
-define('__ANYTERM', 'Αποτελέσματα που έχουν οποιονδήποτε από τους όρους');
-define('__ALLTERMS', 'Αποτελέσματα που έχουν όλους τους όρους');
-define('__LOOKIN', 'Αναζήτηση σε');
-define('__INTITLE', 'Τίτλους');
-define('__INDESC', 'Περιγραφές');
-define('__INTAGS', 'Ετικέτες');
+define('__EXACT', 'Match exact word');
+define('__ANYTERM', 'Results containing any of the terms');
+define('__ALLTERMS', 'Results containing all the terms');
+define('__LOOKIN', 'Look in');
+define('__INTITLE', 'Title');
+define('__INDESC', 'Description');
+define('__INTAGS', 'Tags');
 
 //profile.php
-define('__PROFILE', 'Προφίλ');
-define('__MYBOOKMARKS', 'Οι σελιδοδείκτες μου');
-define('__PERSONALINFO', 'Προσωπικές πληροφορίες');
-define('__UPDATEBUTTON', 'Ενημέρωση');
-define('__REPORTED', 'Αναφορές');
+define('__PROFILE', 'Profile');
+define('__MYBOOKMARKS', 'My Bookmarks');
+define('__PERSONALINFO', 'Personal Info');
+define('__UPDATEBUTTON', 'Update');
+define('__REPORTED', 'Reports');
 
 // tabs/profile/personalinfo-exec.php
-define('__PROFILEUPDATED', 'Οι προσωπικές πληροφορίες ανανεώθηκαν επιτυχώς. Παρακαλώ περιμένετε...');
+define('__PROFILEUPDATED', 'Your personal information was updated successfully. Please wait...');
 
 // tabs/profile/reported.php
-define('__VERIFY', 'Διαγραφή αναφοράς');
-define('__NOBOOKMARKSREPORTED', 'Δεν έχει δουλειά σήμερα μάστορα. Άαααααραξε.');
+define('__VERIFY', 'Delete report');
+define('__NOBOOKMARKSREPORTED', 'No work today. Why not have a capuccino and listen to some Miles Davis?');
 
 // adminedit-form.php
-define('__ADMINEDIT','Διόρθωση Σελιδοδείκτη');
-define('__COMMENT','Σχόλιο');
-define('__ADMINEDITCOMMENT','Διόρθωση Σχολίου');
-define('__ADMINDELETECOMMENT','Διαγραφή Σχολίου');
+define('__ADMINEDIT','Edit Bookmark (Administrative)');
+define('__COMMENT','Comment');
+define('__ADMINEDITCOMMENT','Edit Comment');
+define('__ADMINDELETECOMMENT','Delete Comment');
 
 // ajaxchecks
-define('__AVAILABLE', 'Διαθέσιμο');
-define('__UNAVAILABLE', 'Μη διαθέσιμο');
+define('__AVAILABLE', 'Available');
+define('__UNAVAILABLE', 'Not available');
 ?>
