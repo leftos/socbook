@@ -22,6 +22,7 @@ if(isset($_SESSION['FORM_SECRET']))
 		$member = validateUser($username, $password);
 		if($member === 0)
 		{
+			$_SESSION['ERROR'] = __NOTMEMBER;
 			header("Location: login-form.php");
 			exit ;
 		}

@@ -37,6 +37,11 @@
 		<div id="content">
 			<table border="0">
 				<?php
+				if (!($_SESSION['class'] == 'admin'))
+				{
+					die("You're not an admin! Get the fuck out!");
+				}
+				
 				if (isset($_POST['bid'])) {
 					$bid = $_POST['bid'];
 				} elseif (isset($_SESSION['bid'])) {

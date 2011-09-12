@@ -21,6 +21,7 @@ if(isset($_SESSION['FORM_SECRET']))
 		unset($_SESSION['FORM_SECRET']);
 		
 		if( insertUser($username, $email, $password) == 0 ){
+			$_SESSION['ERROR'] = __MEMBEREXISTS;
 			header("Location: registration-form.php");
 		} else {
 			header("Location: login-form.php");

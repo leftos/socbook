@@ -39,6 +39,7 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
+		<? if (isset($_SESSION['ERROR'])) echo '<p style="color: red">'.$_SESSION['ERROR'].'</p>'; unset($_SESSION['ERROR']); ?>
 		<form id='login' action='login-exec.php' onsubmit="return validateLoginForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
 				<tr>

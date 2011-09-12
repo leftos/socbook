@@ -33,6 +33,11 @@
 		<div id="contentwrap">
 			<div id="content">
 				<?php
+				if (!($_SESSION['class'] == 'admin'))
+				{
+					die("You're not an admin! Get the fuck out!");
+				}
+				
 				if (!(isset($_POST['bid'])))
 				{
 					die("You didn't use a valid BID.");

@@ -19,6 +19,70 @@
 	
 	<!-- Page-specific head attributes -->
 	<?php require_once('deps/validations.inc') ?>
+	
+	<script type="text/javascript">
+		function checkUsername(){
+            var ajaxRequest;  // The variable that makes Ajax possible!
+
+            try{
+                // Opera 8.0+, Firefox, Safari
+                ajaxRequest = new XMLHttpRequest();
+            } catch (e){
+                // Internet Explorer Browsers
+                try{
+                    ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    try{
+                        ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (e){
+                        // Something went wrong
+                        alert("Your browser broke!");
+                        return false;
+                    }
+                }
+            }
+            // Create a function that will receive data sent from the server
+            ajaxRequest.onreadystatechange = function(){
+                if(ajaxRequest.readyState == 4){
+                    document.getElementById('checkusername').innerHTML = ajaxRequest.responseText;
+                }
+            }
+            var username = document.register.username.value;
+            ajaxRequest.open("GET", "ajaxchecks/checkusername.php?username="+username, true);
+            ajaxRequest.send(null);
+        }
+        
+        function checkEmail(){
+            var ajaxRequest;  // The variable that makes Ajax possible!
+
+            try{
+                // Opera 8.0+, Firefox, Safari
+                ajaxRequest = new XMLHttpRequest();
+            } catch (e){
+                // Internet Explorer Browsers
+                try{
+                    ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    try{
+                        ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (e){
+                        // Something went wrong
+                        alert("Your browser broke!");
+                        return false;
+                    }
+                }
+            }
+            // Create a function that will receive data sent from the server
+            ajaxRequest.onreadystatechange = function(){
+                if(ajaxRequest.readyState == 4){
+                    document.getElementById('checkemail').innerHTML = ajaxRequest.responseText;
+                }
+            }
+            var email = document.register.email.value;
+            ajaxRequest.open("GET", "ajaxchecks/checkemail.php?email="+email, true);
+            ajaxRequest.send(null);
+        }
+	</script>
 </head>
 
 <body>
@@ -37,7 +101,8 @@
 	<!-- Above should remain as is on every page -->
 	
 	<div id="content">
-		<form id='register' action='registration-exec.php' onsubmit="return validateRegisterForm()" method='post' accept-charset='UTF-8'>
+		<? if (isset($_SESSION['ERROR'])) echo '<p style="color: red">'.$_SESSION['ERROR'].'</p>'; unset($_SESSION['ERROR']); ?>
+		<form name='register' id='register' action='registration-exec.php' onsubmit="return validateRegisterForm()" method='post' accept-charset='UTF-8'>
 			<table border="0">
 				<tr>
 					<td><input type='hidden' name='form_secret' id='form_secret' value="<?php echo $_SESSION['FORM_SECRET'];?>"></td>
@@ -45,7 +110,7 @@
 				<tr>
 					<td><?=__USERNAME?></td>
 					<td>
-						<input type="text" name="username" id="username" maxlength="50" size="30">
+						<input type="text" name="username" id="username" maxlength="50" size="30" onkeyup="checkUsername()">&nbsp;<span id="checkusername"></span>
 					</td>
 				</tr>
 				<tr>
@@ -54,12 +119,14 @@
 						<input type="password" name="password" id="password" maxlength="50" size="30">
 					</td>
 				</tr>
+				<tr><td colspan=2>&nbsp;</td></tr>
 				<tr>
 					<td><?=__EMAIL?></td>
 					<td>
-						<input type="text" name="email" id="email" maxlength="50" size="30">
+						<input type="text" name="email" id="email" maxlength="50" size="30" onkeyup="checkEmail()">&nbsp;<span id="checkemail"></span>
 					</td>
 				</tr>
+				<tr><td colspan=2>&nbsp;</td></tr>
 				<tr>
 					<td colspan="2"><input type="submit" name="Register" value="<?=__REGISTERBUTTON?>"></td>
 				</tr>

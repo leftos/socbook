@@ -8,30 +8,41 @@ require_once ('deps/presentation.inc');
 	<p>
 		<ul>
 		<?php
+			if (!($_SESSION['class'] == 'admin'))
+			{
+				die("You're not an admin! Get the fuck out!");
+			}
+			
 			$start = $_GET['start'];
 			
-			$reported = getReportedBookmarks($start);			
-			
-			while ($row = $reported->fetch_object())
+			$reported = getReportedBookmarks($start);
+			if ($reported->num_rows > 0)
 			{
-				$bk = fetchBookmark($row->bid);
-				prettyPrintBookmark($bk, 'dateCreated', null, true);
-				?>
-				<li>
-					<form action="admindelete-form.php" method="post">
-						<input type="hidden" name="bid" value="<?=$row->bid?>" />
-						<input type="hidden" name="start" value="<?=$start?>" />
-						<input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" />
-					</form>
-					<form action="adminedit-form.php" method="post">
-						<input type="hidden" name="bid" value="<?=$row->bid?>" />
-						<input type="hidden" name="start" value="<?=$start?>" />
-						<input type="image" src="images/edit.png" title="<?=__EDIT?>" />
-					</form>
-				</li>
-				<li>&nbsp;</li>
-				<?
-			};
+				while ($row = $reported->fetch_object())
+				{
+					$bk = fetchBookmark($row->bid);
+					prettyPrintBookmark($bk, 'dateCreated', null, true);
+					?>
+					<li>
+						<form action="admindelete-form.php" method="post">
+							<input type="hidden" name="bid" value="<?=$row->bid?>" />
+							<input type="hidden" name="start" value="<?=$start?>" />
+							<input type="image" src="images/red_x_16.png" title="<?=__DELETE?>" />
+						</form>
+						<form action="adminedit-form.php" method="post">
+							<input type="hidden" name="bid" value="<?=$row->bid?>" />
+							<input type="hidden" name="start" value="<?=$start?>" />
+							<input type="image" src="images/edit.png" title="<?=__EDIT?>" />
+						</form>
+					</li>
+					<li>&nbsp;</li>
+					<?
+				};
+			}
+			else 
+			{
+				echo '<p>'.__NOBOOKMARKSREPORTED.'</p>';
+			}			
 		?>			
 		</ul>
 	</p>
