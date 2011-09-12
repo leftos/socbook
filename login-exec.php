@@ -13,7 +13,8 @@ if(isset($_SESSION['FORM_SECRET']))
 	{
 		if(!$username || !$password)
 		{
-			echo __NOTALLDETAILS . '<br />';
+			$_SESSION['ERROR'] = __NOTALLDETAILS;
+			header("Location: login-form.php");
 			exit ;
 		}
 		

@@ -8,7 +8,7 @@ require_once ('deps/presentation.inc');
 	<p>
 		<ul>
 		<?php
-			if (!($_SESSION['class'] == 'admin'))
+			if (!($_SESSION['CLASS'] == 'admin'))
 			{
 				die("You're not an admin! Get the fuck out!");
 			}

@@ -3,8 +3,13 @@ while(!file_exists(getcwd()."/.htroot")){chdir('..');}
 
 require_once('deps/session.inc');
 require_once('deps/database.inc');
+
+if (isset($_GET['lang']))
+{
+	$_SESSION['LANG'] = $_GET['lang'];
+}
 $lang = $_SESSION['LANG'];
-require_once('lang/'.$lang.'.php');
+require_once('lang/'.$lang.'.inc');
 
 function settitle($string) {
 	$title = __TITLE;
