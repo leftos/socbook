@@ -112,34 +112,34 @@
 								."&startFrom=".$startFrom; ?>
 				<?=__SORTBY?>:&nbsp;
 				<? if (!($sort=='relevance' && $order=='desc')) { ?>
-				<a href="<?=$query?>&sort=relevance&order=desc"><?=__RELEVANCE." ".__DESC?></a>&nbsp;
+				<a href="<?=$query?>&sort=relevance&order=desc"><?=__RELEVANCE." ".__DESC?></a>&nbsp;&nbsp;
 				<? } ?>
 				<? if (!(($sort=='relevance') && ($order=='asc'))) { ?>
-				<a href="<?=$query?>&sort=relevance&order=asc"><?=__RELEVANCE." ".__ASC?></a>&nbsp;
+				<a href="<?=$query?>&sort=relevance&order=asc"><?=__RELEVANCE." ".__ASC?></a>&nbsp;&nbsp;
 				<? } ?>
 				<? if (!(($sort=='dateCreated') && ($order=='desc'))) { ?>
-				<a href="<?=$query?>&sort=dateCreated&order=desc"><?=__DATECREATED." ".__DESC?></a>&nbsp;
+				<a href="<?=$query?>&sort=dateCreated&order=desc"><?=__DATECREATED." ".__DESC?></a>&nbsp;&nbsp;
 				<? } ?>
 				<? if (!(($sort=='dateCreated') && ($order=='asc'))) { ?>
-				<a href="<?=$query?>&sort=dateCreated&order=asc"><?=__DATECREATED." ".__ASC?></a>&nbsp;
+				<a href="<?=$query?>&sort=dateCreated&order=asc"><?=__DATECREATED." ".__ASC?></a>&nbsp;&nbsp;
 				<? } ?>
 				<? if (!(($sort=='popularity') && ($order=='desc'))) { ?>
-				<a href="<?=$query?>&sort=popularity&order=desc"><?=__POPULARITY." ".__DESC?></a>&nbsp;
+				<a href="<?=$query?>&sort=popularity&order=desc"><?=__POPULARITY." ".__DESC?></a>&nbsp;&nbsp;
 				<? } ?>
 				<? if (!(($sort=='popularity') && ($order=='asc'))) { ?>
-				<a href="<?=$query?>&sort=popularity&order=asc"><?=__POPULARITY." ".__ASC?></a>&nbsp;
+				<a href="<?=$query?>&sort=popularity&order=asc"><?=__POPULARITY." ".__ASC?></a>&nbsp;&nbsp;
 				<? } ?>
 				<? if (!(($sort=='rating') && ($order=='desc'))) { ?>
-				<a href="<?=$query?>&sort=rating&order=desc"><?=__RATING." ".__DESC?></a>&nbsp;
+				<a href="<?=$query?>&sort=rating&order=desc"><?=__RATING." ".__DESC?></a>&nbsp;&nbsp;
 				<? } ?>
 				<? if (!(($sort=='rating') && ($order=='asc'))) { ?>
-				<a href="<?=$query?>&sort=rating&order=asc"><?=__RATING." ".__ASC?></a>&nbsp;
+				<a href="<?=$query?>&sort=rating&order=asc"><?=__RATING." ".__ASC?></a>&nbsp;&nbsp;
 				<? } ?>
 				<? if (!(($sort=='visits') && ($order=='desc'))) { ?>
-				<a href="<?=$query?>&sort=visits&order=desc"><?=__VISITS." ".__DESC?></a>&nbsp;
+				<a href="<?=$query?>&sort=visits&order=desc"><?=__VISITS." ".__DESC?></a>&nbsp;&nbsp;
 				<? } ?>
 				<? if (!(($sort=='visits') && ($order=='asc'))) { ?>
-				<a href="<?=$query?>&sort=visits&order=asc"><?=__VISITS." ".__ASC?></a>&nbsp;
+				<a href="<?=$query?>&sort=visits&order=asc"><?=__VISITS." ".__ASC?></a>&nbsp;&nbsp;
 				<? } ?>
 				
 			</p>

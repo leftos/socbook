@@ -1090,9 +1090,10 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 				echo ($i+1);
 			} 
 			else 
-			{				
+			{
+				if ($exact == true) $exactStr = '1'; else $exactStr = '0';
 				$query = "search-exec.php?s=".$s."&inTitle=".$inTitle."&inDesc=".$inDesc
-								."&inTags=".$inTags."&combine=".$combine."&exact=".$exact
+								."&inTags=".$inTags."&combine=".$combine."&exact=".$exactStr
 								."&startFrom=".($i*15)."&sort=".$sort."&order=".$order; ?>
 				<a href="<?=$query?>"><?=($i+1)?></a>
 			<? 
