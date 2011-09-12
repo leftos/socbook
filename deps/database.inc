@@ -1050,7 +1050,8 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 	
 	$t = $bkobjarr;
 	$bkobjarr = array();
-	for ($i=$startFrom; $i<$startFrom+14; $i++)
+	$count = count($t);
+	for ($i=$startFrom; $i<$startFrom+15; $i++)
 	{
 		if (!(isset($t[$i]))) break;
 		$bkobjarr[] = $t[$i];
@@ -1077,25 +1078,27 @@ function search($s, $inTitle=true, $inDesc=true, $inTags=true, $combine='or', $e
 			break;
 	}
 	echo '</ul>';
-
-	if (count($bkobjarr) > 15)
+	
+	if ($count > 15)
 	{
 		echo '<p>'.__PAGE.' ';
-		$pages = count($bkobjarr) / 15;
+		$pages = $count / 15;
 		for ($i=0;$i<$pages;$i++)
 		{ 
-			if (($startFrom > $i*15) && ($startFrom >($i+1)*15))
+			if (($startFrom >= ($i*15)) && ($startFrom < (($i+1)*15)))
 			{
+				echo ($i+1);
+			} 
+			else 
+			{				
 				$query = "search-exec.php?s=".$s."&inTitle=".$inTitle."&inDesc=".$inDesc
 								."&inTags=".$inTags."&combine=".$combine."&exact=".$exact
-								."&startFrom=".$startFrom."&sort=".$sort."&order=".$order; ?>
-				<a href="<?=$query?>"><?$i+1?></a>
+								."&startFrom=".($i*15)."&sort=".$sort."&order=".$order; ?>
+				<a href="<?=$query?>"><?=($i+1)?></a>
 			<? 
-			} else {
-				echo $i+1;
 			}
-			if ($i<$pages-1) echo ',&nbsp;';
 		}
+		echo '</p>';
 	}
 }
 
