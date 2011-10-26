@@ -26,8 +26,9 @@ if (!empty($_REQUEST['Edit'])) {
 	}
 
 	$db -> close();
-
-	header("Location: adminedit-form.php?bid=" . $bid);
+	$_SESSION['bid'] = $bid;
+	$_SESSION['start'] = $_POST['start'];
+	header("Location: adminedit-form.php");
 } else if (!empty($_REQUEST['Delete'])) {
 	
 	$db = connectToDB();

@@ -37,7 +37,7 @@
 		<div id="content">
 			<table border="0">
 				<?php
-				if (!($_SESSION['class'] == 'admin'))
+				if (!($_SESSION['CLASS'] == 'admin'))
 				{
 					die("You're not an admin! Get the fuck out!");
 				}
