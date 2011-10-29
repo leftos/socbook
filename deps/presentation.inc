@@ -271,4 +271,13 @@ function clearExtraSpaces($s)
 	return $s;
 }
 
+function RFC2822($mydate) {
+	list($date, $time) = explode(' ', $mydate);
+    list($y, $m, $d) = explode('-', $date);
+    list($h, $i, $s) = explode(':', $time);
+
+    return date('r', mktime($h,$i,$s,$m,$d,$y));
+}
+
+
 ?>
