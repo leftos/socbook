@@ -57,6 +57,7 @@
 							<td><?=__BOOKMARKTAGS?></td>
 							<td> <input type="text" class="tags" name="tags" maxlength="200" size="60" /></td>
 						</tr>
+						<tr><td colspan="2"><?=__SEPARATETAGS?></td></tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
 						<tr>
 							<td colspan="2"><input type="submit" value=<?=__BOOKMARKADD?>></td>

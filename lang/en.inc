@@ -24,6 +24,7 @@ define('__BOOKMARKURL', 'URL');
 define('__BOOKMARKTITLE','Title');
 define('__BOOKMARKDESCRIPTION','Description');
 define('__BOOKMARKTAGS','Tags');
+define('__SEPARATETAGS', 'Separate tags by space');
 
 // addbookmark-exec.php
 define('__BOOKMARKADDED', 'The bookmark has been added!');

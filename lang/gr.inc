@@ -24,6 +24,7 @@ define('__BOOKMARKURL', 'URL');
 define('__BOOKMARKTITLE','Τίτλος');
 define('__BOOKMARKDESCRIPTION','Περιγραφή');
 define('__BOOKMARKTAGS','Ετικέτες');
+define('__SEPARATETAGS', 'Διαχωρίστε τις ετικέτες με κενό μεταξύ τους');
 
 // addbookmark-exec.php
 define('__BOOKMARKADDED', 'Ο σελιδοδείκτης καταχωρήθηκε!');
